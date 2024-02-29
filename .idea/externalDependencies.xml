@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="Dart" min-version="&lt;any&gt;" max-version="&lt;any&gt;" />
+    <plugin id="io.flutter" min-version="&lt;any&gt;" max-version="&lt;any&gt;" />
+  </component>
+</project>
