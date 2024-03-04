@@ -19,6 +19,7 @@ class OrderController extends GetxController {
   RxInt filterlen = 0.obs;
   RxDouble stockRs = 0.0.obs;
   int ordforacid = 0;
+  final currentOrder = <OrderModel>[].obs;
 
   final _api = OrderRepository();
   List<OrderModel> _fulllist = <OrderModel>[];
@@ -121,6 +122,11 @@ class OrderController extends GetxController {
     });
   }
 
+  void setSingleOrderDetail(int orefno) async {
+    currentOrder.value = _fulllist.where((rec) {
+      return rec.ref_no == orefno;
+    }).toList();
+  }
   /*void loadfiltervalues() async {
     if (_fulllist.length > 0) {
       appData.allcomp = await UniqueList<String>.from(_fulllist.map((t) => t.company_nm!).toList());

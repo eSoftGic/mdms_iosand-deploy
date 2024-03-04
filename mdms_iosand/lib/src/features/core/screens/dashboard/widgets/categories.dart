@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:mdms_iosand/singletons/AppData.dart';
 //import 'package:get/get_core/src/get_main.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
-//import 'package:mdms_iosand/src/features/core/orderdb/orderdb_home.dart';
+import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/allocation/screen_allocation.dart';
 import 'package:mdms_iosand/src/features/core/screens/approval/screen_approvalhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/screen_orderhome.dart';
@@ -51,14 +51,14 @@ class DashboardCategories extends StatelessWidget {
               onTap: () {
                 switch (list[index].menuname) {
                   case 'STK':
-                    Get.to(() => const StockHomeScreen()); //Party()); //
+                    Get.to(() => const StockHomeScreen()); 
                     break;
                   case 'PRT':
-                    Get.to(() => const PartyHomeScreen()); //Party()); //
+                    Get.to(() => const PartyHomeScreen()); 
                     break;
                   case 'ORD':
-                    //Get.to(() => OrderDbHomePage());
-                    Get.to(() => const OrderHomeScreen());
+                    Get.to(() => const OrderHomeView());
+                    //Get.to(() => const OrderHomeScreen());
                     break;
                   case 'ALO':
                     Get.to(() => const AllocateScreen());

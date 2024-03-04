@@ -21,6 +21,8 @@ import '../features/core/screens/party/option/rcp/controller_rcp.dart';
 import '../features/core/screens/stock/stock_controller.dart';
 import '../repository/authentication_repository/authentication_repository.dart';
 
+
+
 class AppBinding extends Bindings {
   @override
   void dependencies() {
