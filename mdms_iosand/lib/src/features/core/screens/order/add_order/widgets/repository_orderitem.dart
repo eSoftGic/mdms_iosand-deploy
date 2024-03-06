@@ -47,8 +47,8 @@ class OrderItemRepository {
             trantype +
             "&Image_Cnt_Reqd=" +
             imgcnt.toString().trim() +
-            "&Ordered_Item_Only=0";
-      } else {
+            "&Ordered_Item_Only=false";
+      } else if (ordchoice == 'EDIT') {
         itemlistqryparam = "DbName=${appData.log_dbnm!}"
                 "&Branch_Id=${appData.log_branchid.toString().trim()}"
                 "&Company_Id_Str=${_editcontroller.bukcmpstr.value.toString()}"
@@ -61,12 +61,10 @@ class OrderItemRepository {
             trantype +
             "&Image_Cnt_Reqd=" +
             imgcnt.toString().trim() +
-            "&Ordered_Item_Only=0";
+            "&Ordered_Item_Only=true";
       }
     }
-
     var itmlist = <ItemModel>[];
-
     var resdata =
         await _apiService.getApi(AppUrl.itmListUrl + itemlistqryparam);
     if (resdata != null) {

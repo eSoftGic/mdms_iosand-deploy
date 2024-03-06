@@ -1,12 +1,21 @@
-// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_is_empty
+// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_is_empty, non_constant_identifier_names, prefer_const_constructors, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unnecessary_brace_in_string_interps, avoid_print, unused_local_variable
 
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/singletons/AppData.dart';
+import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/constants/constants.dart';
 import 'package:mdms_iosand/src/ecommerce/widget/custom_appbar.dart';
+import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/screens/order/edit_order/controller_orderedit.dart';
+import 'package:mdms_iosand/src/features/core/screens/order/edit_order/screen_order_edithome.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/model_order.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/controller_track.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
+import 'package:path_provider/path_provider.dart';
 import '../screens/order/controller_order.dart';
 
 class OrderDetailView extends StatelessWidget {
@@ -15,11 +24,27 @@ class OrderDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(ordrefno.toString());
-
     final ordcontroller = Get.put(OrderController());
+    final ordeditcontroller = Get.put(OrderEditController());
+    final orditmcontroller = Get.put(OrderItemController());
 
     ordcontroller.setSingleOrderDetail(ordrefno);
+    ordeditcontroller.setOrderRecord();
+
+    ordeditcontroller.acid(ordcontroller.currentOrder[0].ac_id);
+    ordeditcontroller.ordrefno(ordcontroller.currentOrder[0].ref_no);
+    ordeditcontroller.bukcmpstr(ordcontroller.currentOrder[0].company_sel);
+    orditmcontroller.setTrantype('ORD');
+    if (ordrefno > 0) {
+      orditmcontroller.setOrdChoice('EDIT');
+    } else {
+      orditmcontroller.setOrdChoice('ADD');
+    }
+
+    orditmcontroller.setTrantype('ORD');
+    orditmcontroller.setImgcnt(0);
+
+    orditmcontroller.refreshListApi();
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -38,7 +63,8 @@ class OrderDetailView extends StatelessWidget {
           ), //BoxDecoration
           child: Padding(
               padding: const EdgeInsets.all(4.0),
-              child: buildOrderAction(context, ordcontroller.currentOrder[0])),
+              child: buildOrderAction(
+                  context, ordcontroller.currentOrder[0], ordeditcontroller)),
         ),
       ),
       body: SingleChildScrollView(
@@ -48,9 +74,9 @@ class OrderDetailView extends StatelessWidget {
               padding: const EdgeInsets.all(5.0),
               child: ListView(children: [
                 buildOrderInfo(context, ordcontroller.currentOrder[0]),
-                buildOrderItems(context, ordcontroller.currentOrder[0]),
+                buildOrderItems(
+                    context, ordcontroller.currentOrder[0], orditmcontroller),
                 buildOrderStatus(context, ordcontroller.currentOrder[0]),
-                //buildOrderAction(context, ordcontroller.currentOrder[0]),
               ]))),
     );
   }
@@ -79,7 +105,7 @@ class OrderDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Order No / Date ',
+                          'Order No ',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
@@ -91,67 +117,7 @@ class OrderDetailView extends StatelessWidget {
                       ]),
                 ),
                 const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Party ',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        corder.ac_nm!,
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Order Amount ',
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                      Text(
-                        corder.net_amt!.toStringAsFixed(2),
-                        style: Theme.of(context).textTheme.headlineSmall,
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
-            )
-          ]),
-    );
-  }
-
-  Padding buildOrderItems(BuildContext context, OrderModel corder) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: ExpansionTile(
-          initiallyExpanded: false,
-          title: Text(
-            'Item Details',
-            style: Theme.of(context).textTheme.headlineSmall,
-          ),
-          children: [
-            Card(
-              elevation: 2.0,
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                const SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -160,19 +126,17 @@ class OrderDetailView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Order No / Date ',
+                          'Order Date ',
                           style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         Text(
-                          corder.tran_desc.toString() +
-                              '- ' +
-                              corder.ref_no.toString(),
+                          corder.tran_dt.toString(),
                           style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ]),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -192,7 +156,7 @@ class OrderDetailView extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -217,14 +181,50 @@ class OrderDetailView extends StatelessWidget {
     );
   }
 
+  Padding buildOrderItems(
+    BuildContext context,
+    OrderModel corder,
+    OrderItemController orditmcontroller,
+  ) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+        child: Obx(
+          () => ListView.builder(
+              shrinkWrap: true,
+              itemCount: orditmcontroller.lislen.value,
+              itemBuilder: (context, index) {
+                return Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                  ),
+                  child: ListTile(
+                      dense: false,
+                      title: Text(orditmcontroller.orditmlist[index].item_nm!,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      subtitle: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                              'Qty ${orditmcontroller.orditmlist[index].ord_qty}',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                          Text(
+                              'Rate ${orditmcontroller.orditmlist[index].rate!.toStringAsFixed(2)}',
+                              style: Theme.of(context).textTheme.headlineSmall),
+                        ],
+                      )),
+                );
+              }),
+        ));
+  }
+
   Padding buildOrderStatus(BuildContext context, OrderModel corder) {
     bool billed;
     bool hasordpdf;
     String bilurl = "";
     String ordurl = "";
     var _colorapproved = Colors.green;
-    var _localdirpath = "";
-    String progress = "0";
 
     billed = corder.billed == 'Y' ? true : false;
     hasordpdf = corder.ordpdf!.trim().length > 0 ? true : false;
@@ -244,6 +244,8 @@ class OrderDetailView extends StatelessWidget {
     if (corder.approvalstatus!.toUpperCase().contains('PENDING')) {
       _colorapproved = Colors.orange;
     }
+
+    var dio = Dio();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -296,17 +298,15 @@ class OrderDetailView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      IconButton(
-                          icon: Icon(
-                            Icons.picture_as_pdf,
-                            size: 24.0,
-                            color: Colors.green,
-                          ),
-                          onPressed: () async {
-                            (billed && bilurl.isNotEmpty) ? '' : '';
-                            /*download(bilurl, corder.billpdf!.trim() + '.pdf',
-                          'Invoice -' + corder.billdetails!);*/
-                          })
+                      hasordpdf
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.file_download,
+                                size: 24.0,
+                                color: Colors.green,
+                              ),
+                              onPressed: () async {})
+                          : Text('')
                     ],
                   ),
                 ),
@@ -319,7 +319,7 @@ class OrderDetailView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Bill PDF ',
+                        'Invoice ',
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
@@ -328,17 +328,24 @@ class OrderDetailView extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      IconButton(
-                          icon: Icon(
-                            Icons.picture_as_pdf,
-                            size: 24.0,
-                            color: Colors.green,
-                          ),
-                          onPressed: () async {
-                            (billed && bilurl.isNotEmpty) ? '' : '';
-                            /*download(bilurl, corder.billpdf!.trim() + '.pdf',
-                          'Invoice -' + corder.billdetails!);*/
-                          })
+                      billed
+                          ? IconButton(
+                              icon: Icon(
+                                Icons.file_download,
+                                size: 24.0,
+                                color: Colors.green,
+                              ),
+                              onPressed: () async {
+                                var tempDir = await getTemporaryDirectory();
+                                String fullPath = tempDir.path +
+                                    "/" +
+                                    corder.billpdf!.trim() +
+                                    '.pdf';
+                                debugPrint('full path ${fullPath}');
+                                download2(dio, bilurl, fullPath);
+                              },
+                            )
+                          : Text('')
                     ],
                   ),
                 ),
@@ -348,7 +355,8 @@ class OrderDetailView extends StatelessWidget {
     );
   }
 
-  Padding buildOrderAction(BuildContext context, OrderModel corder) {
+  Padding buildOrderAction(BuildContext context, OrderModel corder,
+      OrderEditController ordeditcontroller) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Container(
@@ -359,10 +367,63 @@ class OrderDetailView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton(onPressed: () {}, child: const Text('EDIT')),
+                TextButton(
+                    onPressed: () {
+                      if (corder.billpdf.toString().trim().length > 0) {
+                        Get.snackbar('Billed', 'Cannot Edit Order');
+                      } else {
+                        if (appSecure.editorder!) {
+                          if (appData.log_type != "DMAN") {
+                            ordeditcontroller.setOrderRecord();
+                            Get.to(() => const EditOrderScreen());
+                          }
+                        } else {
+                          Get.snackbar('Not Authorised', 'Edit Order');
+                        }
+                      }
+                    },
+                    child: const Text('EDIT')),
                 TextButton(onPressed: () {}, child: const Text('DELETE')),
-                TextButton(onPressed: () {}, child: const Text('TRACK')),
+                TextButton(
+                    onPressed: () {
+                      final trackcontroller = Get.put(TrackController());
+                      trackcontroller.ordidstr.value =
+                          corder.ref_no.toString().trim();
+                      trackcontroller.trantype.value = 'ORD';
+                      trackcontroller.trackApi();
+                      Get.to(() => const TrackScreen());
+                    },
+                    child: const Text('TRACK')),
               ],
             )));
+  }
+
+  Future download2(Dio dio, String url, String savePath) async {
+    try {
+      var response = await dio.get(
+        url, onReceiveProgress: showDownloadProgress,
+        //Received data with List<int>
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            validateStatus: (status) {
+              return status! < 500;
+            }),
+      );
+      print(response.headers);
+      File file = File(savePath);
+      var raf = file.openSync(mode: FileMode.write);
+      // response.data is List<int> type
+      raf.writeFromSync(response.data);
+      await raf.close();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
+    }
   }
 }

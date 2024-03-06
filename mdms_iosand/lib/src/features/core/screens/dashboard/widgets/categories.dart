@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/singletons/AppData.dart';
-//import 'package:get/get_core/src/get_main.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/allocation/screen_allocation.dart';

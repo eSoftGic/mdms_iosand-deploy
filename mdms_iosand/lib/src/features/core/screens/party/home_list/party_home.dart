@@ -45,7 +45,7 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
   final hisController = Get.put(OrderHistoryController());
   final aController = Get.put(AllocationController());
 
-  bool showsrc = false;
+  bool showsrc = true;
 
   @override
   void initState() {

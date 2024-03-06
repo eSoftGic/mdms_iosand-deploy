@@ -21,19 +21,28 @@ class DashboardCategoriesModel {
   );
 
   static List<DashboardCategoriesModel> list = [
-    DashboardCategoriesModel("PRT", "Party", "", Icons.people, 0xff3399fe, true, null),
-    DashboardCategoriesModel("STK", "Stock Listing", "", Icons.category, 0xffff3266, true, null),
     DashboardCategoriesModel(
-        "ALO", "Stock Allocation", "", Icons.assignment, 0xff622f74, true, null),
-    DashboardCategoriesModel("ORD", "Order", "", Icons.shopping_cart, 0xff622f74, true, null),
-    DashboardCategoriesModel("APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
-    DashboardCategoriesModel("TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
-    DashboardCategoriesModel("PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
-    DashboardCategoriesModel("TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
-    DashboardCategoriesModel("DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
+        "PRT", "Party", "", Icons.people, 0xff3399fe, true, null),
     DashboardCategoriesModel(
-        "OS", "OutStanding", "", Icons.pending_actions_outlined, 0xff26cb3c, true, null),
-    DashboardCategoriesModel("GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
+        "ORD", "Order", "", Icons.shopping_cart, 0xff622f74, true, null),
+    DashboardCategoriesModel(
+        "APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
+    DashboardCategoriesModel(
+        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
+    DashboardCategoriesModel(
+        "STK", "Stock Listing", "", Icons.category, 0xffff3266, true, null),
+    DashboardCategoriesModel("ALO", "Stock Allocation", "", Icons.assignment,
+        0xff622f74, true, null),
+    DashboardCategoriesModel(
+        "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
+    DashboardCategoriesModel(
+        "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
+    DashboardCategoriesModel(
+        "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
+    DashboardCategoriesModel("OS", "OutStanding", "",
+        Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+    DashboardCategoriesModel(
+        "GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
 
     /*DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
     DashboardCategoriesModel("ECO", "eComm", "", Icons.book_online, 0xff622f74, true, null),
@@ -44,20 +53,28 @@ class DashboardCategoriesModel {
   ];
 
   static List<DashboardCategoriesModel> prtlist = [
+    DashboardCategoriesModel("PRT", appData.prtnm.toString().toUpperCase(), "",
+        Icons.people, 0xff3399fe, true, null),
     DashboardCategoriesModel(
-        "PRT", appData.prtnm.toString().toUpperCase(), "", Icons.people, 0xff3399fe, true, null),
-    DashboardCategoriesModel("STK", "Stock Listing", "", Icons.category, 0xffff3266, true, null),
+        "STK", "Stock Listing", "", Icons.category, 0xffff3266, true, null),
+    DashboardCategoriesModel("ALO", "Stock Allocation", "", Icons.assignment,
+        0xff622f74, true, null),
     DashboardCategoriesModel(
-        "ALO", "Stock Allocation", "", Icons.assignment, 0xff622f74, true, null),
-    DashboardCategoriesModel("ORD", "Order", "", Icons.shopping_cart, 0xff622f74, true, null),
-    DashboardCategoriesModel("APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
-    DashboardCategoriesModel("TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
-    DashboardCategoriesModel("PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
-    DashboardCategoriesModel("TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
-    DashboardCategoriesModel("DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
+        "ORD", "Order", "", Icons.shopping_cart, 0xff622f74, true, null),
     DashboardCategoriesModel(
-        "OS", "OutStanding", "", Icons.pending_actions_outlined, 0xff26cb3c, true, null),
-    DashboardCategoriesModel("GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
+        "APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
+    DashboardCategoriesModel(
+        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
+    DashboardCategoriesModel(
+        "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
+    DashboardCategoriesModel(
+        "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
+    DashboardCategoriesModel(
+        "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
+    DashboardCategoriesModel("OS", "OutStanding", "",
+        Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+    DashboardCategoriesModel(
+        "GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
 
     /*DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
     DashboardCategoriesModel("ECO", "eComm", "", Icons.book_online, 0xff622f74, true, null),

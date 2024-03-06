@@ -221,8 +221,32 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             onPressed: () {
               debugPrint(ordcontroller.reslist[index].ref_no.toString());
               debugPrint(index.toString());
-              Get.to(() => OrderDetailView(
-                  ordrefno: ordcontroller.reslist[index].ref_no!));
+
+              setState(() {
+                appData.prtid =
+                    int.parse(ordcontroller.reslist[index].ac_id.toString());
+                appData.prtnm = ordcontroller.reslist[index].ac_nm!.trim();
+                appData.ordrefno = ordcontroller.reslist[index].ref_no;
+                appData.bukid = ordcontroller.reslist[index].tran_type_id ?? 0;
+                appData.bukcmpstr =
+                    ordcontroller.reslist[index].company_sel ?? "";
+                appData.buknm = ordcontroller.reslist[index].tran_desc;
+                appData.billdetails = ordcontroller.reslist[index].billdetails;
+                appData.chainid = ordcontroller.reslist[index].chainid ?? 0;
+                appData.chainnm =
+                    ordcontroller.reslist[index].chainareanm ?? "";
+                appData.ordmaxlimit = 0.0;
+                appData.ordlimitvalid = true;
+                appData.saletype = ordcontroller.reslist[index].saletype;
+                appData.ordbilled = ordcontroller.reslist[index].billed;
+                appData.approvalstatus =
+                    ordcontroller.reslist[index].approvalstatus ?? '';
+                appData.ordqottype = 'ORD';
+              });
+              if (ordcontroller.reslist[index].ref_no! > 0) {
+                Get.to(() => OrderDetailView(
+                    ordrefno: ordcontroller.reslist[index].ref_no!));
+              }
             },
             icon: const Icon(
               LineAwesomeIcons.angle_double_right,
@@ -246,7 +270,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                   ordcontroller.reslist[index].tran_dt.toString(),
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
               Flexible(

@@ -33,6 +33,8 @@ class OrderItemController extends GetxController {
   RxString Curitmnm = ''.obs;
 
   List<ItemModel> _fulllist = <ItemModel>[];
+
+  final orditmlist = <ItemModel>[].obs;
   final reslist = <ItemModel>[].obs;
   final itemImagelist = [].obs;
 
@@ -64,11 +66,11 @@ class OrderItemController extends GetxController {
     ItemListApi(ordchoice, trantype, imgcnt.value);
   }
 
-  @override
+  /*@override
   void onReady() {
     super.onReady();
     ItemListApi(ordchoice, trantype, imgcnt.value);
-  }
+  }*/
 
   void setError(String _value) => error.value = _value;
   void setRxRequestStatus(Status _value) => RxRequestStatus.value = _value;
@@ -117,16 +119,18 @@ class OrderItemController extends GetxController {
     searchtxt.text = "";
     _fulllist = _value;
     lislen.value = _value.length;
+    debugPrint(
+        'edit controller ordno ' + editcontroller.ordrefno.value.toString());
+    debugPrint('setFulllist cnt ' + _value.length.toString());
+    debugPrint('orditmlist cnt ' + orditmlist.value.length.toString());
 
-    debugPrint('edit controller ' + editcontroller.ordrefno.value.toString());
-    debugPrint('setFulllist ' + _value.length.toString());
-
-    if (editcontroller.ordrefno.value > 0 &&
-        _value.length > 0 &&
-        ordcartcontroller.cartlist.length == 0) {
-      debugPrint('setting order cart list for ' +
-          editcontroller.ordrefno.value.toString());
-      setOrderCartlist(editcontroller.ordrefno.value);
+    if (editcontroller.ordrefno.value > 0 && _value.length > 0) {
+      orditmlist.value = _value.toList();
+      if (ordcartcontroller.cartlist.length == 0) {
+        debugPrint('setting order cart list for ' +
+            editcontroller.ordrefno.value.toString());
+        setOrderCartlist(editcontroller.ordrefno.value);
+      }
     }
     loadfiltervalues();
   }
@@ -135,8 +139,14 @@ class OrderItemController extends GetxController {
     List<ItemModel> _crtitemlist = _fulllist.where((rec) {
       return (rec.ord_los_qty! > 0 || rec.ord_qty! > 0);
     }).toList();
+
+    // this is for view only
+    orditmlist.value = _crtitemlist.toList();
+    debugPrint('for view only ' + orditmlist.value.length.toString());
+
     if (_crtitemlist.length > 0) {
       print('total cart list ' + _crtitemlist.toString());
+      print('total ord view list ' + orditmlist.value.length.toString());
       ordcartcontroller.clearCartlist();
       for (int i = 0; i < _crtitemlist.length; i++) {
         double itmrt = _crtitemlist[i].rate!;

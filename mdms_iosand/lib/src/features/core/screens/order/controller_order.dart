@@ -127,13 +127,4 @@ class OrderController extends GetxController {
       return rec.ref_no == orefno;
     }).toList();
   }
-  /*void loadfiltervalues() async {
-    if (_fulllist.length > 0) {
-      appData.allcomp = await UniqueList<String>.from(_fulllist.map((t) => t.company_nm!).toList());
-      appData.allcategory =
-          await UniqueList<String>.from(_fulllist.map((t) => t.item_cat_nm!).toList());
-      appData.allbrand =
-          await UniqueList<String>.from(_fulllist.map((t) => t.item_brand_nm!).toList());
-    }
-  }*/
 }

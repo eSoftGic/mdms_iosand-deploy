@@ -21,7 +21,6 @@ class OrderItemList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     orditmcontroller.setTrantype('ORD');
-
     orditmcontroller.setOrdChoice(ordch);
     orditmcontroller.setShwimg(shwimg);
 
