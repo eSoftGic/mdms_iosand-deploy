@@ -28,7 +28,8 @@ const int _primaryAccentValue = 0xFFCBF6FF;
 
 /* -- LIST OF ALL COLORS -- */
 const tPrimaryColor = Color(0xFF1a5580);
-const tSecondaryColor = Color(0xFF272727);
+//const tSecondaryColor = Color(0xFF272727);
+const tSecondaryColor = Color(0xFFF1F5F8);
 const tAccentColor = Color(0xFF5cc4d4);
 const kOrangeColor = Color(0xFFB97DFE);
 const kRedColor = Color(0xFFFE4067);

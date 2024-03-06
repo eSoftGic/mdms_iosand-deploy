@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mdms_iosand/src/constants/constants.dart';
+import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/newaccount/account.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/home_list/party_filter.dart';
@@ -127,7 +128,7 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
 
   Widget _listItem(index) {
     return Card(
-      color: Get.isDarkMode ? tCardBgColor.withOpacity(0.9) : tCardLightColor,
+      color: Get.isDarkMode ? tCardBgColor.withOpacity(0.9) : tWhiteColor,
       elevation: 1,
       child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -146,13 +147,13 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
                       softWrap: true,
                     ),
                   ),
-                  Flexible(
+                  /*Flexible(
                     flex: 2,
                     child: partypopupMenuButton(
                       partyController.prtlist[index].ac_id!,
                       partyController.prtlist[index].ac_nm!,
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
@@ -229,6 +230,10 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
                             ),
                           ],
                         ),
+                        buildPartyOption(
+                            context,
+                            partyController.prtlist[index].ac_id!,
+                            partyController.prtlist[index].ac_nm!),
                       ],
                     ),
                   ),
@@ -343,6 +348,120 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
         });
   }
 
+  Padding buildPartyOption(BuildContext context, int acid, String acnm) {
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 3.0),
+        child: Container(
+            height: 210,
+            width: double.infinity,
+            padding: const EdgeInsets.all(5.0),
+            child: Column(
+              children: [
+                const Divider(
+                  color: tAccentColor,
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextButton(
+                        onPressed: () {
+                          gotoselected('detail', acid, acnm);
+                        },
+                        child: const Text('Details',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontFamily: "WorkSansSemiBold"))),
+                    TextButton(
+                        onPressed: () {
+                          gotoselected('order', acid, acnm);
+                        },
+                        child: const Text(
+                          'Orders',
+                          style: TextStyle(
+                              fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
+                        )),
+                    TextButton(
+                        onPressed: () {
+                          gotoselected('history', acid, acnm);
+                        },
+                        child: const Text(
+                          'Ord.History',
+                          style: TextStyle(
+                              fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
+                        )),
+                  ],
+                ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            gotoselected('ledger', acid, acnm);
+                          },
+                          child: const Text(
+                            'Ledger',
+                            style: TextStyle(
+                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
+                          )),
+                      Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              gotoselected('os', acid, acnm);
+                            },
+                            child: const Text(
+                              'OutStanding',
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "WorkSansSemiBold"),
+                            )),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            gotoselected('allocate', acid, acnm);
+                          },
+                          child: const Text(
+                            'Allocation',
+                            style: TextStyle(
+                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
+                          )),
+                    ]),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                            onPressed: () {
+                              gotoselected('uncrn', acid, acnm);
+                            },
+                            child: const Text(
+                              'UnAdjusted CRN',
+                              softWrap: true,
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontFamily: "WorkSansSemiBold"),
+                            )),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            gotoselected('rcp', acid, acnm);
+                          },
+                          child: const Text(
+                            'Receipts',
+                            style: TextStyle(
+                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
+                          )),
+                    ]),
+              ],
+            )));
+  }
+
   void gotoselected(String opt, int acid, String acnm) async {
     setState(() {
       appData.prtid = acid;
@@ -354,7 +473,8 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
     }
     if (opt == 'order') {
       ordController.setPartyOrderList(acid);
-      Get.to(() => const OrderHomeScreen());
+      //Get.to(() => const OrderHomeScreen());
+      Get.to(() => const OrderHomeView());
     }
     if (opt == 'ledger') {
       final dfmdy = DateFormat('MM/dd/yyyy');

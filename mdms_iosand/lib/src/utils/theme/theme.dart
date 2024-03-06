@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/appbar_theme.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/elevated_button_theme.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/outlined_button_theme.dart';
+import 'package:mdms_iosand/src/utils/theme/widget_themes/text_button_theme.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/text_field_theme.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/text_theme.dart';
 import 'package:mdms_iosand/src/utils/theme/widget_themes/card_theme.dart';
@@ -19,6 +20,7 @@ class TAppTheme {
       appBarTheme: TAppBarTheme.lightAppBarTheme,
       elevatedButtonTheme: TElevatedButtonTheme.lightElevatedButtonTheme,
       outlinedButtonTheme: TOutlinedButtonTheme.lightOutlinedButtonTheme,
+      //textButtonTheme: TTextButtonTheme.lightTextButtonTheme,
       inputDecorationTheme: TTextFormFieldTheme.lightInputDecorationTheme,
       cardTheme: TCardTheme.lightCardTheme,
       iconTheme: const IconThemeData(color: tPrimaryColor, size: 24));
@@ -32,6 +34,7 @@ class TAppTheme {
       appBarTheme: TAppBarTheme.darkAppBarTheme,
       elevatedButtonTheme: TElevatedButtonTheme.darkElevatedButtonTheme,
       outlinedButtonTheme: TOutlinedButtonTheme.darkOutlinedButtonTheme,
+      //textButtonTheme: TTextButtonTheme.darkTextButtonTheme,
       inputDecorationTheme: TTextFormFieldTheme.darkInputDecorationTheme,
       cardTheme: TCardTheme.darkCardTheme,
       iconTheme: const IconThemeData(color: tAccentColor, size: 24));
