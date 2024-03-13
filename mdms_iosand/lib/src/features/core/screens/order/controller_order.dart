@@ -31,6 +31,8 @@ class OrderController extends GetxController {
     ListApi();
   }
 
+  void setOrdforacid(int _val) => ordforacid = _val;
+
   void setError(String _value) => error.value = _value;
   void setRxRequestStatus(Status _value) => RxRequestStatus.value = _value;
   void setFullList(List<OrderModel> _value) async {

@@ -1,5 +1,4 @@
 // ignore_for_file: non_constant_identifier_names
-
 class PartyModel {
   //Define
   final int? ac_id;
@@ -67,7 +66,8 @@ class DrpDnModel {
   final String? beatnm;
   final String? prt_image_url;
 
-  DrpDnModel({this.ac_id, this.ac_nm, this.mobile, this.beatnm, this.prt_image_url});
+  DrpDnModel(
+      {this.ac_id, this.ac_nm, this.mobile, this.beatnm, this.prt_image_url});
 
   factory DrpDnModel.fromJson(Map<String, dynamic> json) {
     return DrpDnModel(

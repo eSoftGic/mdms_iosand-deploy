@@ -12,6 +12,7 @@ class PartyController extends GetxController {
   final _api = PartyRepository();
 
   List<PartyModel> _fullprtlist = <PartyModel>[];
+  
   RxString error = ''.obs;
   final RxRequestStatus = Status.LOADING.obs;
   final searchtxt = TextEditingController();
@@ -69,7 +70,7 @@ class PartyController extends GetxController {
         return appData.filttype.contains(typenm);
       }).toList();
     }
-    
+
     prtlist.value = prtfiltlist;
     prtlen.value = prtlist.value.length;
   }

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:liquid_pull_refresh/liquid_pull_refresh.dart';
 import 'package:mdms_iosand/singletons/AppData.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/network/exceptions/general_exception_widget.dart';
@@ -27,10 +28,15 @@ class _OrderHomeViewState extends State<OrderHomeView> {
   final Dio dio = Dio();
   String progress = "0";
 
+  Future<void> _handleRefresh() async {
+    ordcontroller.setPartyOrderList(ordcontroller.ordforacid);
+    return await Future.delayed(const Duration(seconds: 2));
+  }
+
   @override
   void initState() {
     super.initState();
-    ordcontroller.setPartyOrderList(0);
+    ordcontroller.setPartyOrderList(ordcontroller.ordforacid);
   }
 
   @override
@@ -59,14 +65,14 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                       Icons.add,
                       size: 24,
                     )),
-                IconButton(
+                /*IconButton(
                     onPressed: () {
                       ordcontroller.refreshListApi();
                     },
                     icon: const Icon(
                       Icons.refresh_outlined,
                       size: 24,
-                    )),
+                    )),*/
               ],
             )),
         body: SingleChildScrollView(
@@ -74,7 +80,8 @@ class _OrderHomeViewState extends State<OrderHomeView> {
               height: MediaQuery.of(context).size.height - 50,
               width: double.infinity,
               padding: const EdgeInsets.all(5.0),
-              child: Column(
+              child: 
+              Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,7 +139,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                                           ordcontroller.refreshListApi());
                                 }
                               case Status.COMPLETED:
-                                return _showList();
+                                return _showList(context);
                             }
                           }),
                         ],
@@ -170,7 +177,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        IconButton(
+        /*IconButton(
             onPressed: () {
               ordcontroller.searchtxt.text = "";
               ordcontroller.refreshListApi();
@@ -178,13 +185,19 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             icon: const Icon(
               Icons.refresh,
               size: 24,
-            )),
+            )),*/
       ],
     );
   }
 
-  Widget _showList() {
-    return Expanded(
+  Widget _showList(BuildContext context) {
+    return LiquidPullRefresh(
+      onRefresh: _handleRefresh,
+      color: tAccentColor.withOpacity(0.3),
+      height: 250,
+      backgroundColor: tCardLightColor,
+      animSpeedFactor: 2,
+      showChildOpacityTransition: true,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: ordcontroller.reslist.value.length,

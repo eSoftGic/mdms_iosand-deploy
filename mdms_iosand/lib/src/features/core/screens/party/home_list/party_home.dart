@@ -3,32 +3,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:liquid_pull_refresh/liquid_pull_refresh.dart';
 import 'package:mdms_iosand/src/constants/constants.dart';
-import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
+import 'package:mdms_iosand/src/features/core/models/dashboard/categories_model.dart';
 import 'package:mdms_iosand/src/features/core/screens/dashboard/dashboard.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/newaccount/account.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/home_list/party_filter.dart';
-import 'package:mdms_iosand/src/features/core/screens/party/option/history/screen_history.dart';
-import 'package:mdms_iosand/src/features/core/screens/party/option/ledger/controller_ledger.dart';
+import 'package:mdms_iosand/src/features/core/screens/party/option/details/screen_party_details.dart';
 import '../../../../../../singletons/AppData.dart';
 import '../../../network/exceptions/general_exception_widget.dart';
 import '../../../network/exceptions/internet_exception_widget.dart';
 import '../../../network/status.dart';
-import '../../allocation/controller_allocation.dart';
-import '../../allocation/screen_allocation.dart';
-import '../../order/controller_order.dart';
-import '../../order/screen_orderhome.dart';
-import '../option/details/screen_party_details.dart';
-import '../option/history/controller_history.dart';
-import '../option/ledger/screen_party_ledger.dart';
-import '../option/os/controller_os.dart';
-import '../option/os/screen_os.dart';
-import '../option/rcp/controller_rcp.dart';
-import '../option/rcp/screen_rcp.dart';
-import '../option/uncrn/controller_uncrn.dart';
-import '../option/uncrn/screen_uncrn.dart';
 import 'party_controller.dart';
-import 'package:intl/intl.dart';
 
 class PartyHomeScreen extends StatefulWidget {
   const PartyHomeScreen({super.key});
@@ -38,15 +24,14 @@ class PartyHomeScreen extends StatefulWidget {
 
 class _PartyHomeScreenState extends State<PartyHomeScreen> {
   final partyController = Get.put(PartyController());
-  final ordController = Get.put(OrderController());
-  final grlController = Get.put(PartyLedgerController());
-  final osController = Get.put(PartyOsController());
-  final rcpController = Get.put(PartyRcpController());
-  final ucrnController = Get.put(PartyUnCrnController());
-  final hisController = Get.put(OrderHistoryController());
-  final aController = Get.put(AllocationController());
-
+  final prtmenulist = DashboardCategoriesModel.prtmenulist.toList();
   bool showsrc = true;
+
+  Future<void> _handleRefresh() async {
+    partyController.applyfilters('');
+    partyController.partyListApi();
+    return await Future.delayed(const Duration(seconds: 1));
+  }
 
   @override
   void initState() {
@@ -56,480 +41,169 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(55.0), // here the desired height
-          child: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Get.to(() => const Dashboard());
-                },
-                icon: const Icon(
-                  LineAwesomeIcons.angle_left,
-                  size: 24,
-                )),
-            title: Text("Party List",
-                style: Theme.of(context).textTheme.headlineMedium),
-            actions: [
-              IconButton(
-                  onPressed: () {
-                    setState(() {
-                      showsrc = !showsrc;
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.search,
-                    size: 24,
-                  )),
+    double ht = MediaQuery.of(context).size.height;
+    debugPrint(ht.toString());
 
-              //
-            ],
-          )),
-      body: Container(
-        height: MediaQuery.of(context).size.height - 5,
-        width: double.infinity,
-        padding: const EdgeInsets.all(5.0),
-        child: Column(
-          children: <Widget>[
-            if (showsrc) _searchBar(),
-            Obx(() {
-              switch (partyController.RxRequestStatus.value) {
-                case Status.LOADING:
-                  return const Center(child: CircularProgressIndicator());
-                case Status.ERROR:
-                  if (partyController.error.value == 'No Internet') {
-                    return InternetExceptionWidget(
-                        onPress: () => partyController.refreshpartyListApi());
-                  } else {
-                    return GeneralExceptionWidget(
-                        onPress: () => partyController.refreshpartyListApi());
-                  }
-                case Status.COMPLETED:
-                  return _showList();
-              }
-            }),
-          ],
-        ),
-      ),
-    );
+    return Scaffold(
+        appBar: PreferredSize(
+            preferredSize:
+                const Size.fromHeight(55.0), // here the desired height
+            child: AppBar(
+                leading: IconButton(
+                    onPressed: () {
+                      Get.to(() => const Dashboard());
+                    },
+                    icon: const Icon(
+                      LineAwesomeIcons.angle_left,
+                      size: 24,
+                    )),
+                title: Text("Party List",
+                    style: Theme.of(context).textTheme.headlineLarge)
+                /*actions: [
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        showsrc = !showsrc;
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.search,
+                      size: 24,
+                    )),
+                //
+              ],*/
+                )),
+        body: SingleChildScrollView(
+          child: Container(
+              height: MediaQuery.of(context).size.height - 60,
+              width: double.infinity,
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                children: [
+                  _searchBar(),
+                  const Divider(
+                    height: 2,
+                    color: tPrimaryColor,
+                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height - 200,
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(5.0),
+                      child: Column(
+                        children: <Widget>[
+                          Obx(() {
+                            switch (partyController.RxRequestStatus.value) {
+                              case Status.LOADING:
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              case Status.ERROR:
+                                if (partyController.error.value ==
+                                    'No Internet') {
+                                  return InternetExceptionWidget(
+                                      onPress: () => partyController
+                                          .refreshpartyListApi());
+                                } else {
+                                  return GeneralExceptionWidget(
+                                      onPress: () => partyController
+                                          .refreshpartyListApi());
+                                }
+                              case Status.COMPLETED:
+                                return _showList(context); //Text('Completed');
+                            }
+                          }),
+                        ],
+                      )),
+                ],
+              )),
+        ));
   }
 
-  Widget _showList() {
+  Widget _showList(BuildContext context) {
     return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: partyController.prtlist.value.length,
-        itemBuilder: (context, index) {
-          return _listItem(index);
-        },
+        child: SizedBox(
+      height: MediaQuery.of(context).size.height - 200,
+      child: LiquidPullRefresh(
+        onRefresh: _handleRefresh,
+        height: 200,
+        bottomShaddow: true,
+        bottomShaddowCollor: tAccentColor,
+        color: tAccentColor.withOpacity(0.3),
+        backgroundColor: tCardLightColor,
+        animSpeedFactor: 2,
+        showChildOpacityTransition: true,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: partyController.prtlist.value.length,
+          itemBuilder: (context, index) {
+            return _listItem(index);
+          },
+        ),
       ),
-    );
+    ));
   }
 
   Widget _listItem(index) {
     return Card(
-      color: Get.isDarkMode ? tCardBgColor.withOpacity(0.9) : tWhiteColor,
-      elevation: 1,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
-                    flex: 10,
-                    child: Text(
-                      partyController.prtlist[index].ac_nm!,
-                      style: Theme.of(context).textTheme.headlineMedium,
-                      softWrap: true,
-                    ),
-                  ),
-                  /*Flexible(
-                    flex: 2,
-                    child: partypopupMenuButton(
-                      partyController.prtlist[index].ac_id!,
-                      partyController.prtlist[index].ac_nm!,
-                    ),
-                  ),*/
-                ],
+      color: Get.isDarkMode ? tCardDarkColor : tCardLightColor,
+      child: ListTile(
+        trailing: IconButton(
+            onPressed: () {
+              setState(() {
+                appData.prtid = partyController.prtlist[index].ac_id!;
+                appData.prtnm = partyController.prtlist[index].ac_nm!.trim();
+              });
+              if (partyController.prtlist[index].ac_id! > 0) {
+                Get.to(() => PartyDetails(
+                      acid: partyController.prtlist[index].ac_id!,
+                      acnm: partyController.prtlist[index].ac_nm!,
+                    ));
+              }
+            },
+            icon: const Icon(
+              LineAwesomeIcons.angle_double_right,
+              size: 28,
+              color: tAccentColor,
+            )),
+        title: Text(
+          partyController.prtlist[index].ac_nm.toString(),
+          style: Theme.of(context).textTheme.headlineMedium,
+          softWrap: true,
+          overflow: TextOverflow.ellipsis,
+        ),
+        subtitle:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              const Flexible(
+                flex: 6,
+                child: PartyImageWidget(),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: ExpansionTile(
-                leading: const PartyImageWidget(),
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Flexible(
-                      flex: 6,
-                      child: Text(
-                        partyController.prtlist[index].mobile.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    ),
-                    Flexible(
-                      flex: 6,
-                      child: Text(
-                        partyController.prtlist[index].beatnm.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        softWrap: true,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.copyWith(color: tDarkColor),
-                      ),
-                    ),
-                  ],
-                ),
-                initiallyExpanded: false,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                "${partyController.prtlist[index].classnm!}/${partyController.prtlist[index].typenm!}",
-                              ),
-                            ),
-                            Text(
-                              partyController.prtlist[index].sale_type
-                                  .toString(),
-                            ),
-                            Text(
-                              partyController.prtlist[index].routeSr ??
-                                  '-'.toString(),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Flexible(
-                              child: Text(
-                                partyController.prtlist[index].addr.toString(),
-                                softWrap: true,
-                                style: const TextStyle(
-                                    fontSize: 14, color: Colors.black),
-                              ),
-                            ),
-                          ],
-                        ),
-                        buildPartyOption(
-                            context,
-                            partyController.prtlist[index].ac_id!,
-                            partyController.prtlist[index].ac_nm!),
-                      ],
-                    ),
-                  ),
-                ],
+              Flexible(
+                flex: 6,
+                child: Text(
+                    '${partyController.prtlist[index].mobile}\n${partyController.prtlist[index].beatnm.toString().trim()}\n${partyController.prtlist[index].sale_type.toString()}',
+                    //overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyLarge),
               ),
-            ),
-          ]),
-    );
-  }
-
-  PopupMenuButton<String> partypopupMenuButton(int acid, String acnm) {
-    return PopupMenuButton(
-        icon: const Icon(
-          Icons.more_vert,
-          color: tPrimaryColor,
-          size: 30,
-        ), // add this line
-        itemBuilder: (_) => <PopupMenuItem<String>>[
-              const PopupMenuItem<String>(
-                  value: 'detail',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Details",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'order',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Orders",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'ledger',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Ledger",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'os',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Outstanding",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'rcp',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Receipts",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'uncrn',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "UnAdjsuted CRN",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'history',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Order History",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              const PopupMenuItem<String>(
-                  value: 'allocate',
-                  child: SizedBox(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Stock Allocation",
-                        style: TextStyle(color: tAccentColor),
-                      ))),
-              /*PopupMenuItem<String>(
-                  child: Container(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Edit Party",
-                        style: TextStyle(color: tAccentColor),
-                      )),
-                  value: 'edit'),*/
-              /*PopupMenuItem<String>(
-                  child: Container(
-                      width: 100,
-                      // height: 30,
-                      child: Text(
-                        "Target",
-                        style: TextStyle(color: tAccentColor),
-                      )),
-                  value: 'target'),*/
             ],
-        onSelected: (index) async {
-          gotoselected(index, acid, acnm);
-        });
-  }
-
-  Padding buildPartyOption(BuildContext context, int acid, String acnm) {
-    return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 3.0),
-        child: Container(
-            height: 210,
-            width: double.infinity,
-            padding: const EdgeInsets.all(5.0),
-            child: Column(
-              children: [
-                const Divider(
-                  color: tAccentColor,
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    TextButton(
-                        onPressed: () {
-                          gotoselected('detail', acid, acnm);
-                        },
-                        child: const Text('Details',
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                fontFamily: "WorkSansSemiBold"))),
-                    TextButton(
-                        onPressed: () {
-                          gotoselected('order', acid, acnm);
-                        },
-                        child: const Text(
-                          'Orders',
-                          style: TextStyle(
-                              fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          gotoselected('history', acid, acnm);
-                        },
-                        child: const Text(
-                          'Ord.History',
-                          style: TextStyle(
-                              fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
-                        )),
-                  ],
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            gotoselected('ledger', acid, acnm);
-                          },
-                          child: const Text(
-                            'Ledger',
-                            style: TextStyle(
-                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
-                          )),
-                      Expanded(
-                        child: TextButton(
-                            onPressed: () {
-                              gotoselected('os', acid, acnm);
-                            },
-                            child: const Text(
-                              'OutStanding',
-                              softWrap: true,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "WorkSansSemiBold"),
-                            )),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            gotoselected('allocate', acid, acnm);
-                          },
-                          child: const Text(
-                            'Allocation',
-                            style: TextStyle(
-                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
-                          )),
-                    ]),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                            onPressed: () {
-                              gotoselected('uncrn', acid, acnm);
-                            },
-                            child: const Text(
-                              'UnAdjusted CRN',
-                              softWrap: true,
-                              style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: "WorkSansSemiBold"),
-                            )),
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            gotoselected('rcp', acid, acnm);
-                          },
-                          child: const Text(
-                            'Receipts',
-                            style: TextStyle(
-                                fontSize: 18.0, fontFamily: "WorkSansSemiBold"),
-                          )),
-                    ]),
-              ],
-            )));
-  }
-
-  void gotoselected(String opt, int acid, String acnm) async {
-    setState(() {
-      appData.prtid = acid;
-      appData.prtnm = acnm;
-    });
-
-    if (opt == 'detail') {
-      Get.to(() => PartyDetails(acid: acid));
-    }
-    if (opt == 'order') {
-      ordController.setPartyOrderList(acid);
-      //Get.to(() => const OrderHomeScreen());
-      Get.to(() => const OrderHomeView());
-    }
-    if (opt == 'ledger') {
-      final dfmdy = DateFormat('MM/dd/yyyy');
-      DateTime tdate = DateTime.now();
-      DateTime fdate = DateTime.now().subtract(const Duration(days: 30));
-      grlController.setcleargrl();
-      grlController.setgrlacid(acid);
-      grlController.setfdt(dfmdy.format(fdate));
-      grlController.settdt(dfmdy.format(tdate));
-      grlController.setsordad(true);
-      grlController.prtGrlApi();
-      Get.to(() => const PartyLedger());
-    }
-    if (opt == 'os') {
-      osController.setclearos();
-      osController.setosacid(acid);
-      osController.prtOsApi();
-      Get.to(() => const PartyOSScreen());
-    }
-    if (opt == 'rcp') {
-      rcpController.setclearrcp();
-      rcpController.setrcpacid(acid);
-      rcpController.prtRcpApi();
-      if (rcpController.rcplen.value > 0) {
-        Get.to(() => const PartyRcpScreen());
-      } else {
-        Get.snackbar('Receipts', 'No Record');
-      }
-    }
-    if (opt == 'uncrn') {
-      ucrnController.setclearos();
-      ucrnController.setosacid(acid);
-      ucrnController.prtUnCrnApi();
-      if (ucrnController.oslen.value > 0) {
-        Get.to(() => const PartyUnCrnScreen());
-      } else {
-        Get.snackbar('UnAdjusted Credit Note', 'No Record');
-      }
-    }
-    if (opt == 'history') {
-      final dfmdy = DateFormat('MM/dd/yyyy');
-      DateTime fdate = DateTime.now().subtract(const Duration(days: 15));
-      hisController.setclearhis();
-      hisController.sethisacid(acid);
-      hisController.setfdt(dfmdy.format(fdate));
-      hisController.setTop10(10);
-      hisController.prtOrdHisApi();
-      Get.to(() => const OrdHistoryScreen());
-    }
-    if (opt == 'allocate') {
-      aController.onChangeGroup('Partywise');
-      aController.setItmIdstr('');
-      aController.setprtIdstr(acid.toString().trim());
-      Get.to(() => const AllocateScreen());
-    }
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  flex: 12,
+                  child: Text(partyController.prtlist[index].addr.toString(),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                      softWrap: true,
+                      style: Theme.of(context).textTheme.bodyLarge),
+                )
+              ]),
+        ]),
+      ),
+    );
   }
 
   Widget _searchBar() {
@@ -539,7 +213,7 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
       children: <Widget>[
         Expanded(
           child: Container(
-            height: 50.0,
+            height: 35.0,
             margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
               controller: partyController.searchtxt,
@@ -639,10 +313,11 @@ class PartyImageWidget extends StatelessWidget {
   const PartyImageWidget({
     super.key,
   });
-
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100,
+      width: 100,
       margin: const EdgeInsets.only(right: 20, top: 7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),

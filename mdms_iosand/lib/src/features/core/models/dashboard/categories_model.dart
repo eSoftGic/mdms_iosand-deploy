@@ -83,4 +83,23 @@ class DashboardCategoriesModel {
     DashboardCategoriesModel("DLV", "Delivery", "", Icons.airport_shuttle, 0xffeab676, true, null),
     */
   ];
+
+  static List<DashboardCategoriesModel> prtmenulist = [
+    /*DashboardCategoriesModel(
+        "PDET", "Details", "", Icons.details, 0xff3399fe, true, null),*/
+    DashboardCategoriesModel("PORD", "Order", "", Icons.shopping_bag_outlined,
+        0xff3399fe, true, null),
+    DashboardCategoriesModel(
+        "PHIS", "History", "", Icons.history, 0xff3399fe, true, null),
+    DashboardCategoriesModel(
+        "POS", "O/S", "", Icons.list_alt_outlined, 0xff3399fe, true, null),
+    DashboardCategoriesModel(
+        "PGRL", "Ledger", "", Icons.category, 0xff3399fe, true, null),
+    DashboardCategoriesModel("PALO", "Stock Allocation", "",
+        Icons.assignment_ind_outlined, 0xff3399fe, true, null),
+    DashboardCategoriesModel(
+        "PRCP", "Receipts", "", Icons.receipt_outlined, 0xff3399fe, true, null),
+    DashboardCategoriesModel("PUNCRN", "UnAdjusted CRN", "",
+        Icons.pending_actions_outlined, 0xff3399fe, true, null),
+  ];
 }

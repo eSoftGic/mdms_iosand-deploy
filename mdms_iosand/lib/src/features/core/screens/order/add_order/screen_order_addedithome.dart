@@ -84,17 +84,17 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
                         onPressed: () {
                           if (_activeStepIndex <
                               (stepList(context).length - 1)) {
-                            if (controller.iscrdlimitover == false) {
-                              setState(() {
-                                curacid = controller.acid.value;
-                                debugPrint('curacid $curacid');
-                                _activeStepIndex += 1;
-                              });
-                            } else {
-                              Get.snackbar('Credit Alert',
-                                  'Credit Limit Over for New Order',
-                                  snackPosition: SnackPosition.BOTTOM);
-                            }
+                            //if (controller.iscrdlimitover == false) {
+                            setState(() {
+                              curacid = controller.acid.value;
+                              debugPrint('curacid $curacid');
+                              _activeStepIndex += 1;
+                            });
+                            //} else {
+                            //  Get.snackbar('Credit Alert',
+                            //      'Credit Limit Over for New Order',
+                            //      snackPosition: SnackPosition.BOTTOM);
+                            //}
                           } else {
                             // Save Order
                             cartcontroller.saveOrder();
@@ -147,12 +147,16 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
   }
 
   Widget OrderItemSelect() {
-    debugPrint('OrderItemSelect ${controller.acid.value}');
+    /*debugPrint('OrderItemSelect ${controller.acid.value}');
     return controller.acid.value > 0 &&
             controller.iscrdlimitover.value == false &&
             controller.ordlimitvalid.value == true
         ? OrderItemList(ordch: 'ADD')
-        : const Text('Order Basic Details Not Valid');
+        : const Text('Order Party or Credit Details Not Valid');
+    */
+    return controller.acid.value > 0
+        ? OrderItemList(ordch: 'ADD')
+        : const Text('Order Party Not properly selected');
   }
 
   Widget OrderTotal() {
