@@ -130,13 +130,13 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                     subTitle: _identifier,
                     imageHeight: 0.1,
                     textAlign: TextAlign.center,
-                    fsize: 16,
+                    fsize: 14,
                   ),
                   const SizedBox(
-                    height: tDefaultSize + 20,
+                    height: tDefaultSize,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
+                    padding: const EdgeInsets.only(top: 20.0),
                     child: _buildMenuBar(context),
                   ),
                   Expanded(
@@ -418,11 +418,8 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                 setState(() {
                   _isloading = true;
                 });
-                //print('setbaseurl');
                 setbaseurl();
-                //print('savebasicpref');
                 savebasicpref();
-                //print('checking user');
                 checkuser();
               },
               child: _isloading
@@ -579,7 +576,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
 
   Widget _buildSignIn(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: const EdgeInsets.only(top: 40.0),
       child: Column(
         children: <Widget>[
           Stack(
@@ -604,7 +601,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                           focusNode: myFocusHttp,
                           controller: loginHttpController,
                           keyboardType: TextInputType.url,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          //style: Theme.of(context).textTheme.headlineMedium,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: const Icon(
@@ -612,7 +609,10 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                               size: 28.0,
                             ),
                             hintText: "Server Ip",
-                            hintStyle: Theme.of(context).textTheme.bodySmall,
+                            hintStyle: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(fontSize: 14),
                           ),
                         ),
                       ),
@@ -628,7 +628,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                           focusNode: myFocusUser,
                           controller: loginUserController,
                           keyboardType: TextInputType.text,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          //style: Theme.of(context).textTheme.headlineMedium,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: const Icon(
@@ -652,7 +652,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                           focusNode: myFocusPassword,
                           controller: loginPasswordController,
                           obscureText: _obscureTextLogin,
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          //style: Theme.of(context).textTheme.headlineMedium,
                           decoration: InputDecoration(
                             border: InputBorder.none,
                             icon: const Icon(
@@ -710,7 +710,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                         "CONNECT",
                         style: TextStyle(
                             color: tPrimaryColor,
-                            fontSize: 25.0,
+                            fontSize: 20.0,
                             fontFamily: "Montserrat-Medium"),
                       ),
                     ),
@@ -820,7 +820,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                     "START",
                     style: TextStyle(
                         color: tPrimaryColor,
-                        fontSize: 25.0,
+                        fontSize: 20.0,
                         fontFamily: "Montserrat-Medium"),
                   ),
                 ),
@@ -906,6 +906,31 @@ class _LoginSetupPageState extends State<LoginSetupPage>
   void _onSignUpButtonPress() {
     if (validuser == true) {
       //Get.snackbar('OK', 'Select Firms & Other Details');
+
+      debugPrint('onsignupbuttonpress .. loading pref');
+      loadpref();
+
+      debugPrint('Firm $_myFirmSelection');
+      debugPrint('DbName $_myDbName');
+      debugPrint('BrnId $_myBranchId');
+      debugPrint('Brnname $_myBranchName');
+      debugPrint('Central Order $_centralorder.toString()');
+
+      if (validuser == true) {
+        loadfirms();
+        if (_myFirmSelection.isNotEmpty) {
+          validfirm = true;
+          loadyear();
+        }
+        if (_myDbName.isNotEmpty) {
+          validyear = true;
+          loadbranch();
+        }
+        if (_myBranchId > 0) {
+          validbranch = true;
+        }
+      }
+
       _pageController.animateToPage(1,
           duration: const Duration(milliseconds: 500),
           curve: Curves.decelerate);
@@ -924,61 +949,78 @@ class _LoginSetupPageState extends State<LoginSetupPage>
   void loadpref() async {
     //print('loading pref');
     prefs = await SharedPreferences.getInstance();
-    _myUserName = prefs.get('spUserName').toString() == 'null'
-        ? ''
-        : prefs.get('spUserName').toString();
-    _myUserPass = prefs.get('spUserPass').toString() == 'null'
-        ? ''
-        : prefs.get('spUserPass').toString();
-    _myIp = prefs.get('spIp').toString() == 'null'
-        ? ''
-        : prefs.get('spIp').toString();
-    loginUserController.text = _myUserName == 'null' ? '' : _myUserName;
-    loginPasswordController.text = _myUserPass == 'null' ? '' : _myUserPass;
-    loginHttpController.text = _myIp == 'null' ? '' : _myIp;
-    _mySmanId = int.tryParse(prefs.get('spSmanId').toString()) ?? 0;
-    _myFirmSelection = prefs.get('spFrim').toString();
-    _myFirmName = prefs.get('spFirmName').toString();
-    _myCoyr = prefs.get('spCoYr').toString();
-    _myDbName = prefs.get('spDbName').toString();
-    _myBranchId = int.tryParse(prefs.get('spBrnId').toString()) ?? 0;
-    _myBranchName = prefs.get('spBranchName').toString();
-    _myUserType = prefs.get('spUserType').toString();
-    _mySmanBeat = prefs.get('spSmanBeat').toString();
-    _myDmanId = int.tryParse(prefs.get('spDmanId').toString()) ?? 0;
-    _myDlrId = int.tryParse(prefs.get('spDlrId').toString()) ?? 0;
+    setState(() {
+      _myUserName = prefs.get('spUserName').toString() == 'null'
+          ? ''
+          : prefs.get('spUserName').toString();
+      _myUserPass = prefs.get('spUserPass').toString() == 'null'
+          ? ''
+          : prefs.get('spUserPass').toString();
+      _myIp = prefs.get('spIp').toString() == 'null'
+          ? ''
+          : prefs.get('spIp').toString();
 
-    appData.log_name = _myUserName;
-    appData.log_id = _myUserId;
-    appData.log_deviceid = _identifier;
-    appData.log_branch = _myBranchName;
-    appData.log_branchid = _myBranchId;
-    appData.log_coid = _myFirmSelection.toString();
-    appData.log_conm = _myFirmName;
-    appData.log_coyr = _myCoyr;
-    appData.log_dbnm = _myDbName;
-    appData.log_smanid = _mySmanId;
-    appData.log_dmanid = _myDmanId;
-    appData.log_dlrid = _myDlrId;
+      loginUserController.text = _myUserName == 'null' ? '' : _myUserName;
+      loginPasswordController.text = _myUserPass == 'null' ? '' : _myUserPass;
+      loginHttpController.text = _myIp == 'null' ? '' : _myIp;
 
-    appData.log_ip = _myIp.trim();
-    appData.log_smnbeat = _mySmanBeat;
-    appData.log_type = _myUserType;
-    appData.prtid = 0;
-    appData.prtnm = "";
-    appData.ordrefno = 0;
-    appData.cologo = "assets/img/smdms.png";
-    if (_myIp.trim().isNotEmpty) {
-      appData.baseurl = 'http://${_myIp.trim()}/api/';
-      appData.pdfbaseurl = 'http://${_myIp.trim()}/pdf/';
-      appData.cologo = '${appData.pdfbaseurl}co_logo.png';
-    }
-    //print('cologo ' + appData.cologo.toString());
-    appData.demover = false;
-    if (appData.log_name!.toLowerCase() == "demo") {
-      appData.demover = true;
-      appData.log_conm = "Demo Version";
-    }
+      _mySmanId = int.tryParse(prefs.get('spSmanId').toString()) ?? 0;
+      _myFirmSelection = prefs.get('spFrim').toString();
+      _myFirmName = prefs.get('spFirmName').toString();
+      _myCoyr = prefs.get('spCoYr').toString();
+      _myDbName = prefs.get('spDbName').toString();
+      _myBranchId = int.tryParse(prefs.get('spBrnId').toString()) ?? 0;
+      _myBranchName = prefs.get('spBranchName').toString();
+      _myUserType = prefs.get('spUserType').toString();
+      _mySmanBeat = prefs.get('spSmanBeat').toString();
+      _myDmanId = int.tryParse(prefs.get('spDmanId').toString()) ?? 0;
+      _myDlrId = int.tryParse(prefs.get('spDlrId').toString()) ?? 0;
+      _acstdt = prefs.get('spacstdt').toString();
+      _acendt = prefs.get('spacendt').toString();
+      _acmxdt = prefs.get('spacmxdt').toString();
+      _centralorder =
+          (int.tryParse(prefs.get('spcentralorder').toString()) ?? 0) == 1
+              ? true
+              : false;
+
+      validfirm = _myFirmSelection.toString().isNotEmpty;
+      validyear = _myCoyr.toString().isNotEmpty;
+      validbranch = _myBranchId > 0;
+      appData.commonorder = _centralorder;
+
+      appData.log_name = _myUserName;
+      appData.log_id = _myUserId;
+      appData.log_deviceid = _identifier;
+      appData.log_branch = _myBranchName;
+      appData.log_branchid = _myBranchId;
+      appData.log_coid = _myFirmSelection.toString();
+      appData.log_conm = _myFirmName;
+      appData.log_coyr = _myCoyr;
+      appData.log_dbnm = _myDbName;
+      appData.log_smanid = _mySmanId;
+      appData.log_dmanid = _myDmanId;
+      appData.log_dlrid = _myDlrId;
+
+      appData.log_ip = _myIp.trim();
+      appData.log_smnbeat = _mySmanBeat;
+      appData.log_type = _myUserType;
+      appData.prtid = 0;
+      appData.prtnm = "";
+      appData.ordrefno = 0;
+      appData.cologo = "assets/img/smdms.png";
+      if (_myIp.trim().isNotEmpty) {
+        appData.baseurl = 'http://${_myIp.trim()}/api/';
+        appData.pdfbaseurl = 'http://${_myIp.trim()}/pdf/';
+        appData.cologo = '${appData.pdfbaseurl}co_logo.png';
+      }
+
+      //print('cologo ' + appData.cologo.toString());
+      appData.demover = false;
+      if (appData.log_name!.toLowerCase() == "demo") {
+        appData.demover = true;
+        appData.log_conm = "Demo Version";
+      }
+    });
   }
 
   void setbaseurl() {
@@ -1256,7 +1298,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                             value: f.coid.toString(),
                             child: Text(
                               f.conm!,
-                              style: Theme.of(context).textTheme.headlineSmall,
+                              //style: Theme.of(context).textTheme.headlineSmall,
                               softWrap: true,
                             ),
                           );
@@ -1305,8 +1347,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  Text('Year : ',
-                      style: Theme.of(context).textTheme.headlineSmall),
+                  Text('Year : ', style: Theme.of(context).textTheme.bodyLarge),
                   const SizedBox(
                     width: 10,
                   ),
@@ -1343,7 +1384,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                           value: acyr.codbnm,
                           child: Text(
                             acyr.coyear!,
-                            style: Theme.of(context).textTheme.headlineSmall,
+                            //style: Theme.of(context).textTheme.headlineSmall,
                           ),
                         );
                       }).toList(),
@@ -1428,7 +1469,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                 children: <Widget>[
                   Text(
                     'Branch : ',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   DropdownButtonHideUnderline(
                     child: DropdownButton<int>(
@@ -1444,10 +1485,12 @@ class _LoginSetupPageState extends State<LoginSetupPage>
                       items: _branch.map((Branch brn) {
                         return DropdownMenuItem<int>(
                           value: brn.branchid,
-                          child: Text(brn.brnachnm!,
-                              softWrap: true,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).textTheme.headlineSmall),
+                          child: Text(
+                            brn.brnachnm!,
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            //style: Theme.of(context).textTheme.headlineSmall
+                          ),
                         );
                       }).toList(),
                     ),
@@ -1500,59 +1543,65 @@ class _LoginSetupPageState extends State<LoginSetupPage>
     if (_myUserType == 'SMAN' || _myUserType == 'ASM') {
       loadsmanbeat();
     }
+
     prefs = await SharedPreferences.getInstance();
+
+    prefs.setString('spIp', _myIp.toString());
+    prefs.setString('spUserName', _myUserName.toString());
+    prefs.setString('spUserType', _myUserType.toString());
+    prefs.setInt('spUserId', _myUserId);
+    prefs.setString('spUserPass', _myUserPass.toString());
+    prefs.setString('spDevId', _identifier.toString());
+
     prefs.setString('spFrim', _myFirmSelection.toString());
     prefs.setString('spFirmName', _myFirmName.toString());
     prefs.setString('spCoYr', _myCoyr.toString());
     prefs.setString('spDbName', _myDbName.toString());
     prefs.setInt('spBrnId', _myBranchId);
     prefs.setString('spBranchName', _myBranchName.toString());
+    prefs.setString('spacstdt', _acstdt.toString());
+    prefs.setString('spacendt', _acendt.toString());
+    prefs.setString('spacmxdt', _acmxdt.toString());
+    prefs.setInt('spcentralorder', _centralorder == true ? 1 : 0);
 
-    prefs.setString('spUserPass', _myUserPass.toString());
     prefs.setString('spSmanBeat', _mySmanBeat.toString());
     prefs.setInt('spSmanId', _mySmanId);
-    prefs.setString('spIp', _myIp.toString());
-    prefs.setString('spUserName', _myUserName.toString());
-    prefs.setString('spUserType', _myUserType.toString());
-    prefs.setInt('spUserId', _myUserId);
-    prefs.setString('spDevId', _identifier.toString());
     prefs.setInt('spDmanId', _myDmanId);
     prefs.setInt('spDlrId', _myDlrId);
 
-    // _acstdt
-    // _acendt
-    // _acmxdt
+    setState(() {
+      appData.log_name = _myUserName;
+      appData.log_deviceid = _identifier;
+      appData.log_branch = _myBranchName;
+      appData.log_id = _myUserId;
+      appData.log_branchid = _myBranchId;
+      appData.log_coid = _myFirmSelection.toString();
+      appData.log_conm = _myFirmName;
+      appData.log_coyr = _myCoyr;
+      appData.log_dbnm = _myDbName;
+      appData.log_smanid = _mySmanId;
+      appData.log_ip = _myIp.trim();
+      appData.log_smnbeat = _mySmanBeat;
+      appData.log_type = _myUserType;
+      appData.log_dmanid = _myDmanId;
+      appData.log_dlrid = _myDlrId;
 
-    appData.log_name = _myUserName;
-    appData.log_deviceid = _identifier;
-    appData.log_branch = _myBranchName;
-    appData.log_id = _myUserId;
-    appData.log_branchid = _myBranchId;
-    appData.log_coid = _myFirmSelection.toString();
-    appData.log_conm = _myFirmName;
-    appData.log_coyr = _myCoyr;
-    appData.log_dbnm = _myDbName;
-    appData.log_smanid = _mySmanId;
-    appData.log_ip = _myIp.trim();
-    appData.log_smnbeat = _mySmanBeat;
-    appData.log_type = _myUserType;
-    appData.log_dmanid = _myDmanId;
-    appData.log_dlrid = _myDlrId;
-    //print('appdata.log_dmanid is ' + _myDmanId.toString());
-    appData.prtid = 0;
-    appData.prtnm = "";
-    appData.ordrefno = 0;
-    appData.baseurl = 'http://' + _myIp.trim() + "/api";
-    appData.demover = false;
-    appData.acstdt = _acstdt;
-    appData.acendt = _acendt;
-    appData.acmxdt = _acmxdt;
-    appData.billissno = _mybillissno;
-    appData.pdfbaseurl = 'http://${_myIp.trim()}/pdf/';
-    appData.commonorder = _centralorder;
-    if (_myUserName.toLowerCase().trim() == "demo") {
-      appData.demover = true;
-    }
+      //print('appdata.log_dmanid is ' + _myDmanId.toString());
+      appData.prtid = 0;
+      appData.prtnm = "";
+      appData.ordrefno = 0;
+      appData.baseurl = 'http://' + _myIp.trim() + "/api";
+      appData.demover = false;
+      appData.acstdt = _acstdt;
+      appData.acendt = _acendt;
+      appData.acmxdt = _acmxdt;
+      appData.billissno = _mybillissno;
+      appData.pdfbaseurl = 'http://${_myIp.trim()}/pdf/';
+      appData.commonorder = _centralorder;
+      if (_myUserName.toLowerCase().trim() == "demo") {
+        appData.demover = true;
+      }
+    });
   }
 
   void loadsmanbeat() async {

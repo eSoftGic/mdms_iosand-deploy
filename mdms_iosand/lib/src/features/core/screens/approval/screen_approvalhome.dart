@@ -52,9 +52,11 @@ class ApprovalScreen extends StatelessWidget {
                   () => GroupedListView<dynamic, String>(
                     elements: aprController.groupedData.value,
                     groupBy: (element) => element[aprController.grp1nm.value],
-                    groupComparator: (value1, value2) => value2.compareTo(value1),
-                    itemComparator: (item1, item2) => item1[aprController.grp2nm.value]
-                        .compareTo(item2[aprController.grp2nm.value]),
+                    groupComparator: (value1, value2) =>
+                        value2.compareTo(value1),
+                    itemComparator: (item1, item2) =>
+                        item1[aprController.grp2nm.value]
+                            .compareTo(item2[aprController.grp2nm.value]),
                     order: GroupedListOrder.DESC,
                     useStickyGroupSeparators: false,
                     groupSeparatorBuilder: (String value) => Padding(
@@ -69,7 +71,8 @@ class ApprovalScreen extends StatelessWidget {
                     itemBuilder: (c, element) {
                       return Card(
                         elevation: 8.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 6.0),
                         child: SizedBox(
                           child: ExpansionTile(
                             title: Text(
@@ -77,31 +80,49 @@ class ApprovalScreen extends StatelessWidget {
                               style: Theme.of(context)
                                   .textTheme
                                   .headlineMedium
-                                  ?.copyWith(color: getColor(aprController.grp2nm.value)),
+                                  ?.copyWith(
+                                      color:
+                                          getColor(aprController.grp2nm.value)),
                             ),
                             initiallyExpanded: false,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text('Order',
-                                              style: Theme.of(context).textTheme.headlineSmall),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
                                           Text(
-                                              element['tran_desc'].toString().trim() +
+                                              element['tran_desc']
+                                                      .toString()
+                                                      .trim() +
                                                   ' - ' +
-                                                  element['tran_no'].toString().trim(),
-                                              style: Theme.of(context).textTheme.headlineSmall),
-                                          Text('Rs. ' + element['net_amt'].toStringAsFixed(2),
-                                              style: Theme.of(context).textTheme.headlineSmall),
+                                                  element['tran_no']
+                                                      .toString()
+                                                      .trim(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
+                                          Text(
+                                              'Rs. ' +
+                                                  element['net_amt']
+                                                      .toStringAsFixed(2),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
                                         ]),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         const Expanded(
                                           flex: 1,
@@ -110,117 +131,144 @@ class ApprovalScreen extends StatelessWidget {
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['approvalstatus'].toString(),
+                                              element['approvalstatus']
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: getColor(
-                                                      element['approvalstatus'].toString())),
-                                            )),
-                                        Expanded(
-                                            flex: 2,
-                                            child: Text(getdmy(element['ord_dt'].toString()))),
-                                        const Expanded(flex: 1, child: Text('')),
-                                      ],
-                                    ),
-                                    const Divider(),
-                                    Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('Billing',
-                                              style: Theme.of(context).textTheme.headlineSmall),
-                                          Text(
-                                            element['billdetails'].toString(),
-                                            style: Theme.of(context).textTheme.headlineSmall,
-                                          ),
-                                        ]),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        const Expanded(flex: 1, child: Text(' ')),
-                                        Expanded(
-                                            flex: 1,
-                                            child: Text(
-                                              element['bill_asm_approval_status'].toString(),
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  color: getColor(
-                                                      element['bill_asm_approval_status']
+                                                      element['approvalstatus']
                                                           .toString())),
                                             )),
                                         Expanded(
                                             flex: 2,
-                                            child: Text(
-                                              getdmy(element['bill_asm_approval_dt'].toString()),
-                                              overflow: TextOverflow.ellipsis,
-                                            )),
-                                        Expanded(
-                                            flex: 1,
-                                            child:
-                                                Text(element['bill_asm_approval_user'].toString())),
+                                            child: Text(getdmy(
+                                                element['ord_dt'].toString()))),
+                                        const Expanded(
+                                            flex: 1, child: Text('')),
                                       ],
                                     ),
                                     const Divider(),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text('Billing',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
+                                          Text(
+                                            element['billdetails'].toString(),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headlineSmall,
+                                          ),
+                                        ]),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Expanded(
+                                            flex: 1, child: Text(' ')),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                              element['bill_asm_approval_status']
+                                                  .toString(),
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: getColor(element[
+                                                          'bill_asm_approval_status']
+                                                      .toString())),
+                                            )),
+                                        Expanded(
+                                            flex: 2,
+                                            child: Text(
+                                              getdmy(element[
+                                                      'bill_asm_approval_dt']
+                                                  .toString()),
+                                              overflow: TextOverflow.ellipsis,
+                                            )),
+                                        Expanded(
+                                            flex: 1,
+                                            child: Text(element[
+                                                    'bill_asm_approval_user']
+                                                .toString())),
+                                      ],
+                                    ),
+                                    const Divider(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
                                           flex: 1,
                                           child: Text('Finance',
-                                              style: Theme.of(context).textTheme.headlineSmall),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
                                         ),
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['bill_account_approval_status'].toString(),
+                                              element['bill_account_approval_status']
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: getColor(
-                                                      element['bill_account_approval_status']
-                                                          .toString())),
+                                                  color: getColor(element[
+                                                          'bill_account_approval_status']
+                                                      .toString())),
                                             )),
                                         Expanded(
                                             flex: 2,
                                             child: Text(
-                                              getdmy(
-                                                  element['bill_account_approval_dt'].toString()),
+                                              getdmy(element[
+                                                      'bill_account_approval_dt']
+                                                  .toString()),
                                               overflow: TextOverflow.ellipsis,
                                             )),
                                         Expanded(
                                             flex: 1,
-                                            child: Text(
-                                                element['bill_account_approval_user'].toString())),
+                                            child: Text(element[
+                                                    'bill_account_approval_user']
+                                                .toString())),
                                       ],
                                     ),
                                     const Divider(),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
                                           flex: 1,
                                           child: Text('Logistic',
-                                              style: Theme.of(context).textTheme.headlineSmall),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall),
                                         ),
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['bill_logistic_approval_status'].toString(),
+                                              element['bill_logistic_approval_status']
+                                                  .toString(),
                                               style: TextStyle(
                                                   fontWeight: FontWeight.bold,
-                                                  color: getColor(
-                                                      element['bill_logistic_approval_status']
-                                                          .toString())),
+                                                  color: getColor(element[
+                                                          'bill_logistic_approval_status']
+                                                      .toString())),
                                             )),
                                         Expanded(
                                             flex: 2,
                                             child: Text(
-                                              getdmy(
-                                                  element['bill_logistic_approval_dt'].toString()),
+                                              getdmy(element[
+                                                      'bill_logistic_approval_dt']
+                                                  .toString()),
                                               overflow: TextOverflow.ellipsis,
                                             )),
                                         Expanded(
                                             flex: 1,
-                                            child: Text(
-                                                element['bill_logistic_approval_user'].toString())),
+                                            child: Text(element[
+                                                    'bill_logistic_approval_user']
+                                                .toString())),
                                       ],
                                     ),
                                   ],
@@ -335,15 +383,32 @@ class stockOptionWidget extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 1,
-                    child: Text('Details', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Details',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
                 Expanded(
                     flex: 1,
-                    child: Text('Status', style: Theme.of(context).textTheme.headlineSmall)),
-                Expanded(
-                    flex: 1, child: Text('Date', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Status',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
                 Expanded(
                     flex: 1,
-                    child: Text('ApprovedBy', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Date',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
+                Expanded(
+                    flex: 1,
+                    child: Text('ApprovedBy',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
               ],
             ),
             const Divider(

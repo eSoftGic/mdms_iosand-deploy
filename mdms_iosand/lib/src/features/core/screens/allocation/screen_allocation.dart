@@ -29,9 +29,11 @@ class AllocateScreen extends StatelessWidget {
                     // ignore: invalid_use_of_protected_member
                     elements: aController.groupedData.value,
                     groupBy: (element) => element[aController.grp1nm.value],
-                    groupComparator: (value1, value2) => value2.compareTo(value1),
+                    groupComparator: (value1, value2) =>
+                        value2.compareTo(value1),
                     itemComparator: (item1, item2) =>
-                        item1[aController.grp2nm.value].compareTo(item2[aController.grp2nm.value]),
+                        item1[aController.grp2nm.value]
+                            .compareTo(item2[aController.grp2nm.value]),
                     order: GroupedListOrder.DESC,
                     useStickyGroupSeparators: false,
                     groupSeparatorBuilder: (String value) => Padding(
@@ -45,44 +47,58 @@ class AllocateScreen extends StatelessWidget {
                     itemBuilder: (c, element) {
                       return Card(
                         elevation: 8.0,
-                        margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 6.0),
                         child: SizedBox(
                           child: ExpansionTile(
                             title: Text(element[aController.grp2nm.value]),
                             initiallyExpanded: false,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['allocated_qty'].toString(),
-                                              style: Theme.of(context).textTheme.headlineSmall,
+                                              element['allocated_qty']
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall,
                                             )),
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['pend_order_qty'].toString(),
-                                              style: Theme.of(context).textTheme.headlineSmall,
+                                              element['pend_order_qty']
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall,
                                             )),
                                         Expanded(
                                             flex: 1,
                                             child: Text(
                                               element['billed_qty'].toString(),
-                                              style: Theme.of(context).textTheme.headlineSmall,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall,
                                             )),
                                         Expanded(
                                             flex: 1,
                                             child: Text(
-                                              element['alloc_pend_qty'].toString(),
-                                              style: Theme.of(context).textTheme.headlineSmall,
+                                              element['alloc_pend_qty']
+                                                  .toString(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headlineSmall,
                                             )),
                                       ],
                                     ),
@@ -202,17 +218,32 @@ class stockOptionWidget extends StatelessWidget {
               children: [
                 Expanded(
                     flex: 1,
-                    child: Text('Allocated', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Allocated',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
                 Expanded(
                     flex: 1,
-                    child: Text('Order Pending', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Ord.Pending',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 16))),
                 Expanded(
                     flex: 1,
-                    child: Text('Billed', style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Billed',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18))),
                 Expanded(
                     flex: 1,
-                    child: Text('Allocated Balance',
-                        style: Theme.of(context).textTheme.headlineSmall)),
+                    child: Text('Allocated Bal.',
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 16))),
               ],
             ),
           ],

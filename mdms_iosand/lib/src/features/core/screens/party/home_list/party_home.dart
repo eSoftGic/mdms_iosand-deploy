@@ -57,8 +57,11 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
                       LineAwesomeIcons.angle_left,
                       size: 24,
                     )),
-                title: Text("Party List",
-                    style: Theme.of(context).textTheme.headlineLarge)
+                backgroundColor: tCardBgColor,
+                title: const Text(
+                  "Party List",
+                  textAlign: TextAlign.center,
+                )
                 /*actions: [
                 IconButton(
                     onPressed: () {
@@ -125,11 +128,9 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
       child: LiquidPullRefresh(
         onRefresh: _handleRefresh,
         height: 200,
-        bottomShaddow: true,
-        bottomShaddowCollor: tAccentColor,
         color: tAccentColor.withOpacity(0.3),
         backgroundColor: tCardLightColor,
-        animSpeedFactor: 2,
+        animSpeedFactor: 1,
         showChildOpacityTransition: true,
         child: ListView.builder(
           shrinkWrap: true,
@@ -166,7 +167,8 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
             )),
         title: Text(
           partyController.prtlist[index].ac_nm.toString(),
-          style: Theme.of(context).textTheme.headlineMedium,
+          style:
+              Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 20),
           softWrap: true,
           overflow: TextOverflow.ellipsis,
         ),
@@ -176,16 +178,20 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               const Flexible(
-                flex: 6,
+                flex: 5,
                 child: PartyImageWidget(),
               ),
               Flexible(
-                flex: 6,
+                flex: 7,
                 child: Text(
                     '${partyController.prtlist[index].mobile}\n${partyController.prtlist[index].beatnm.toString().trim()}\n${partyController.prtlist[index].sale_type.toString()}',
                     //overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: Theme.of(context).textTheme.bodyLarge),
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineSmall
+                        ?.copyWith(fontSize: 14)),
               ),
             ],
           ),
@@ -198,7 +204,10 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       softWrap: true,
-                      style: Theme.of(context).textTheme.bodyLarge),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(fontSize: 14)),
                 )
               ]),
         ]),
@@ -316,9 +325,7 @@ class PartyImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      width: 100,
-      margin: const EdgeInsets.only(right: 20, top: 7),
+      margin: const EdgeInsets.only(right: 10, top: 7),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: tCardBgColor.withOpacity(0.5),

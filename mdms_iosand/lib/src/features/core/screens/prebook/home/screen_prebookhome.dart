@@ -47,7 +47,8 @@ class _PrebookHomeScreenState extends State<PrebookHomeScreen> {
                   LineAwesomeIcons.angle_left,
                   size: 24,
                 )),
-            title: Text("Pre-Booking", style: Theme.of(context).textTheme.headlineMedium),
+            title: const Text("Pre-Booking"),
+            backgroundColor: tCardBgColor,
             actions: [
               IconButton(
                   onPressed: () {
@@ -95,7 +96,8 @@ class _PrebookHomeScreenState extends State<PrebookHomeScreen> {
                     return InternetExceptionWidget(
                         onPress: () => preordcontroller.refreshListApi());
                   } else {
-                    return GeneralExceptionWidget(onPress: () => preordcontroller.refreshListApi());
+                    return GeneralExceptionWidget(
+                        onPress: () => preordcontroller.refreshListApi());
                   }
                 case Status.COMPLETED:
                   return _showList();
@@ -227,7 +229,8 @@ class _PrebookHomeScreenState extends State<PrebookHomeScreen> {
           softWrap: true,
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        subtitle:
+            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -260,25 +263,30 @@ class _PrebookHomeScreenState extends State<PrebookHomeScreen> {
               ),
             ],
           ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-            Flexible(
-                flex: 6,
-                child: Text(
-                    'Approval ${preordcontroller.reslist[index].approvalstatus!}',
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodyMedium)),
-            Flexible(
-              flex: 6,
-              child: _billed
-                  ? Text(preordcontroller.reslist[index].billdetails!,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: true,
-                      style: Theme.of(context).textTheme.bodyMedium)
-                  : Text('Not Converted to Order',
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.red)),
-            ),
-            /* Flexible(
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                    flex: 6,
+                    child: Text(
+                        'Approval ${preordcontroller.reslist[index].approvalstatus!}',
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: true,
+                        style: Theme.of(context).textTheme.bodyMedium)),
+                Flexible(
+                  flex: 6,
+                  child: _billed
+                      ? Text(preordcontroller.reslist[index].billdetails!,
+                          overflow: TextOverflow.ellipsis,
+                          softWrap: true,
+                          style: Theme.of(context).textTheme.bodyMedium)
+                      : Text('Not Converted to Order',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: Colors.red)),
+                ),
+                /* Flexible(
               flex: 4,
               child: (_billed && controller.reslist[index].billpdf!.isNotEmpty)
                   ? IconButton(
@@ -293,14 +301,15 @@ class _PrebookHomeScreenState extends State<PrebookHomeScreen> {
                       })
                   : Text(' '),
             ),*/
-          ]),
+              ]),
         ]),
       ),
     );
   }
 
   PopupMenuButton<String> orderindexpopupMenuButton(PreBookModel currorder) {
-    bool cancancel = currorder.approvalstatus!.toUpperCase().contains('PENDING');
+    bool cancancel =
+        currorder.approvalstatus!.toUpperCase().contains('PENDING');
     bool billed = currorder.billed == 'Y' ? true : false;
     return PopupMenuButton(
         color: Get.isDarkMode ? tCardDarkColor : tCardLightColor,

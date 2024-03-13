@@ -35,16 +35,17 @@ class DashboardCategoriesModel {
         0xff622f74, true, null),
     DashboardCategoriesModel(
         "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
-    DashboardCategoriesModel(
+    DashboardCategoriesModel("OS", "OutStanding", "",
+        Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+
+    /*
+      DashboardCategoriesModel(
         "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
     DashboardCategoriesModel(
         "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
-    DashboardCategoriesModel("OS", "OutStanding", "",
-        Icons.pending_actions_outlined, 0xff26cb3c, true, null),
     DashboardCategoriesModel(
         "GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
-
-    /*DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
+    DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
     DashboardCategoriesModel("ECO", "eComm", "", Icons.book_online, 0xff622f74, true, null),
     DashboardCategoriesModel("RCP", "Receipts", "", Icons.payment, 0xffff5829, true, null),
     DashboardCategoriesModel("QOT", "Qotation", "", Icons.request_quote, 0xff5B8076, true, null),
@@ -68,15 +69,16 @@ class DashboardCategoriesModel {
     DashboardCategoriesModel(
         "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
     DashboardCategoriesModel(
-        "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
-    DashboardCategoriesModel(
         "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
     DashboardCategoriesModel("OS", "OutStanding", "",
         Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+
+    /*
+    DashboardCategoriesModel(
+        "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
     DashboardCategoriesModel(
         "GEO", "Geo Map", "", Icons.location_on_sharp, 0xff5B8076, true, null),
-
-    /*DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
+    DashboardCategoriesModel("SHP", "Track Shipment", "", Icons.local_shipping_outlined,0xff5B8076, true, null),
     DashboardCategoriesModel("ECO", "eComm", "", Icons.book_online, 0xff622f74, true, null),
     DashboardCategoriesModel("RCP", "Receipts", "", Icons.payment, 0xffff5829, true, null),
     DashboardCategoriesModel("QOT", "Qotation", "", Icons.request_quote, 0xff5B8076, true, null),

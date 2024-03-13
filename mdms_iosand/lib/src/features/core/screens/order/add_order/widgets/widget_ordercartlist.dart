@@ -45,12 +45,18 @@ class OrderCartScreen extends StatelessWidget {
                                             'Qty ${cartController.cartlist[index].ord_qty}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headlineSmall),
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
                                         Text(
                                             'Rs. ${cartController.cartlist[index].itemnet!.toStringAsFixed(2)}',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headlineSmall),
+                                                .bodyMedium
+                                                ?.copyWith(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 16)),
                                         IconButton(
                                             icon: const Icon(
                                               Icons.delete_forever,

@@ -24,7 +24,7 @@ class DashboardChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final list = DashboardChartModel.list;
     return SizedBox(
-      height: 410,
+      height: 250,
       child: ListView.builder(
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
@@ -33,13 +33,16 @@ class DashboardChart extends StatelessWidget {
           onTap: list[index].onPress,
           child: SizedBox(
             width: 385,
-            height: 400,
+            height: 250,
             child: Padding(
-              padding: const EdgeInsets.only(right: 5, top: 5, bottom: 5, left: 5),
+              padding:
+                  const EdgeInsets.only(right: 5, top: 5, bottom: 5, left: 5),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  color: Get.isDarkMode ? tCardDarkColor : tCardLightColor.withOpacity(0.2),
+                  color: Get.isDarkMode
+                      ? tCardDarkColor
+                      : tCardLightColor.withOpacity(0.2),
                 ),
                 padding: const EdgeInsets.all(0),
                 child: Column(
@@ -48,9 +51,10 @@ class DashboardChart extends StatelessWidget {
                     Row(
                       children: [
                         SizedBox(
-                          height: 400,
+                          height: 240,
                           width: 375,
-                          child: ChartWidget(list: list, showpie: true, index: index),
+                          child: ChartWidget(
+                              list: list, showpie: true, index: index),
                         )
                       ],
                     ),
@@ -107,7 +111,11 @@ class DashboardChart extends StatelessWidget {
 }
 
 class ChartWidget extends StatelessWidget {
-  const ChartWidget({super.key, required this.list, required this.showpie, required this.index});
+  const ChartWidget(
+      {super.key,
+      required this.list,
+      required this.showpie,
+      required this.index});
 
   final List<DashboardChartModel> list;
   final bool showpie;
@@ -164,7 +172,7 @@ class ChartWidget extends StatelessWidget {
               width: 40,
               child: LinearProgressIndicator(),
             ),
-            size: const Size(370, 400),
+            size: const Size(370, 290),
             data: list[index].chartdata,
             scripts: const [
               "https://code.highcharts.com/highcharts.js",
@@ -187,8 +195,9 @@ class ChartWidget extends StatelessWidget {
               showLegendsInRow: showLegendsInRow,
               legendPosition: legendPosition,
               showLegends: showLegends,
-              legendShape:
-                  legendShape == LegendShape.circle ? BoxShape.circle : BoxShape.rectangle,
+              legendShape: legendShape == LegendShape.circle
+                  ? BoxShape.circle
+                  : BoxShape.rectangle,
               legendTextStyle: const TextStyle(
                 fontWeight: FontWeight.bold,
               ),

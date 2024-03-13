@@ -6,8 +6,8 @@ import 'package:mdms_iosand/firebase_options.dart';
 
 import 'package:mdms_iosand/src/repository/authentication_repository/authentication_repository.dart';
 import 'package:mdms_iosand/src/utils/app_bindings.dart';
-import 'package:mdms_iosand/src/utils/theme/theme.dart';
-//import 'package:flex_color_scheme/flex_color_scheme.dart';
+//import 'package:mdms_iosand/src/utils/theme/theme.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 /// NOTE:
 /// DESIGN PLAYLIST : https://www.youtube.com/playlist?list=PL5jb9EteFAODpfNJu8U2CMqKFp4NaXlto
@@ -41,15 +41,15 @@ class App extends StatelessWidget {
     return GetMaterialApp(
       initialBinding:
           AppBinding(), // Solves the issues of Get.lazyPut and Get.Put() by defining all Controllers in single class
-      /*
+
       theme: FlexThemeData.light(scheme: FlexScheme.blueWhale),
       darkTheme: FlexThemeData.dark(scheme: FlexScheme.blueWhale),
       themeMode: ThemeMode.system,
-      */
+      /*
       themeMode: ThemeMode.light,
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
-
+      */
       defaultTransition: Transition.leftToRightWithFade,
       transitionDuration: const Duration(milliseconds: 500),
       debugShowCheckedModeBanner: false,

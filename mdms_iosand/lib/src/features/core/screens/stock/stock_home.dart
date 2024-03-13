@@ -64,8 +64,8 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
                   LineAwesomeIcons.angle_left,
                   size: 24,
                 )),
-            title: Text("Stock Listing",
-                style: Theme.of(context).textTheme.headlineMedium),
+            backgroundColor: tCardBgColor,
+            title: const Text("Stock Listing"),
             actions: [
               Row(
                 children: [
@@ -137,7 +137,7 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
             child: TextFormField(
               controller: stockController.searchtxt,
               textAlign: TextAlign.start,
-              style: Theme.of(context).textTheme.headlineSmall,
+              //style: Theme.of(context).textTheme.headlineSmall,
               keyboardType: TextInputType.text,
               onChanged: (value) {
                 stockController.applyfilters(value);
@@ -151,7 +151,7 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
         Obx(
           () => Text(
             stockController.lislen.toString(),
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
           ),
         ),
         IconButton(
@@ -309,7 +309,8 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
                 : null,
         title: Text(
           stockController.reslist[index].item_nm,
-          style: Theme.of(context).textTheme.headlineMedium,
+          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+              color: tPrimaryColor, fontSize: 16, fontWeight: FontWeight.w500),
           softWrap: true,
           //overflow: TextOverflow.ellipsis,
         ),

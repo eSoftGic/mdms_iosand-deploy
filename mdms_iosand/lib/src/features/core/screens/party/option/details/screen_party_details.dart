@@ -48,8 +48,11 @@ class PartyDetails extends StatelessWidget {
                     LineAwesomeIcons.angle_left,
                     size: 24,
                   )),
-              title: Text("Party Details",
-                  style: Theme.of(context).textTheme.headlineLarge))),
+              backgroundColor: tCardBgColor,
+              title: const Text(
+                "Party Details",
+                textAlign: TextAlign.center,
+              ))),
       body: Obx(() {
         switch (optionController.RxRequestStatus.value) {
           case Status.LOADING:
@@ -227,7 +230,13 @@ class PartyDetails extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           acmst.ac_nm ?? '',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                  fontSize: 20,
+                                  color: tPrimaryColor,
+                                  fontWeight: FontWeight.w500),
                           textAlign: TextAlign.center,
                         ),
                         Padding(
@@ -283,7 +292,12 @@ class PartyDetails extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           'Other Details',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontSize: 18,
+                              ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -403,7 +417,12 @@ class PartyDetails extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           'A/C Status',
-                          style: Theme.of(context).textTheme.headlineMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(
+                                fontSize: 18,
+                              ),
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
@@ -501,7 +520,12 @@ class PartyDetails extends StatelessWidget {
                           children: [
                             Text(
                               'Location ',
-                              style: Theme.of(context).textTheme.headlineMedium,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(
+                                    fontSize: 18,
+                                  ),
                             ),
                             IconButton(
                                 icon: const Icon(Icons.my_location,

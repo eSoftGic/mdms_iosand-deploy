@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import '../../../../../ecommerce/widget/custom_appbar.dart';
 import '../add_order/widgets/controller_cart.dart';
 import '../add_order/widgets/widget_ordercartlist.dart';
@@ -98,17 +99,25 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                             cartcontroller.saveOrder();
                             Get.snackbar('Order', 'Succesfull',
                                 snackPosition: SnackPosition.BOTTOM);
-                            Get.to(() => const OrderHomeScreen());
+                            Get.to(() => const OrderHomeView());
                           }
                         },
                         child: (editcontroller.activeStepIndex.value <
                                 (stepList(context).length - 1))
                             ? Text('NEXT',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall)
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16))
                             : Text('SAVE ORDER',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16)),
                       ),
                       TextButton(
                         onPressed: () {
@@ -121,8 +130,12 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         },
                         child: (editcontroller.activeStepIndex.value > 0)
                             ? Text('Previous',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall)
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16))
                             : const SizedBox(),
                       ),
                     ],
@@ -148,13 +161,13 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
               Text('Order # ',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
               Text(editcontroller.ordrefno.value.toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(
                 width: 5,
               ),
@@ -163,13 +176,13 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
               Text('Book Name # ',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
               Text(editcontroller.buknm.value.toString(),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyLarge
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(
                 width: 5,
               ),

@@ -32,20 +32,28 @@ class FormHeaderWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: crossAxisAlignment,
       children: [
-        Image(image: AssetImage(image), color: imageColor, height: size.height * imageHeight),
+        Image(
+            image: AssetImage(image),
+            color: imageColor,
+            height: size.height * imageHeight),
         SizedBox(height: heightBetween),
         Text(
           title,
-          style: Theme.of(context).textTheme.displayMedium,
+          style: Theme.of(context).textTheme.displaySmall,
           textAlign: textAlign,
         ),
         Text(subTitle,
             textAlign: textAlign,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: fsize)),
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(fontSize: fsize)),
         Text(appData.mdmsverno.toString().trim(),
             textAlign: textAlign,
-            style:
-                Theme.of(context).textTheme.bodySmall?.copyWith(fontSize: 14, color: tDarkColor)),
+            style: Theme.of(context)
+                .textTheme
+                .bodySmall
+                ?.copyWith(fontSize: 14, color: tDarkColor)),
       ],
     );
   }

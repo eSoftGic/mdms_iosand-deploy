@@ -22,14 +22,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     //OrderCartController cartController = Get.put(OrderCartController());
 
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
+      backgroundColor: tCardBgColor,
+      elevation: 1,
       title: Container(
         color: Colors.transparent,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Text(
           title,
-          style: Theme.of(context).textTheme.headlineMedium,
+          //style:
+          //    Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
         ),
       ),
       actions: [
@@ -81,5 +82,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(80);
+  Size get preferredSize => const Size.fromHeight(55);
 }

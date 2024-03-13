@@ -31,7 +31,10 @@ class _GeneralExceptionWidgetState extends State<GeneralExceptionWidget> {
               child: Center(
                 child: Text(
                   'General Exception Err.'.tr,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 20),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 20),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -45,7 +48,7 @@ class _GeneralExceptionWidgetState extends State<GeneralExceptionWidget> {
                 height: 44,
                 width: 150,
                 decoration: BoxDecoration(
-                  color: tSecondaryColor,
+                  color: tCardBgColor,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(

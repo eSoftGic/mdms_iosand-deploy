@@ -31,7 +31,8 @@ class DashboardCategories extends StatelessWidget {
     final list = appData.log_type == 'PARTY'
         ? DashboardCategoriesModel.prtlist
         : DashboardCategoriesModel.list;
-    double listht = size.height - (showchart ? 550 : 200);
+    //double listht = size.height - (showchart ? 500 : 100);
+    double listht = 275;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
       child: Container(
@@ -46,7 +47,7 @@ class DashboardCategories extends StatelessWidget {
           child: ListView.builder(
             itemCount: list.length,
             shrinkWrap: true,
-            scrollDirection: Axis.vertical, //.horizontal,
+            scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) => GestureDetector(
               onTap: () {
                 switch (list[index].menuname) {
@@ -69,7 +70,7 @@ class DashboardCategories extends StatelessWidget {
                     break;
                   case 'TRK':
                     Get.to(() =>
-                        const OrderHomeScreen()); //TrackScreen()); // MyTimeLine()); //
+                        const OrderHomeView()); //TrackScreen()); // MyTimeLine()); //
                     break;
                   case 'PRB':
                     Get.to(() =>
@@ -92,7 +93,7 @@ class DashboardCategories extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: SizedBox(
-                  height: 70,
+                  height: 200,
                   child: Card(
                       elevation: 1,
                       child: Column(
@@ -101,14 +102,14 @@ class DashboardCategories extends StatelessWidget {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Container(
-                                    width: 30,
-                                    height: 30,
+                                    width: 150,
+                                    height: 150,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       border: Border.all(
@@ -120,14 +121,14 @@ class DashboardCategories extends StatelessWidget {
                                     child: Center(
                                       child: Icon(
                                         list[index].icon,
-                                        size: 28.0,
+                                        size: 100.0,
                                         color: Color(list[index].color),
                                       ),
                                     ),
                                   ),
                                 ),
                                 const SizedBox(
-                                  width: 5,
+                                  width: 10,
                                 ),
                                 Text(
                                   list[index].heading +
@@ -137,10 +138,11 @@ class DashboardCategories extends StatelessWidget {
                                   textAlign: TextAlign.left,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headlineMedium
+                                      .bodyLarge
                                       ?.copyWith(
-                                        color: Color(list[index].color),
-                                      ),
+                                          color: Color(list[index].color),
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600),
                                 ),
                               ],
                             ),

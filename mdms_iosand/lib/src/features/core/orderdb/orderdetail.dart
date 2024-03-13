@@ -88,7 +88,7 @@ class OrderDetailView extends StatelessWidget {
           initiallyExpanded: true,
           title: Text(
             'Order Details',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
           children: [
             Card(
@@ -112,7 +112,10 @@ class OrderDetailView extends StatelessWidget {
                           corder.tran_desc.toString() +
                               '- ' +
                               corder.ref_no.toString(),
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontSize: 18),
                         ),
                       ]),
                 ),
@@ -131,7 +134,10 @@ class OrderDetailView extends StatelessWidget {
                         ),
                         Text(
                           corder.tran_dt.toString(),
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontSize: 18),
                         ),
                       ]),
                 ),
@@ -150,7 +156,10 @@ class OrderDetailView extends StatelessWidget {
                       ),
                       Text(
                         corder.ac_nm!,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 16),
                       ),
                     ],
                   ),
@@ -170,7 +179,10 @@ class OrderDetailView extends StatelessWidget {
                       ),
                       Text(
                         corder.net_amt!.toStringAsFixed(2),
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontSize: 18),
                       ),
                     ],
                   ),
@@ -202,16 +214,25 @@ class OrderDetailView extends StatelessWidget {
                       dense: false,
                       title: Text(orditmcontroller.orditmlist[index].item_nm!,
                           softWrap: true,
-                          style: Theme.of(context).textTheme.headlineSmall),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontSize: 16)),
                       subtitle: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                               'Qty ${orditmcontroller.orditmlist[index].ord_qty}',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontSize: 18)),
                           Text(
                               'Rate ${orditmcontroller.orditmlist[index].rate!.toStringAsFixed(2)}',
-                              style: Theme.of(context).textTheme.headlineSmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineSmall
+                                  ?.copyWith(fontSize: 18)),
                         ],
                       )),
                 );
@@ -396,7 +417,6 @@ class OrderDetailView extends StatelessWidget {
                     child: const Text('TRACK')),
               ],
             )));
-  
   }
 
   Future download2(Dio dio, String url, String savePath) async {

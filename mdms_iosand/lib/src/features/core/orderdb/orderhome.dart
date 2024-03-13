@@ -46,8 +46,8 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             preferredSize:
                 const Size.fromHeight(55.0), // here the desired height
             child: AppBar(
-              title: Text("ORDER",
-                  style: Theme.of(context).textTheme.headlineLarge),
+              title: const Text("ORDER"),
+              backgroundColor: tCardBgColor,
               actions: [
                 IconButton(
                     onPressed: () {
@@ -80,8 +80,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
               height: MediaQuery.of(context).size.height - 50,
               width: double.infinity,
               padding: const EdgeInsets.all(5.0),
-              child: 
-              Column(
+              child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

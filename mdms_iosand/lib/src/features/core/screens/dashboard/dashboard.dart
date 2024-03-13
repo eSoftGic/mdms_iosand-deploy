@@ -19,12 +19,13 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool shwchart = false;
+  bool shwchart = true;
   @override
   Widget build(BuildContext context) {
     //Variables
     final txtTheme = Theme.of(context).textTheme;
-    final isDark = MediaQuery.of(context).platformBrightness == Brightness.dark; //Dark mode
+    final isDark = MediaQuery.of(context).platformBrightness ==
+        Brightness.dark; //Dark mode
     return SafeArea(
       child: Scaffold(
         appBar: DashboardAppBar(isDark: Get.isDarkMode),
@@ -35,12 +36,16 @@ class _DashboardState extends State<Dashboard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 //Heading
-                Text(getutype(), style: txtTheme.bodyMedium),
+                Text(getutype(),
+                    style: txtTheme.bodyLarge!.copyWith(
+                        fontSize: 20,
+                        color: isDark ? tSecondaryColor : tPrimaryColor)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(tDashboardHeading,
-                        style: txtTheme.displayMedium!.copyWith(
+                        style: txtTheme.displaySmall!.copyWith(
+                          fontSize: 18,
                           color: isDark ? tSecondaryColor : tCardBgColor,
                         )),
                     InkWell(
@@ -62,7 +67,8 @@ class _DashboardState extends State<Dashboard> {
                 shwchart
                     ? Padding(
                         padding: const EdgeInsets.all(5.0),
-                        child: DashboardChart(txtTheme: txtTheme, isDark: isDark),
+                        child:
+                            DashboardChart(txtTheme: txtTheme, isDark: isDark),
                       )
                     : const SizedBox(),
                 Padding(
@@ -96,7 +102,9 @@ class _DashboardState extends State<Dashboard> {
 
   String getutype() {
     String utype = '';
-    if (appData.log_type == 'SMAN' || appData.log_type == 'ASM' || appData.log_type == 'DLR') {
+    if (appData.log_type == 'SMAN' ||
+        appData.log_type == 'ASM' ||
+        appData.log_type == 'DLR') {
       return 'Salesman ' + appData.log_name.toString().toUpperCase();
     }
     if (appData.log_type == 'DLR' || appData.log_type == 'PARTY') {
@@ -105,7 +113,9 @@ class _DashboardState extends State<Dashboard> {
     if (appData.log_type == 'DLV') {
       return 'Deliveryman ' + appData.log_name.toString().toUpperCase();
     }
-    return appData.log_type.toString() + ' ' + appData.log_name.toString().toUpperCase();
+    return appData.log_type.toString() +
+        ' ' +
+        appData.log_name.toString().toUpperCase();
   }
 }
 
