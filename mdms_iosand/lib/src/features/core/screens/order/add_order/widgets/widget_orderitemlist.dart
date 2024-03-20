@@ -16,13 +16,13 @@ class OrderItemList extends StatelessWidget {
   final orditmcontroller = Get.put(OrderItemController());
   final editcontroller = Get.put(OrderEditController());
   bool showsrc = true;
-  bool shwimg = false;
+  //bool shwimg = false;
 
   @override
   Widget build(BuildContext context) {
     orditmcontroller.setTrantype('ORD');
     orditmcontroller.setOrdChoice(ordch);
-    orditmcontroller.setShwimg(shwimg);
+    orditmcontroller.setShwimg(orditmcontroller.shwimg.value);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height - 400,
@@ -81,17 +81,19 @@ class OrderItemList extends StatelessWidget {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        IconButton(
-            onPressed: () {
-              orditmcontroller.setShwimg(!orditmcontroller.shwimg.value);
-              debugPrint(orditmcontroller.shwimg.value.toString());
-            },
-            icon: Icon(
-              orditmcontroller.shwimg.value == true
-                  ? Icons.image_outlined
-                  : Icons.image_not_supported_outlined,
-              size: 24,
-            )),
+        Obx(
+          () => IconButton(
+              onPressed: () {
+                orditmcontroller.setShwimg(!orditmcontroller.shwimg.value);
+                debugPrint(orditmcontroller.shwimg.value.toString());
+              },
+              icon: Icon(
+                orditmcontroller.shwimg.value == true
+                    ? Icons.image_outlined
+                    : Icons.image_not_supported_outlined,
+                size: 24,
+              )),
+        ),
         IconButton(
             onPressed: () {
               orditmcontroller.refreshListApi();

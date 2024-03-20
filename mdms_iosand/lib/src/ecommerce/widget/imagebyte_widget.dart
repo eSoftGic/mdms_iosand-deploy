@@ -10,23 +10,28 @@ class ImageByteWidget extends StatelessWidget {
   double imgwid;
   double imght;
 
-  ImageByteWidget({super.key, required this.b64, this.imgwid = 100, this.imght = 100});
+  ImageByteWidget(
+      {super.key, required this.b64, this.imgwid = 100, this.imght = 100});
   @override
   Widget build(BuildContext context) {
     DecorationImage? decorationImage;
     Uint8List bytesImage = const Base64Decoder().convert(b64);
     bool hasimgByte = b64.isNotEmpty;
 
+    debugPrint(b64.toString());
+    debugPrint(hasimgByte.toString());
+
     return Container(
-        margin: const EdgeInsets.only(right: 5, top: 5),
+        margin: const EdgeInsets.only(right: 10, top: 7),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: tCardLightColor,
+          color: tCardLightColor.withOpacity(0.5),
         ),
         child: hasimgByte
             ? GestureDetector(
                 onTap: () async {
-                  await showDialog(context: context, builder: (_) => zoomImage(bytesImage));
+                  await showDialog(
+                      context: context, builder: (_) => zoomImage(bytesImage));
                 },
                 child: Container(
                     child: Image.memory(
@@ -40,7 +45,8 @@ class ImageByteWidget extends StatelessWidget {
 
   Widget zoomImage(Uint8List bytesImage) {
     return Dialog(
-      child: Container(child: Image.memory(bytesImage, width: 250, height: 250)),
+      child:
+          Container(child: Image.memory(bytesImage, width: 150, height: 150)),
     );
   }
 }

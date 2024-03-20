@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:liquid_pull_refresh/liquid_pull_refresh.dart';
 import 'package:mdms_iosand/src/features/core/screens/stock/stock_controller.dart';
 import 'package:mdms_iosand/src/features/core/screens/stock/stock_filter.dart';
 import '../../../../../singletons/singletons.dart';
@@ -43,6 +44,12 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
   bool showsrc = false;
   bool withimg = false;
 
+  Future<void> _handleRefresh() async {
+    stockController.applyfilters('');
+    stockController.refreshListApi();
+    return await Future.delayed(const Duration(seconds: 1));
+  }
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +76,7 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
             actions: [
               Row(
                 children: [
-                  IconButton(
+                  /*IconButton(
                       onPressed: () {
                         setState(() {
                           withimg = !withimg;
@@ -83,6 +90,7 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
                             : Icons.image_not_supported_outlined,
                         size: 28,
                       )),
+                  */
                   IconButton(
                       onPressed: () {
                         setState(() {
@@ -137,7 +145,6 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
             child: TextFormField(
               controller: stockController.searchtxt,
               textAlign: TextAlign.start,
-              //style: Theme.of(context).textTheme.headlineSmall,
               keyboardType: TextInputType.text,
               onChanged: (value) {
                 stockController.applyfilters(value);
@@ -229,14 +236,24 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
 
   Widget _showList() {
     return Expanded(
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: stockController.reslist.value.length,
-        itemBuilder: (context, index) {
-          return _listItem(index);
-        },
+        child: SizedBox(
+      height: MediaQuery.of(context).size.height - 200,
+      child: LiquidPullRefresh(
+        onRefresh: _handleRefresh,
+        height: 200,
+        color: tAccentColor.withOpacity(0.3),
+        backgroundColor: tCardLightColor,
+        animSpeedFactor: 1,
+        showChildOpacityTransition: true,
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: stockController.reslist.value.length,
+          itemBuilder: (context, index) {
+            return _listItem(index);
+          },
+        ),
       ),
-    );
+    ));
   }
 
   PopupMenuButton<String> itempopupMenuButton(int itemid) {
@@ -274,7 +291,7 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
   Widget _listItem(index) {
     // Image Setup
     // This is from IP file
-    String imgurl = '';
+    //String imgurl = '';
     /*if (stockController.reslist[index].show_image == true) {
       _imgurl = "http://" +
           appData.log_ip! +
@@ -283,11 +300,11 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
           ".jpg";
     }*/
     // This is for imagebyte
-    String itmimgbyte = stockController.reslist[index].item_image
-        .toString()
-        .replaceAll('na', '')
-        .trim();
 
+    String itmimgbyte =
+        stockController.reslist[index].item_image.toString().trim() == 'na'
+            ? ''
+            : stockController.reslist[index].item_image.toString().trim();
     var coloravailable = tPrimaryColor;
 
     String itmmrpstk = stockController.reslist[index].qty.toString();
@@ -301,20 +318,19 @@ class _StockHomeScreenState extends State<StockHomeScreen> {
 
     return Card(
       elevation: 1.0,
+      color: Get.isDarkMode ? tCardDarkColor : tCardLightColor,
       child: ListTile(
-        leading: itmimgbyte.isNotEmpty
-            ? ImageByteWidget(b64: itmimgbyte)
-            : imgurl.isNotEmpty
-                ? ImageUrlWidget(imgurl: imgurl)
-                : null,
+        //leading: ImageByteWidget(b64: itmimgbyte),
         title: Text(
           stockController.reslist[index].item_nm,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-              color: tPrimaryColor, fontSize: 16, fontWeight: FontWeight.w500),
+          style:
+              Theme.of(context).textTheme.headlineSmall?.copyWith(fontSize: 18),
           softWrap: true,
           //overflow: TextOverflow.ellipsis,
         ),
-        trailing: itempopupMenuButton(stockController.reslist[index].item_id),
+        trailing:
+            itmimgbyte.isNotEmpty ? ImageByteWidget(b64: itmimgbyte) : null,
+        //itempopupMenuButton(stockController.reslist[index].item_id),
         subtitle:
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(

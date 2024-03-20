@@ -165,6 +165,7 @@ class _PartyHomeScreenState extends State<PartyHomeScreen> {
               size: 28,
               color: tAccentColor,
             )),
+        
         title: Text(
           partyController.prtlist[index].ac_nm.toString(),
           style:

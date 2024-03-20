@@ -44,7 +44,7 @@ class OrderItemController extends GetxController {
 
   void setShwimg(bool val) {
     shwimg.value = val;
-    setImgcnt(val ? 1 : 0);
+    setImgcnt(val == true ? 1 : 0);
   }
 
   void setTrantype(String _value) {

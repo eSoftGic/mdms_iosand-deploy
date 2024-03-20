@@ -65,6 +65,7 @@ class _OrderHomeScreenState extends State<OrderHomeScreen> {
       appBar: PreferredSize(
           preferredSize: const Size.fromHeight(55.0), // here the desired height
           child: AppBar(
+            elevation: 0,
             leading: IconButton(
                 onPressed: () {
                   Get.to(() => const Dashboard());

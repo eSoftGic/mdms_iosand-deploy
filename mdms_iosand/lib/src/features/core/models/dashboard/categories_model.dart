@@ -22,21 +22,17 @@ class DashboardCategoriesModel {
 
   static List<DashboardCategoriesModel> list = [
     DashboardCategoriesModel(
-        "PRT", "Party", "", Icons.people, 0xff3399fe, true, null),
+        "PRT", "Party", "", Icons.people, 0xff5B8076, true, null),
     DashboardCategoriesModel(
-        "ORD", "Order", "", Icons.shopping_cart, 0xff622f74, true, null),
+        "ORD", "Order", "", Icons.shopping_cart, 0xff5B8076, true, null),
     DashboardCategoriesModel(
-        "APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
+        "APR", "Approval", "", Icons.approval, 0xff5B8076, true, null),
     DashboardCategoriesModel(
         "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
     DashboardCategoriesModel(
-        "STK", "Stock Listing", "", Icons.category, 0xffff3266, true, null),
-    DashboardCategoriesModel("ALO", "Stock Allocation", "", Icons.assignment,
-        0xff622f74, true, null),
-    DashboardCategoriesModel(
-        "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
+        "STK", "Stock Listing", "", Icons.category, 0xff5B8076, true, null),
     DashboardCategoriesModel("OS", "OutStanding", "",
-        Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+        Icons.pending_actions_outlined, 0xff5B8076, true, null),
 
     /*
       DashboardCategoriesModel(
@@ -72,6 +68,10 @@ class DashboardCategoriesModel {
         "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
     DashboardCategoriesModel("OS", "OutStanding", "",
         Icons.pending_actions_outlined, 0xff26cb3c, true, null),
+    DashboardCategoriesModel("ALO", "Stock Allocation", "", Icons.assignment,
+        0xff5B8076, true, null),
+    DashboardCategoriesModel(
+        "PRB", "Pre Booking", "", Icons.star_border, 0xff5B8076, true, null),
 
     /*
     DashboardCategoriesModel(

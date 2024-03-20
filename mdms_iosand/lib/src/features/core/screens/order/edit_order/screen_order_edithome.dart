@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import '../../../../../ecommerce/widget/custom_appbar.dart';
 import '../add_order/widgets/controller_cart.dart';
 import '../add_order/widgets/widget_ordercartlist.dart';
 import '../add_order/widgets/widget_orderitemlist.dart';
-import '../screen_orderhome.dart';
+//import '../screen_orderhome.dart';
 import 'controller_orderedit.dart';
 
 class EditOrderScreen extends StatefulWidget {
@@ -29,7 +30,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
           isActive: editcontroller.activeStepIndex.value >= 0,
           title: Obx(() => Text(
                 '${editcontroller.acnm.value} [ Rs.${cartcontroller.ordtotstr.value} ]',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: tAccentColor, fontWeight: FontWeight.w400),
               )),
           content: OrderEditBasic(context),
         ),
@@ -40,7 +42,8 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
           isActive: editcontroller.activeStepIndex.value >= 1,
           title: Obx(() => Text(
                 'Items ${cartcontroller.lislen.value.toString()}',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    color: tAccentColor, fontWeight: FontWeight.w400),
               )),
           content: OrderItemSelect(),
         ),
@@ -49,7 +52,10 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
           isActive: editcontroller.activeStepIndex.value >= 2,
           title: Text(
             'Summary',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: tAccentColor, fontWeight: FontWeight.w400),
           ),
           content: OrderTotal(),
         ),
@@ -105,19 +111,9 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         child: (editcontroller.activeStepIndex.value <
                                 (stepList(context).length - 1))
                             ? Text('NEXT',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16))
+                                style: Theme.of(context).textTheme.bodyMedium)
                             : Text('SAVE ORDER',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16)),
+                                style: Theme.of(context).textTheme.bodyMedium),
                       ),
                       TextButton(
                         onPressed: () {
@@ -130,12 +126,7 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                         },
                         child: (editcontroller.activeStepIndex.value > 0)
                             ? Text('Previous',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16))
+                                style: Theme.of(context).textTheme.bodyMedium)
                             : const SizedBox(),
                       ),
                     ],
@@ -162,12 +153,12 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
               Text(editcontroller.ordrefno.value.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
               const SizedBox(
                 width: 5,
               ),
@@ -177,12 +168,12 @@ class _EditOrderScreenState extends State<EditOrderScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
               Text(editcontroller.buknm.value.toString(),
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.bold, fontSize: 16)),
+                      ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
               const SizedBox(
                 width: 5,
               ),

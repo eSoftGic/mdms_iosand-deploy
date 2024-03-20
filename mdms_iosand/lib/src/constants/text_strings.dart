@@ -27,7 +27,8 @@ const String tOnBoardingTitle2 = "Learn from YouTube";
 const String tOnBoardingTitle3 = "Get Code & Resources";
 const String tOnBoardingSubTitle1 =
     "Let's start your journey with us on this amazing and easy platform.";
-const String tOnBoardingSubTitle2 = "Get Video Tutorials of each topic to learn things easily.";
+const String tOnBoardingSubTitle2 =
+    "Get Video Tutorials of each topic to learn things easily.";
 const String tOnBoardingSubTitle3 =
     "Save time by just copy pasting complete apps you learned from videos.";
 const String tOnBoardingCounter1 = "1/3";
@@ -58,10 +59,12 @@ const String tResetViaEMail = "Reset via Mail Verification";
 const String tResetViaPhone = "Reset via Phone Verification";
 
 // -- Forget Password Via Phone - Text
-const String tForgetPhoneSubTitle = "Enter your registered Phone No to receive OTP";
+const String tForgetPhoneSubTitle =
+    "Enter your registered Phone No to receive OTP";
 
 // -- Forget Password Via E-Mail - Text
-const String tForgetMailSubTitle = "Enter your registered E-Mail to receive OTP";
+const String tForgetMailSubTitle =
+    "Enter your registered E-Mail to receive OTP";
 
 // -- OTP Screen - Text
 const String tOtpTitle = "CO\nDE";

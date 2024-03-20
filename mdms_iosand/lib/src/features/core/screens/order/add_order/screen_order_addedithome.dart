@@ -1,6 +1,7 @@
 // ignore_for_file: unrelated_type_equality_checks, avoid_print, non_constant_identifier_names
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/ecommerce/widget/custom_appbar.dart';
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_cart.dart';
@@ -28,7 +29,10 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
           isActive: _activeStepIndex >= 0,
           title: Obx(() => Text(
                 '${controller.acnm.value} [ Rs.${cartcontroller.ordtotstr} ]',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: tCardBgColor),
               )),
           content: OrderBasic(context),
         ),
@@ -37,7 +41,10 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
           isActive: _activeStepIndex >= 1,
           title: Obx(() => Text(
                 'Order Items ${cartcontroller.lislen.value}',
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge
+                    ?.copyWith(color: tAccentColor),
               )),
           content: OrderItemSelect(),
         ),
@@ -46,7 +53,10 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
           isActive: _activeStepIndex >= 2,
           title: Text(
             'Order Summary',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: tAccentColor),
           ),
           content: OrderTotal(),
         ),
@@ -107,11 +117,9 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
                         child: (_activeStepIndex <
                                 (stepList(context).length - 1))
                             ? Text('NEXT',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall)
+                                style: Theme.of(context).textTheme.bodyMedium)
                             : Text('SAVE ORDER',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
+                                style: Theme.of(context).textTheme.bodyMedium),
                       ),
                       TextButton(
                         onPressed: () {
@@ -124,8 +132,7 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
                         },
                         child: (_activeStepIndex > 0)
                             ? Text('Previous',
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall)
+                                style: Theme.of(context).textTheme.bodyMedium)
                             : const SizedBox(),
                       ),
                     ],
@@ -160,7 +167,7 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
   }
 
   Widget OrderTotal() {
-    debugPrint('Going for Order total');
+    //debugPrint('Going for Order total');
     return const OrderCartScreen();
   }
 

@@ -51,7 +51,7 @@ class OrderBasicFormWidget extends StatelessWidget {
       initiallyExpanded: controller.iscrdlimitover.value,
       title: Text(
         'Credit Limits',
-        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
             color: controller.iscrdlimitover.value == false
                 ? Colors.green
                 : Colors.red,
@@ -73,13 +73,12 @@ class OrderBasicFormWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('CREDIT',
-                          style: Theme.of(context).textTheme.headlineSmall),
-                      Text('O/S',
-                          style: Theme.of(context).textTheme.headlineSmall),
+                          style: Theme.of(context).textTheme.bodySmall),
+                      Text('O/S', style: Theme.of(context).textTheme.bodySmall),
                       Text('LIMIT',
-                          style: Theme.of(context).textTheme.headlineSmall),
+                          style: Theme.of(context).textTheme.bodySmall),
                       Text('STATUS',
-                          style: Theme.of(context).textTheme.headlineSmall),
+                          style: Theme.of(context).textTheme.bodySmall),
                     ],
                   ),
                 ),
@@ -93,8 +92,8 @@ class OrderBasicFormWidget extends StatelessWidget {
                     Text('DAYS',
                         style: Theme.of(context)
                             .textTheme
-                            .bodyLarge
-                            ?.copyWith(fontWeight: FontWeight.bold)),
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
                     Text(
                       controller.bukosday.toString(),
                       style: Theme.of(context)
@@ -124,13 +123,11 @@ class OrderBasicFormWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'BILLS',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text('BILLS',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
                     Text(controller.bukosbil.toString().trim(),
                         style: Theme.of(context).textTheme.bodyMedium),
                     Text(controller.bukcrbil.toString(),
@@ -152,13 +149,11 @@ class OrderBasicFormWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'RS.#',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(fontWeight: FontWeight.bold),
-                    ),
+                    Text('RS.#',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
                     Text(controller.bukosrs.toString(),
                         style: Theme.of(context).textTheme.bodyMedium),
                     Text(controller.bukcrrs.toString(),
@@ -203,7 +198,7 @@ class OrderBasicFormWidget extends StatelessWidget {
         children: <Widget>[
           Text(
             msg,
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                   color: controller.iscrdlimitover.value
                       ? Colors.red.shade900
                       : Colors.green.shade900,
@@ -338,6 +333,7 @@ class OrderBasicFormWidget extends StatelessWidget {
         contentAlign: TextAlign.center,
         autovalidateMode: AutovalidateMode.disabled,
         items: controller.prtlist.map((f) => f.ac_nm).toList(),
+        showMaterialonIOS: true,
         visible: true,
         validator: (value) {
           if (value == null || value.isEmpty) return 'Party Name required';
@@ -404,16 +400,16 @@ class OrderBasicFormWidget extends StatelessWidget {
                 Text(controller.ordqottype != 'QOT' ? 'Order # ' : 'Quote # ',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w400, fontSize: 18)),
                 Text(
                     controller.istelephonicorder
                         ? controller.ordrefno.value.toString() + ' Telephonic '
                         : (controller.ordrefno.value.toString()),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyLarge
-                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 20)),
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.bold, fontSize: 18)),
               ],
             ),
             Column(
@@ -426,12 +422,12 @@ class OrderBasicFormWidget extends StatelessWidget {
                         controller.ordlon.toString().toString(),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyMedium
+                        .bodySmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
                 Text(controller.cdistance.toStringAsFixed(3) + ' mtrs',
                     style: Theme.of(context)
                         .textTheme
-                        .bodyMedium
+                        .bodySmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
             )

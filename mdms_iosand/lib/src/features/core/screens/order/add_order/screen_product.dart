@@ -69,10 +69,8 @@ class ItemScreen extends StatelessWidget {
                   },
                   child: Text(
                     'Add To Order',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium
-                        ?.copyWith(color: tPrimaryColor),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: tPrimaryColor, fontWeight: FontWeight.bold),
                   ),
                 ),
                 TextButton(
@@ -84,10 +82,8 @@ class ItemScreen extends StatelessWidget {
                   },
                   child: Text(
                     'Delete',
-                    style: Theme.of(context)
-                        .textTheme
-                        .headlineMedium
-                        ?.copyWith(color: tPrimaryColor),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: tPrimaryColor, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],
@@ -96,39 +92,39 @@ class ItemScreen extends StatelessWidget {
         ),
       ),
       body: ListView(children: [
-        (curitmcontroller.prdimglist.value.isNotEmpty)
-            ? SizedBox(
-                height: 150,
-                width: 100,
-                child: Obx(() {
-                  return CarouselSlider(
-                      options: CarouselOptions(
-                        aspectRatio: 2.0,
-                        viewportFraction: 0.8,
-                        enlargeCenterPage: true,
-                        enlargeStrategy: CenterPageEnlargeStrategy.height,
-                        enableInfiniteScroll: false,
-                        initialPage: 1,
-                        autoPlay: false,
-                      ),
-                      items:
-                          curitmcontroller.prdimglist.value.map<Widget>((itm) {
-                        return Builder(builder: (BuildContext context) {
-                          return Container(
-                            margin: const EdgeInsets.all(5),
-                            child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10.0)),
-                                child: ImageByteWidget(
-                                  b64: itm.toString().trim(),
-                                  imgwid: 1000.0,
-                                  imght: 300.0,
-                                )),
-                          );
-                        });
-                      }).toList());
-                }))
-            : const SizedBox(height: 150, width: 100, child: Text('No Image')),
+        //(curitmcontroller.prdimglist.value.isNotEmpty)
+        //?
+        SizedBox(
+            height: 150,
+            width: 100,
+            child: Obx(() {
+              return CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 2.0,
+                    viewportFraction: 0.8,
+                    enlargeCenterPage: true,
+                    enlargeStrategy: CenterPageEnlargeStrategy.height,
+                    enableInfiniteScroll: false,
+                    initialPage: 1,
+                    autoPlay: false,
+                  ),
+                  items: curitmcontroller.prdimglist.value.map<Widget>((itm) {
+                    return Builder(builder: (BuildContext context) {
+                      return Container(
+                        margin: const EdgeInsets.all(5),
+                        child: ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10.0)),
+                            child: ImageByteWidget(
+                              b64: itm.toString().trim(),
+                              imgwid: 1000.0,
+                              imght: 300.0,
+                            )),
+                      );
+                    });
+                  }).toList());
+            })),
+        //: const SizedBox(height: 150, width: 100, child: Text('No Image')),
         buildItemQtyDetails(context, curitmcontroller),
         buildProductInfo(context),
         buildProductFeatures(curitmcontroller, context)
@@ -175,7 +171,7 @@ class ItemScreen extends StatelessWidget {
         initiallyExpanded: true,
         title: Text(
           'Order Details',
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         children: [
           Card(
@@ -896,12 +892,12 @@ class ItemScreen extends StatelessWidget {
   Padding buildProductFeatures(
       SingleItemController curitmcontroller, BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: ExpansionTile(
         initiallyExpanded: false,
         title: Text(
           'Features',
-          style: Theme.of(context).textTheme.headlineSmall,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
         children: [
           Text(curitmcontroller.itmfeature.value.toString(),
@@ -935,12 +931,12 @@ class ItemScreen extends StatelessWidget {
 
   Padding buildProductInfo(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 5.0),
       child: ExpansionTile(
           initiallyExpanded: false,
           title: Text(
             'Product Info',
-            style: Theme.of(context).textTheme.headlineSmall,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           children: [
             Card(
@@ -962,7 +958,7 @@ class ItemScreen extends StatelessWidget {
                         ),
                         Text(
                           product.company_nm!,
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ]),
                 ),
@@ -981,7 +977,7 @@ class ItemScreen extends StatelessWidget {
                       ),
                       Text(
                         product.item_brand_nm!,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -1001,7 +997,7 @@ class ItemScreen extends StatelessWidget {
                       ),
                       Text(
                         product.item_cat_nm!,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -1021,7 +1017,7 @@ class ItemScreen extends StatelessWidget {
                       ),
                       Text(
                         product.item_code!,
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
@@ -1041,7 +1037,7 @@ class ItemScreen extends StatelessWidget {
                         ),
                         Text(
                           '${product.mrp_ref} / ${product.stock_qty}',
-                          style: Theme.of(context).textTheme.headlineSmall,
+                          style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ]),
                 ),

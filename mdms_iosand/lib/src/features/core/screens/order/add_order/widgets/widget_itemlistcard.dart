@@ -17,7 +17,7 @@ class ItemListCard extends StatelessWidget {
   const ItemListCard({
     super.key,
     required this.product,
-    this.widthFactor = 2.2,
+    this.widthFactor = 2.5,
     this.leftPosition = 5,
     this.isWishlist = false,
   });
@@ -50,7 +50,7 @@ class ItemListCard extends StatelessWidget {
 
     return Card(
       color: Get.isDarkMode ? tCardDarkColor : tCardLightColor,
-      elevation: 8,
+      elevation: 4,
       child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
         Padding(
           padding: const EdgeInsets.all(2.0),
@@ -59,12 +59,12 @@ class ItemListCard extends StatelessWidget {
             softWrap: true,
             style: Theme.of(context)
                 .textTheme
-                .bodyMedium
-                ?.copyWith(fontWeight: FontWeight.bold, color: tAccentColor),
+                .bodyLarge
+                ?.copyWith(fontWeight: FontWeight.w600, color: tAccentColor),
           ),
         ),
         const Divider(
-          color: tPrimaryColor,
+          color: tAccentColor,
           thickness: 0.5,
         ),
         ExpansionTile(
@@ -121,18 +121,27 @@ class ItemListCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Flexible(
-                        flex: 8,
+                        flex: 4,
                         child: Text(
-                          'Stock-UnBilled ' +
-                              product.stock_qty.toString() +
-                              ' - ' +
-                              product.unbilled_qty.toString(),
+                          'Stock ${product.stock_qty.toString()}',
                           softWrap: true,
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 4,
+                        child: Text(
+                          'UnBilled ${product.unbilled_qty.toString()}',
+                          softWrap: true,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ),
                       Flexible(
@@ -155,18 +164,27 @@ class ItemListCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: <Widget>[
                       Flexible(
-                        flex: 8,
+                        flex: 4,
                         child: Text(
-                          'Allocated-UnBilled ' +
-                              product.allocated_qty.toString() +
-                              ' - ' +
-                              product.allocated_pend_qty.toString(),
+                          'Allocated ${product.allocated_qty.toString()}',
                           softWrap: true,
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
                               .bodyMedium
-                              ?.copyWith(fontWeight: FontWeight.bold),
+                              ?.copyWith(fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                      Flexible(
+                        flex: 4,
+                        child: Text(
+                          'UnBilled ${product.allocated_pend_qty.toString()}',
+                          softWrap: true,
+                          textAlign: TextAlign.start,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(fontWeight: FontWeight.w500),
                         ),
                       ),
                       Flexible(
