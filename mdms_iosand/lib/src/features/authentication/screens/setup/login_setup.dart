@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:mdms_iosand/src/ecommerce/screen/home_screen.dart';
 import 'package:unique_identifier/unique_identifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -16,7 +17,7 @@ import 'package:mdms_iosand/src/features/authentication/models/models.dart';
 
 import 'package:mdms_iosand/src/features/authentication/screens/setup/tabindicator.dart';
 import '../../../../common_widgets/form/form_header_widget.dart';
-import '../../../core/screens/dashboard/dashboard.dart';
+//import '../../../core/screens/dashboard/dashboard.dart';
 
 class LoginSetupPage extends StatefulWidget {
   const LoginSetupPage({super.key});
@@ -1674,7 +1675,8 @@ class _LoginSetupPageState extends State<LoginSetupPage>
       Navigator.of(context).push(route);
     }*/
     }
-    Get.to(() => const Dashboard());
+    Get.to(() => const HomeScreen());
+    //Get.to(() => const Dashboard());
   }
 
   /*Future<void> _msgAlert(BuildContext context, String msg, String tit) async {

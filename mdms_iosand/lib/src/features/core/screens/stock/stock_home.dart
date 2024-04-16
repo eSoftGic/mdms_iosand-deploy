@@ -10,7 +10,7 @@ import 'package:mdms_iosand/src/features/core/screens/stock/stock_filter.dart';
 import '../../../../../singletons/singletons.dart';
 import '../../../../constants/constants.dart';
 import '../../../../ecommerce/widget/imagebyte_widget.dart';
-import '../../../../ecommerce/widget/imageurl_widget.dart';
+//import '../../../../ecommerce/widget/imageurl_widget.dart';
 import '../../../../utils/pdfview.dart';
 import '../../network/exceptions/general_exception_widget.dart';
 import '../../network/exceptions/internet_exception_widget.dart';

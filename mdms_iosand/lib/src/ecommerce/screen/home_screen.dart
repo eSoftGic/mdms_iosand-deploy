@@ -1,10 +1,7 @@
 // ignore_for_file: avoid_unnecessary_containers, invalid_use_of_protected_member
-
 import 'package:carousel_slider/carousel_slider.dart';
-//import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-//import 'package:get/get_core/src/get_main.dart';
 import 'package:mdms_iosand/src/ecommerce/controller/item_controller.dart';
 import 'package:mdms_iosand/src/ecommerce/models/ecomm_model.dart';
 import 'package:mdms_iosand/src/ecommerce/widget/widget.dart';
@@ -17,7 +14,7 @@ class HomeScreen extends StatelessWidget {
     ItemController itemController = Get.put(ItemController());
 
     return Scaffold(
-      appBar: const CustomAppBar(title: 'Dealer Name'),
+      appBar: const CustomAppBar(title: 'Product Page'),
       bottomNavigationBar: const CustomNavBar(),
       body: SingleChildScrollView(
         child: Column(
@@ -31,9 +28,8 @@ class HomeScreen extends StatelessWidget {
                 enlargeCenterPage: true,
                 enlargeStrategy: CenterPageEnlargeStrategy.height,
                 enableInfiniteScroll: false,
-                //initialPage: 2,
-                //autoPlay: true,
-                //autoPlay: true,
+                initialPage: 1,
+                autoPlay: true,
               ),
               items: CategoryModel.prdcategories
                   .map((category) => HeroCarouselCard(
@@ -54,14 +50,17 @@ class HomeScreen extends StatelessWidget {
             Obx(() {
               return ProductCarousel(
                   products: itemController.reslist.value
-                      .where((product) => product.tbl_id! > 15 && product.tbl_id! <= 20)
+                      .where((product) =>
+                          product.tbl_id! > 15 && product.tbl_id! <= 20)
                       .toList());
             }),
+
             const SectionTitle(title: 'PRODUCTS'),
             Obx(() {
               return ProductCarousel(
-                products:
-                    itemController.reslist.value.where((product) => product.tbl_id! <= 15).toList(),
+                products: itemController.reslist.value
+                    .where((product) => product.tbl_id! <= 10)
+                    .toList(),
                 scrldirection: "VER",
               );
             })

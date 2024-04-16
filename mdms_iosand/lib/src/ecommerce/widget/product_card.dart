@@ -34,7 +34,7 @@ class ProductCard extends StatelessWidget {
         children: [
           SizedBox(
             width: widthValue,
-            height: 150,
+            height: 400, //150
             child: ImageByteWidget(b64: product.item_image.toString().trim()),
           ),
           Positioned(
@@ -58,7 +58,8 @@ class ProductCard extends StatelessWidget {
                 color: Colors.black.withAlpha(50),
               ),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
                 child: Row(
                   children: [
                     Expanded(
@@ -69,10 +70,13 @@ class ProductCard extends StatelessWidget {
                         children: [
                           Text(
                             product.item_nm!,
-                            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: tWhiteColor,
-                                fontWeight: FontWeight.bold,
-                                overflow: TextOverflow.ellipsis),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.copyWith(
+                                    color: tWhiteColor,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis),
                           ),
                           Text(
                             product.rate!.toStringAsFixed(2),
@@ -97,7 +101,8 @@ class ProductCard extends StatelessWidget {
                         ? Expanded(
                             child: IconButton(
                                 onPressed: () {
-                                  wishListController.removefromWishlist(product);
+                                  wishListController
+                                      .removefromWishlist(product);
                                 },
                                 icon: const Icon(
                                   Icons.delete,

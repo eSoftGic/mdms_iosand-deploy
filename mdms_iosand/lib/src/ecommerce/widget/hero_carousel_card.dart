@@ -31,14 +31,14 @@ class HeroCarouselCard extends StatelessWidget {
                 product == null
                     ? ImageUrlWidget(
                         imgurl: category!.catimage.toString(),
-                        imgwid: 1000.0,
+                        imgwid: 800.0,
                         imght: 300.0,
                       )
                     : ImageByteWidget(
                         b64: product == null
                             ? category!.catimage.toString()
                             : product!.item_image.toString(),
-                        imgwid: 1000.0,
+                        imgwid: 800.0,
                         imght: 300.0,
                       ),
                 Positioned(
