@@ -32,6 +32,7 @@ class ItemListCard extends StatelessWidget {
           product.tbl_id.toString().trim() +
           ".jpg";
     }*/
+    /*
     // This is for imagebyte
     String itmimgbyte =
         product.item_image.toString().toLowerCase().trim() == 'na'
@@ -47,7 +48,10 @@ class ItemListCard extends StatelessWidget {
     if (alloc_avail > 0 && alloc_avail < available) {
       stkavailable = alloc_avail;
     }
+    */
 
+    return Text(product.item_nm.toString());
+    /*
     return Card(
       color: Get.isDarkMode ? tCardDarkColor : tCardLightColor,
       elevation: 4,
@@ -63,10 +67,12 @@ class ItemListCard extends StatelessWidget {
                 ?.copyWith(fontWeight: FontWeight.w600, color: tAccentColor),
           ),
         ),
+        
         const Divider(
           color: tAccentColor,
           thickness: 0.5,
         ),
+        
         ExpansionTile(
           leading: itmimgbyte.isNotEmpty
               ? ImageByteWidget(b64: itmimgbyte)
@@ -247,7 +253,9 @@ class ItemListCard extends StatelessWidget {
             ),
           ],
         ),
+
       ]),
     );
+    */
   }
 }

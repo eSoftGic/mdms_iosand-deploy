@@ -9,6 +9,7 @@ import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/co
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderbasic.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_ordercartlist.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderitemlist.dart';
+//import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderitemlist.dart';
 //import 'package:mdms_iosand/src/features/core/screens/order/screen_orderhome.dart';
 
 class AddOrderHomeScreen extends StatefulWidget {
@@ -27,32 +28,34 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
         Step(
           state: _activeStepIndex <= 0 ? StepState.editing : StepState.complete,
           isActive: _activeStepIndex >= 0,
-          title: Obx(() => Text(
-                '${controller.acnm.value} [ Rs.${cartcontroller.ordtotstr} ]',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: tCardBgColor),
-              )),
+          title: Text(
+            'Party/Book',
+            //'${controller.acnm.value} [ Rs.${cartcontroller.ordtotstr} ]',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: tCardBgColor),
+          ),
           content: OrderBasic(context),
         ),
         Step(
           state: _activeStepIndex <= 1 ? StepState.editing : StepState.complete,
           isActive: _activeStepIndex >= 1,
-          title: Obx(() => Text(
-                'Order Items ${cartcontroller.lislen.value}',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge
-                    ?.copyWith(color: tAccentColor),
-              )),
-          content: OrderItemSelect(),
+          title: Text(
+            'Items',
+            //'Order Items ${cartcontroller.lislen.value}',
+            style: Theme.of(context)
+                .textTheme
+                .bodyLarge
+                ?.copyWith(color: tAccentColor),
+          ),
+          content: OrderItemSelect(context),
         ),
         Step(
           state: StepState.complete,
           isActive: _activeStepIndex >= 2,
           title: Text(
-            'Order Summary',
+            'Summary',
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge
@@ -84,7 +87,7 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
             child: Obx(() {
               return Stepper(
                 physics: const ClampingScrollPhysics(),
-                type: StepperType.vertical,
+                type: StepperType.horizontal,
                 currentStep: _activeStepIndex,
                 steps: stepList(context),
                 controlsBuilder: (context, _) {
@@ -153,21 +156,17 @@ class _AddOrderHomeScreenState extends State<AddOrderHomeScreen> {
     return OrderBasicFormWidget();
   }
 
-  Widget OrderItemSelect() {
-    /*debugPrint('OrderItemSelect ${controller.acid.value}');
-    return controller.acid.value > 0 &&
-            controller.iscrdlimitover.value == false &&
-            controller.ordlimitvalid.value == true
-        ? OrderItemList(ordch: 'ADD')
-        : const Text('Order Party or Credit Details Not Valid');
-    */
+  Widget OrderItemSelect(BuildContext context) {
+    /*return ( controller.acid.value > 0 &&
+             controller.iscrdlimitover.value == false &&
+             controller.ordlimitvalid.value == true)
+             */
     return controller.acid.value > 0
-        ? OrderItemList(ordch: 'ADD')
-        : const Text('Order Party Not properly selected');
+    ? OrderItemList(ordch: 'ADD')
+    : const Text('Order Party or Credit Details Not Valid');
   }
 
   Widget OrderTotal() {
-    //debugPrint('Going for Order total');
     return const OrderCartScreen();
   }
 

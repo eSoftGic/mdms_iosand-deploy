@@ -1,8 +1,9 @@
-// ignore_for_file: must_be_immutable, unused_local_variable, invalid_use_of_protected_member, unused_element
+// ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_itemlistcard.dart';
+import 'package:mdms_iosand/src/features/core/screens/order/tproduct_card_vertical.dart';
 import '../../../../network/exceptions/general_exception_widget.dart';
 import '../../../../network/exceptions/internet_exception_widget.dart';
 import '../../../../network/status.dart';
@@ -16,7 +17,7 @@ class OrderItemList extends StatelessWidget {
   final orditmcontroller = Get.put(OrderItemController());
   final editcontroller = Get.put(OrderEditController());
   bool showsrc = true;
-  //bool shwimg = false;
+  bool shwimg = true;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class OrderItemList extends StatelessWidget {
     orditmcontroller.setShwimg(orditmcontroller.shwimg.value);
 
     return SizedBox(
-      height: MediaQuery.of(context).size.height - 400,
+      height: MediaQuery.of(context).size.height - 150,
       width: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -44,10 +45,30 @@ class OrderItemList extends StatelessWidget {
                       onPress: () => orditmcontroller.refreshListApi());
                 }
               case Status.COMPLETED:
-                return _showList();
+                return _gridshow(context);
+              // TProductCardVertical();
+              //return _showList();
             }
           }),
         ],
+      ),
+    );
+  }
+
+  Widget _gridshow(BuildContext context) {
+    return GridView.builder(
+      itemCount: orditmcontroller.reslist.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 16,
+        crossAxisSpacing: 16,
+        mainAxisExtent: 250, // play with this
+      ),
+      itemBuilder: (_, index) => TProductCardVertical(
+        product: orditmcontroller.reslist[index],
       ),
     );
   }
@@ -108,6 +129,7 @@ class OrderItemList extends StatelessWidget {
     );
   }
 
+  /*
   Widget _filter() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -153,13 +175,14 @@ class OrderItemList extends StatelessWidget {
       ),
     );
   }
+  */
 
   Widget _showList() {
-    TextEditingController tqty;
+    //TextEditingController tqty;
     return Expanded(
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: orditmcontroller.reslist.value.length,
+        itemCount: orditmcontroller.reslist.length,
         itemBuilder: (context, index) {
           return ItemListCard(
             product: orditmcontroller.reslist[index],

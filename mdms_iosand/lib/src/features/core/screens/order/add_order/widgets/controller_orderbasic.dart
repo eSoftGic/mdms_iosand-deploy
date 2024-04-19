@@ -31,6 +31,7 @@ class OrderBasicController extends GetxController {
   RxBool todayorder = true.obs;
   RxBool iscrdlimitover = false.obs;
   RxInt chainid = 0.obs;
+  RxString searchtext = "".obs;
 
   final _api = OrderRepository();
   final _prtapi = PartyRepository();

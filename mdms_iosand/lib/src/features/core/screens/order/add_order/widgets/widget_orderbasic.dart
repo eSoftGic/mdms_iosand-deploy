@@ -1,11 +1,13 @@
-// ignore_for_file: must_be_immutable, prefer_final_fields, non_constant_identifier_names, prefer_interpolation_to_compose_strings, unrelated_type_equality_checks, prefer_adjacent_string_concatenation, curly_braces_in_flow_control_structures, unused_element
+// ignore_for_file: must_be_immutable, prefer_final_fields, non_constant_identifier_names, prefer_interpolation_to_compose_strings, unrelated_type_equality_checks, prefer_adjacent_string_concatenation, curly_braces_in_flow_control_structures, unused_element, use_build_context_synchronously
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:card_settings/card_settings.dart';
+import 'package:mdms_iosand/src/constants/constants.dart';
 import '../../../../../../../singletons/singletons.dart';
 import 'controller_orderbasic.dart';
+import 'package:list_picker/list_picker.dart';
 
 class OrderBasicFormWidget extends StatelessWidget {
   OrderBasicFormWidget({
@@ -21,6 +23,7 @@ class OrderBasicFormWidget extends StatelessWidget {
   GlobalKey<FormState> _buknoorder = GlobalKey<FormState>();
   GlobalKey<FormState> _cmpselstr = GlobalKey<FormState>();
   GlobalKey<FormState> _cosidnm = GlobalKey<FormState>();
+  final TextEditingController fieldCont = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,12 @@ class OrderBasicFormWidget extends StatelessWidget {
         Form(
           key: _formKey,
           child: Obx(() {
-            return Card(elevation: 8, child: _buildPortraitLayout(context));
+            return Card(
+                elevation: 8,
+                child: Column(children: <Widget>[
+                  _buildpartyWidget(context),
+                  _buildPortraitLayout(context),
+                ]));
           }),
         ),
         const SizedBox(
@@ -242,7 +250,7 @@ class OrderBasicFormWidget extends StatelessWidget {
           CardSettingsSection(
             header: CardSettingsHeader(child: OrderHeader(context)),
             children: <CardSettingsWidget>[
-              _buildCardSettingsListPicker_Prt(),
+              //_buildCardSettingsListPicker_Prt(),
               _buildCardSettingsListPicker_Buk(),
               //_buildCardSettingsText_Buk(),
               _buildCardSettingsSwitch_noorder(),
@@ -434,5 +442,54 @@ class OrderBasicFormWidget extends StatelessWidget {
           ]),
           const Divider(),
         ]);
+  }
+
+  _buildpartyWidget(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(controller.acnm.toString(),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: tCardLightColor, // Background color
+              foregroundColor: tPrimaryColor, // Text Color (Foreground color)
+            ),
+            onPressed: () async {
+              final String? prnm = await showPickerDialog(
+                context: context,
+                label: 'Party',
+                items: controller.prtlist.map((f) => f.ac_nm!).toList(),
+              );
+              if (prnm != null) {
+                controller.setParty(prnm);
+                controller.acnm.value = prnm.toString();
+                controller.initorder(controller.acid.value);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(prnm),
+                  ),
+                );
+              }
+              if (controller.acid > 0) {
+                if (appSecure.chklocation == true &&
+                    controller.invaliddist.value == false) {
+                  Get.snackbar(
+                      'Invalid Distance, You are ',
+                      controller.cdistance.toString() +
+                          ' mtrs away from Party Location');
+                }
+              }
+            },
+            child: const Text('>>'),
+          ),
+        ],
+      ),
+    );
   }
 }
