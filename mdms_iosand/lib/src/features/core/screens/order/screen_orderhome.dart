@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:mdms_iosand/src/features/core/neworder/screen/ordernavigation.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_cart.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderitem.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/model_order.dart';
@@ -97,7 +98,8 @@ class _OrderHomeScreenState extends State<OrderHomeScreen> {
                       appData.ordmaxlimit = 0.0;
                       appData.ordlimitvalid = true;
                     });
-                    Get.to(() => const AddOrderHomeScreen());
+                    //Get.to(() => const AddOrderHomeScreen());
+                    Get.to(() => const OrderNavigationScreen());
                   },
                   icon: const Icon(
                     Icons.add,

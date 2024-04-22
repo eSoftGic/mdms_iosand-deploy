@@ -10,8 +10,8 @@ import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/network/exceptions/general_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/exceptions/internet_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
+import 'package:mdms_iosand/src/features/core/neworder/screen/ordernavigation.dart';
 import 'package:mdms_iosand/src/features/core/orderdb/orderdetail.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/screen_order_addedithome.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/controller_order.dart';
 
 class OrderHomeView extends StatefulWidget {
@@ -59,7 +59,8 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                         appData.ordmaxlimit = 0.0;
                         appData.ordlimitvalid = true;
                       });
-                      Get.to(() => const AddOrderHomeScreen());
+                      //Get.to(() => const AddOrderHomeScreen());
+                      Get.to(() => const OrderNavigationScreen());
                     },
                     icon: const Icon(
                       Icons.add,
