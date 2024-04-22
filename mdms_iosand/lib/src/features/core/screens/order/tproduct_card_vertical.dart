@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_if_null_operators
+// ignore_for_file: avoid_unnecessary_containers, prefer_if_null_operators, unnecessary_cast
 
 import 'package:flutter/material.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
@@ -319,7 +319,7 @@ class TRoundedImage extends StatelessWidget {
                   imgwid: 80.0,
                   imght: 80.0,
                 )
-              : Image(fit: fit, image: AssetImage(tNoImage) as ImageProvider),
+              : Image(fit: fit, image: const AssetImage(tNoImage) as ImageProvider),
         ),
       ),
     );
