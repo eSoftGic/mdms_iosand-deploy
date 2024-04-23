@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/features/core/neworder/screen/orderitemlist.dart';
 import 'package:mdms_iosand/src/features/core/neworder/screen/orderparty.dart';
 
 //import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderbasic.dart';
@@ -22,12 +23,14 @@ class OrderNavigationScreen extends StatelessWidget {
               onDestinationSelected: (index) =>
                   navcontroller.selectedIndex.value = index,
               destinations: const [
-                NavigationDestination(icon: Icon(Icons.person), label: 'Party'),
                 NavigationDestination(
-                    icon: Icon(Icons.category), label: 'Items'),
+                    icon: Icon(Icons.person), label: 'Basic Details'),
                 NavigationDestination(
-                    icon: Icon(Icons.shopping_cart), label: 'Cart'),
-                NavigationDestination(icon: Icon(Icons.save), label: 'Summary'),
+                    icon: Icon(Icons.category), label: 'Products'),
+                NavigationDestination(
+                    icon: Icon(Icons.shopping_cart), label: 'Cart List'),
+                NavigationDestination(
+                    icon: Icon(Icons.save), label: 'Save Order'),
               ])),
       body: Obx(() => navcontroller.screens[navcontroller.selectedIndex.value]),
     );
@@ -39,6 +42,7 @@ class NavigationController extends GetxController {
 
   final screens = [
     OrderPartyScreen(),
+    OrderitemListScreen(),
     //OrderBasicFormWidget(),
     //OrderItemList(ordch: 'ADD'),
     Container(

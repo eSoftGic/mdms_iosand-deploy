@@ -32,6 +32,7 @@ class OrderBasicController extends GetxController {
   RxBool iscrdlimitover = false.obs;
   RxInt chainid = 0.obs;
   RxString searchtext = "".obs;
+  RxString chainareanm = "".obs;
 
   final _api = OrderRepository();
   final _prtapi = PartyRepository();
@@ -72,10 +73,10 @@ class OrderBasicController extends GetxController {
   String bukstrs = '';
   bool bukhasord = false;
   String todayorddet = '';
-  String chainareanm = '';
+
   bool costore = false;
   String saletype = '';
-  bool hascostores = false;
+  RxBool hascostores = false.obs;
 
   @override
   void onInit() async {
@@ -141,7 +142,7 @@ class OrderBasicController extends GetxController {
     setAcid(acid);
     setOrdrefno(0);
     BookListApi(acid);
-    if (hascostores == true) {
+    if (hascostores.value == true) {
       ChainOfStoresListApi();
     }
   }

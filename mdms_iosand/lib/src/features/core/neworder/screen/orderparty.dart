@@ -2,10 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/appbar.dart';
 import 'package:mdms_iosand/src/common_widgets/custom_shapes/container/primary_header_container.dart';
-import 'package:mdms_iosand/src/common_widgets/searchbar/tsearchbar.dart';
+import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderbasic.dart';
+import 'package:list_picker/list_picker.dart';
+//import 'package:mdms_iosand/src/common_widgets/searchbar/tsearchbar.dart';
 
 class OrderPartyScreen extends StatelessWidget {
   const OrderPartyScreen({super.key});
@@ -13,32 +16,211 @@ class OrderPartyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrderBasicController controller = Get.put(OrderBasicController());
+
     return Scaffold(
         body: SingleChildScrollView(
             child: Column(children: [
       TPrimaryHeaderContainer(
-          height: 300,
+          height: 400,
           child: Column(
             children: [
               const TAppBar(
-                title: Text('ORDER - Basic Details'),
+                title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('ORDER'),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text('Book/Party/Credit Limit',
+                          style: TextStyle(fontSize: 16, color: tPrimaryColor)),
+                    ]),
                 showBackArrow: false,
               ),
-              const Divider(),
               OrderHeader(context, controller),
-              const Divider(),
-              // SearchBar
-              const TSearchContainer(
-                text: 'Search Party',
-              ),
+              PartySelect(context, controller),
+              ChainOfStoreSelect(context, controller),
+              SalesBookSelect(context, controller),
+              //const TSearchContainer(text: 'Search Party',),
             ],
           )),
+      Column(
+        children: [
+          Obx(() {
+            return (controller.buknm.value != '' && controller.acid.value > 0)
+                ? _Limit(context, controller)
+                : const SizedBox();
+          })
+        ],
+      )
     ])));
+  }
+
+  _Limit(BuildContext context, OrderBasicController controller) {
+    return ExpansionTile(
+      initiallyExpanded: controller.iscrdlimitover.value,
+      title: Text(
+        'Credit Limits',
+        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: controller.iscrdlimitover.value == false
+                ? Colors.green
+                : Colors.red,
+            fontWeight: FontWeight.bold),
+      ),
+      children: [
+        Card(
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('CREDIT',
+                          style: Theme.of(context).textTheme.bodySmall),
+                      Text('O/S', style: Theme.of(context).textTheme.bodySmall),
+                      Text('LIMIT',
+                          style: Theme.of(context).textTheme.bodySmall),
+                      Text('STATUS',
+                          style: Theme.of(context).textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('DAYS',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
+                    Text(
+                      controller.bukosday.toString(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(fontWeight: FontWeight.bold),
+                    ),
+                    Text(controller.bukcrday.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    controller.bukstday.toString().trim() == 'Over'
+                        ? Icon(
+                            Icons.clear,
+                            color: Colors.red.shade900,
+                            size: 20,
+                          )
+                        : Icon(
+                            Icons.check,
+                            color: Colors.green.shade900,
+                            size: 20,
+                          ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('BILLS',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
+                    Text(controller.bukosbil.toString().trim(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    Text(controller.bukcrbil.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    controller.bukstbil.toString().trim() == 'Over'
+                        ? Icon(Icons.clear,
+                            size: 20, color: Colors.red.shade900)
+                        : Icon(
+                            Icons.check,
+                            size: 20,
+                            color: Colors.green.shade900,
+                          ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('RS.#',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontWeight: FontWeight.w400)),
+                    Text(controller.bukosrs.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    Text(controller.bukcrrs.toString(),
+                        style: Theme.of(context).textTheme.bodyMedium),
+                    controller.bukstrs.trim() == 'Over'
+                        ? Icon(
+                            Icons.clear,
+                            size: 20,
+                            color: Colors.red.shade900,
+                          )
+                        : Icon(
+                            Icons.check,
+                            size: 20,
+                            color: Colors.green.shade900,
+                          ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                CreditLimit(context, controller),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  CreditLimit(BuildContext context, OrderBasicController controller) {
+    String msg = "";
+    if (controller.iscrdlimitover == false) {
+      msg = "Max. Order Amount Rs. " + controller.OrdLimit.toStringAsFixed(0);
+    } else {
+      msg = "Credit Limit Over";
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 15.0, bottom: 5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            msg,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: controller.iscrdlimitover.value
+                      ? Colors.red.shade900
+                      : Colors.green.shade900,
+                ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget OrderHeader(BuildContext context, OrderBasicController controller) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,28 +241,193 @@ class OrderPartyScreen extends StatelessWidget {
                           fontWeight: FontWeight.bold, fontSize: 18)),
                 ],
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+            ]),
+            //const Divider(),
+          ]),
+    );
+  }
+
+  Widget PartySelect(BuildContext context, OrderBasicController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Obx(
+                () => Text(
+                    controller.acnm.value.isEmpty
+                        ? 'Select Party '
+                        : controller.acnm.value,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: tCardLightColor, // Background color
+                  foregroundColor:
+                      tPrimaryColor, // Text Color (Foreground color)
+                ),
+                onPressed: () async {
+                  final String? prnm = await showPickerDialog(
+                    context: context,
+                    label: 'Party',
+                    items: controller.prtlist.map((f) => f.ac_nm!).toList(),
+                  );
+                  if (prnm != null) {
+                    controller.setParty(prnm);
+                    controller.acnm.value = prnm.toString();
+                    controller.initorder(controller.acid.value);
+                  }
+                  if (controller.acid > 0) {
+                    if (appSecure.chklocation == true &&
+                        controller.invaliddist.value == false) {
+                      Get.snackbar(
+                          'Invalid Distance, You are ',
+                          controller.cdistance.toString() +
+                              ' mtrs away from Party Location');
+                    }
+                  }
+                },
+                child: const Text('>>'),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                  controller.ordlat.toString() +
+                      '/' +
+                      controller.ordlon.toString().toString(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w400)),
+              Text(controller.cdistance.toStringAsFixed(3) + ' mtrs',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: FontWeight.w400)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget ChainOfStoreSelect(
+      BuildContext context, OrderBasicController controller) {
+    bool shwcos = controller.coslist.value.isNotEmpty;
+    return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8),
+        child: shwcos
+            ? Column(
                 children: [
-                  Text(
-                      controller.ordlat.toString() +
-                          '/' +
-                          controller.ordlon.toString().toString(),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontWeight: FontWeight.bold)),
-                  Text(controller.cdistance.toStringAsFixed(3) + ' mtrs',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(fontWeight: FontWeight.bold)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Obx(
+                        () => Text(
+                            controller.chainareanm.value.isEmpty
+                                ? 'Chain of Stores'
+                                : controller.chainareanm.value,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    fontWeight: FontWeight.w500, fontSize: 16)),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: tCardLightColor, // Background color
+                          foregroundColor:
+                              tPrimaryColor, // Text Color (Foreground color)
+                        ),
+                        onPressed: () async {
+                          final String? cosnm = await showPickerDialog(
+                            context: context,
+                            label: 'Chain of Stores',
+                            items: controller.coslist
+                                .map((f) => f.areanm!)
+                                .toList(),
+                          );
+                          if (cosnm != null) {
+                            controller.chainareanm.value = cosnm;
+                          }
+                        },
+                        child: const Text('>>'),
+                      ),
+                    ],
+                  ),
                 ],
               )
-            ]),
-            const Divider(),
-          ]),
+            : null);
+  }
+
+  Widget SalesBookSelect(
+      BuildContext context, OrderBasicController controller) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Obx(
+                () => Text(
+                    controller.buknm.value.isEmpty
+                        ? 'Sales Book '
+                        : controller.buknm.value,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: tCardLightColor, // Background color
+                  foregroundColor:
+                      tPrimaryColor, // Text Color (Foreground color)
+                ),
+                onPressed: () async {
+                  final String? buknm = await showPickerDialog(
+                    context: context,
+                    label: 'Sales Book',
+                    items: controller.buklist.map((f) => f.trandesc!).toList(),
+                  );
+                  if (buknm != null) {
+                    controller.buknm.value = buknm;
+                    controller.loadcredit(buknm);
+                    controller.setbukcmp(buknm);
+                  }
+                },
+                child: const Text('>>'),
+              ),
+            ],
+          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('Today' 's Order ',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w500, fontSize: 16)),
+                Obx(() => Switch(
+                      activeColor: Colors.green,
+                      value: controller.todayorder.value,
+                      onChanged: (bool newvalue) {
+                        controller.setTodayorder(newvalue);
+                      },
+                    ))
+              ]),
+        ],
+      ),
     );
   }
 }

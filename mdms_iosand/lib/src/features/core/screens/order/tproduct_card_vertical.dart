@@ -151,7 +151,7 @@ class TProductTitleText extends StatelessWidget {
     this.textAlign = TextAlign.left,
   });
 
-  final String title;
+  final String? title;
   final bool smallSize;
   final int maxLines;
   final TextAlign? textAlign;
@@ -159,7 +159,7 @@ class TProductTitleText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      title,
+      title.toString(),
       style: smallSize
           ? Theme.of(context)
               .textTheme
@@ -297,7 +297,8 @@ class TRoundedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint(imageUrl);
+    //debugPrint(imageUrl);
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -310,17 +311,23 @@ class TRoundedImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
         ),
         child: ClipRRect(
-          borderRadius: applyImageRadius
-              ? BorderRadius.circular(borderRadius)
-              : BorderRadius.zero,
-          child: (imageUrl != 'na')
-              ? ImageByteWidget(
-                  b64: imageUrl,
-                  imgwid: 80.0,
-                  imght: 80.0,
-                )
-              : Image(fit: fit, image: const AssetImage(tNoImage) as ImageProvider),
-        ),
+            borderRadius: applyImageRadius
+                ? BorderRadius.circular(borderRadius)
+                : BorderRadius.zero,
+            child: isImageByByte == true
+                ? imageUrl != 'na'
+                    ? ImageByteWidget(
+                        b64: imageUrl,
+                        imgwid: 110.0,
+                        imght: 110.0,
+                      )
+                    : Image(fit: fit, image: AssetImage(imageUrl))
+                : isNetWorkImage == false
+                    ? Image(fit: fit, image: AssetImage(imageUrl))
+                    : Image(
+                        // here add network image
+                        fit: fit,
+                        image: AssetImage(imageUrl) as ImageProvider)),
       ),
     );
   }

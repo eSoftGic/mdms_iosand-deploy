@@ -255,6 +255,7 @@ class OrderBasicFormWidget extends StatelessWidget {
               //_buildCardSettingsText_Buk(),
               _buildCardSettingsSwitch_noorder(),
               _buildCardSettingsListPicker_Cos(),
+              _buildCardSettingsSwitch_noorder(),
               _buildCardSettingsCheckboxPicker_cmp(),
             ],
           )
@@ -438,9 +439,21 @@ class OrderBasicFormWidget extends StatelessWidget {
                         .bodySmall
                         ?.copyWith(fontWeight: FontWeight.bold)),
               ],
-            )
+            ),
           ]),
           const Divider(),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('Party Name',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: FontWeight.w400, fontSize: 18)),
+                  
+
+              ],
+            ),
         ]);
   }
 
@@ -450,7 +463,10 @@ class OrderBasicFormWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(controller.acnm.toString(),
+          Text(
+              controller.acnm.toString().isEmpty
+                  ? 'Select Party'
+                  : controller.acnm.toString(),
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
@@ -488,6 +504,7 @@ class OrderBasicFormWidget extends StatelessWidget {
             },
             child: const Text('>>'),
           ),
+        
         ],
       ),
     );

@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 import '../../constants/colors.dart';
@@ -28,7 +26,7 @@ class TSearchContainer extends StatelessWidget {
           color: showBackground
               ? isDark
                   ? tWhiteColor
-                  : Colors.transparent
+                  : tPrimaryColor.withOpacity(0.3)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(16),
           border: showBorder ? Border.all(color: tWhiteColor) : null),
