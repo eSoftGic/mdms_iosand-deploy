@@ -7,8 +7,8 @@ import '../../constants/constants.dart';
 
 class ImageByteWidget extends StatelessWidget {
   String b64;
-  double imgwid;
-  double imght;
+  double? imgwid;
+  double? imght;
 
   ImageByteWidget(
       {super.key, required this.b64, this.imgwid = 100, this.imght = 100});
@@ -16,10 +16,9 @@ class ImageByteWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     DecorationImage? decorationImage;
     Uint8List bytesImage = const Base64Decoder().convert(b64);
-    bool hasimgByte = b64.isNotEmpty;
-
-    debugPrint(b64.toString());
-    debugPrint(hasimgByte.toString());
+    bool hasimgByte = b64.isNotEmpty && b64 != 'na';
+    //debugPrint(b64.toString());
+    //debugPrint(hasimgByte.toString());
 
     return Container(
         margin: const EdgeInsets.only(right: 10, top: 7),
@@ -45,8 +44,9 @@ class ImageByteWidget extends StatelessWidget {
 
   Widget zoomImage(Uint8List bytesImage) {
     return Dialog(
-      child:
-          Container(child: Image.memory(bytesImage, width: 150, height: 150)),
+      child: Container(
+          child: Image.memory(bytesImage,
+              width: 200, height: 200, fit: BoxFit.fill)),
     );
   }
 }

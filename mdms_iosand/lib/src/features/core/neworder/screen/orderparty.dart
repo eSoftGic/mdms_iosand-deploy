@@ -58,7 +58,7 @@ class OrderPartyScreen extends StatelessWidget {
 
   _Limit(BuildContext context, OrderBasicController controller) {
     return ExpansionTile(
-      initiallyExpanded: controller.iscrdlimitover.value,
+      initiallyExpanded: true, //controller.iscrdlimitover.value,
       title: Text(
         'Credit Limits',
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(

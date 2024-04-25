@@ -55,7 +55,7 @@ class OrderItemController extends GetxController {
     ordchoice = _value == "EDIT" ? "EDIT" : "ADD";
     update();
     if (kDebugMode) {
-      print(ordchoice);
+      print('Order Choice $ordchoice');
     }
     refreshListApi();
   }
@@ -119,8 +119,8 @@ class OrderItemController extends GetxController {
     searchtxt.text = "";
     _fulllist = _value;
     lislen.value = _value.length;
-    debugPrint(
-        'edit controller ordno ' + editcontroller.ordrefno.value.toString());
+
+    debugPrint('controller ordno ' + editcontroller.ordrefno.value.toString());
     debugPrint('setFulllist cnt ' + _value.length.toString());
     debugPrint('orditmlist cnt ' + orditmlist.value.length.toString());
 
@@ -179,6 +179,7 @@ class OrderItemController extends GetxController {
   }
 
   void setItemList(List<ItemModel> _value) {
+    debugPrint('setItemList Call' + _value.length.toString());
     reslist.value = _value.toList();
     lislen.value = reslist.length;
   }

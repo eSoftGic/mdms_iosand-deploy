@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/colors.dart';
 
 class TSearchContainer extends StatelessWidget {
@@ -18,6 +17,7 @@ class TSearchContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Container(
       width: MediaQuery.of(context).size.width - 24,
       height: 50,

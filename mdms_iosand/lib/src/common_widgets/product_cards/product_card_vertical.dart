@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/constants/image_strings.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/model_item.dart';
+import 'package:mdms_iosand/src/features/core/screens/order/add_order/screen_product.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/tproduct_card_vertical.dart';
 
 class ProductCardVertical extends StatelessWidget {
@@ -11,12 +13,11 @@ class ProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
-    bool hasimage =
-        (product.item_image!.isNotEmpty && product.item_image != 'na');
+    bool hasimage = (product.item_image!.isNotEmpty);
 
     return GestureDetector(
       onTap: () {
-        debugPrint('Card Clciked');
+        debugPrint('Card Clciked ${product.item_nm}');
       },
       child: Container(
         width: 180,
@@ -27,7 +28,6 @@ class ProductCardVertical extends StatelessWidget {
           color: isDark ? Colors.grey : Colors.white.withOpacity(0.8),
         ),
         child: Column(children: [
-          //Thumbnail, Wishlist, Stock Tag
           TRoundedContainer(
               height: 180,
               padding: const EdgeInsets.all(4),
@@ -40,6 +40,8 @@ class ProductCardVertical extends StatelessWidget {
                     imageUrl: hasimage ? product.item_image! : tNoImage,
                     applyImageRadius: false,
                     isImageByByte: hasimage,
+                    height: 180,
+                    width: 180,
                   ),
                   // Stock on Left Top
                   Positioned(
@@ -56,6 +58,7 @@ class ProductCardVertical extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   /*
                   // fav on Right top
                   const Positioned(
@@ -118,7 +121,11 @@ class ProductCardVertical extends StatelessWidget {
                             backgroundColor: tPrimaryColor.withOpacity(0.3),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
-                            child: Text(product.ord_qty.toString()),
+                            child: Text(product.ord_qty.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge!
+                                    .copyWith(color: Colors.red)),
                           )
                         : Container(
                             decoration: const BoxDecoration(
@@ -127,16 +134,20 @@ class ProductCardVertical extends StatelessWidget {
                                   topLeft: Radius.circular(16),
                                   bottomRight: Radius.circular(16)),
                             ),
-                            child: const SizedBox(
+                            child: SizedBox(
                               width: 28 * 1.2,
                               height: 28 * 1.2,
-                              child: Icon(
-                                Icons.add,
-                                color: tWhiteColor,
-                                size: 18,
-                              ),
+                              child: IconButton(
+                                  icon: const Icon(Icons.add),
+                                  iconSize: 18.0,
+                                  color: tWhiteColor,
+                                  onPressed: () {
+                                    Get.to(() => ItemScreen(
+                                          product: product,
+                                        ));
+                                  }),
                             ),
-                          )
+                          ),
                   ],
                 )
               ],

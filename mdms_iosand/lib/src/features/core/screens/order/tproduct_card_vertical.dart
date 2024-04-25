@@ -297,8 +297,6 @@ class TRoundedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //debugPrint(imageUrl);
-
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -318,15 +316,21 @@ class TRoundedImage extends StatelessWidget {
                 ? imageUrl != 'na'
                     ? ImageByteWidget(
                         b64: imageUrl,
-                        imgwid: 110.0,
-                        imght: 110.0,
+                        imgwid: width,
+                        imght: height,
                       )
-                    : Image(fit: fit, image: AssetImage(imageUrl))
+                    : Image(
+                        width: width,
+                        height: height,
+                        fit: fit,
+                        image: AssetImage(imageUrl) as ImageProvider)
                 : isNetWorkImage == false
                     ? Image(fit: fit, image: AssetImage(imageUrl))
                     : Image(
                         // here add network image
                         fit: fit,
+                        width: width,
+                        height: height,
                         image: AssetImage(imageUrl) as ImageProvider)),
       ),
     );
