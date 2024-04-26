@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:get/get.dart';
-import '../../../../../../singletons/AppData.dart';
+import '../../../../../singletons/AppData.dart';
 
 class OrderEditController extends GetxController {
   RxInt activeStepIndex = 0.obs;

@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_interpolation_to_compose_strings
 
+import 'package:mdms_iosand/src/features/core/neworder/controller/model_order.dart';
+
 import '../../../../../singletons/AppData.dart';
 import '../../network/app_url.dart';
 import '../../network/network_api_service.dart';
-import '../order/model_order.dart';
+
 
 class ApprovalRepository {
   final _apiService = NetworkApiServices();

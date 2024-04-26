@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../../../ecommerce/widget/imagebyte_widget.dart';
-import '../model_item.dart';
+
 
 class ItemCarasoulCard extends StatelessWidget {
   final ItemModel? product;

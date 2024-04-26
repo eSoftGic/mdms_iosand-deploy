@@ -4,10 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/model_order.dart';
 import 'package:mdms_iosand/src/features/core/neworder/screen/ordernavigation.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_cart.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderitem.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/model_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
 import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
 
 import '../../../../../singletons/AppData.dart';
@@ -20,14 +21,14 @@ import '../../network/status.dart';
 import '../dashboard/dashboard.dart';
 import '../track/controller_track.dart';
 //import 'add_order/screen_order_addedithome.dart';
-import 'controller_order.dart';
+
 import 'package:dio/dio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_extend/share_extend.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 
-import 'edit_order/controller_orderedit.dart';
+import '../../neworder/controller/controller_orderedit.dart';
 import 'edit_order/screen_order_edithome.dart';
 
 class OrderHomeScreen extends StatefulWidget {

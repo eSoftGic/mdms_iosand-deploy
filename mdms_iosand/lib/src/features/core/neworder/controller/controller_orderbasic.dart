@@ -3,16 +3,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import '../../../../network/status.dart';
 import 'package:mdms_iosand/singletons/singletons.dart';
-import '../../../party/home_list/party_repository.dart';
-import '../../repository_order.dart';
+import 'package:mdms_iosand/src/features/core/models/company_model.dart';
 
-import '../../../../models/company_model.dart';
-import '../model_book.dart';
-import '../model_chain.dart';
-import '../model_quot.dart';
+
+
+
+
+
+
 import 'package:mdms_iosand/src/features/core/models/party/party_model.dart';
+import 'package:mdms_iosand/src/features/core/network/status.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/repository_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_book.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_chain.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_quot.dart';
+import 'package:mdms_iosand/src/features/core/screens/party/home_list/party_repository.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class OrderBasicController extends GetxController {

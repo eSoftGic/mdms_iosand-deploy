@@ -1,12 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/material.dart';
-//import 'package:get/get.dart';
-//import 'package:mdms_iosand/src/ecommerce/widget/imagebyte_widget.dart';
-//import 'package:mdms_iosand/src/ecommerce/widget/imageurl_widget.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/model_item.dart';
-//import '../../../../../../constants/constants.dart';
-//import '../screen_product.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 
 class ItemListCard extends StatelessWidget {
   final ItemModel product;

@@ -980,6 +980,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
       _acstdt = prefs.get('spacstdt').toString();
       _acendt = prefs.get('spacendt').toString();
       _acmxdt = prefs.get('spacmxdt').toString();
+      _myForBuk = prefs.get('spForBuk').toString();
       _centralorder =
           (int.tryParse(prefs.get('spcentralorder').toString()) ?? 0) == 1
               ? true
@@ -1002,6 +1003,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
       appData.log_smanid = _mySmanId;
       appData.log_dmanid = _myDmanId;
       appData.log_dlrid = _myDlrId;
+      appData.log_forbuk = _myForBuk;
 
       appData.log_ip = _myIp.trim();
       appData.log_smnbeat = _mySmanBeat;
@@ -1570,6 +1572,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
     prefs.setInt('spSmanId', _mySmanId);
     prefs.setInt('spDmanId', _myDmanId);
     prefs.setInt('spDlrId', _myDlrId);
+    prefs.setString('spForBuk', _myForBuk);
 
     setState(() {
       appData.log_name = _myUserName;
@@ -1587,6 +1590,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
       appData.log_type = _myUserType;
       appData.log_dmanid = _myDmanId;
       appData.log_dlrid = _myDlrId;
+      appData.log_forbuk = _myForBuk;
 
       //print('appdata.log_dmanid is ' + _myDmanId.toString());
       appData.prtid = 0;
@@ -1615,7 +1619,7 @@ class _LoginSetupPageState extends State<LoginSetupPage>
     final smanbeaturl =
         "SMANBEAT?DbName=$_myDbName&SmanId=${_mySmanId.toString().trim()}&Demo=$demostr&DmanId=${_myDmanId.toString().trim()}&User_Type_Code=${_myUserType.toString().trim()}";
 
-    //print(baseUrl + smanbeaturl);
+    debugPrint(baseUrl + smanbeaturl);
 
     var res = await http.get(Uri.parse(baseUrl + smanbeaturl),
         headers: {"Accept": "application/json"});

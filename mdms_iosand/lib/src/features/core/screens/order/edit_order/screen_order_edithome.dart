@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import '../../../../../ecommerce/widget/custom_appbar.dart';
-import '../add_order/widgets/controller_cart.dart';
+import '../../../neworder/controller/controller_cart.dart';
 import '../add_order/widgets/widget_ordercartlist.dart';
 import '../add_order/widgets/widget_orderitemlist.dart';
 //import '../screen_orderhome.dart';
-import 'controller_orderedit.dart';
+import '../../../neworder/controller/controller_orderedit.dart';
 
 class EditOrderScreen extends StatefulWidget {
   const EditOrderScreen({super.key});

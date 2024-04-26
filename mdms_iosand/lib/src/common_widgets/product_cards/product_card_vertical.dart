@@ -1,8 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/constants/image_strings.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/model_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/screen/productdetail.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/add_order/screen_product.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/tproduct_card_vertical.dart';
 
@@ -13,11 +16,13 @@ class ProductCardVertical extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
+
     bool hasimage = (product.item_image!.isNotEmpty);
 
     return GestureDetector(
       onTap: () {
-        debugPrint('Card Clciked ${product.item_nm}');
+        Get.to(() => ProductDetailScreen(product: product));
+        //debugPrint('Card Clciked ${product.item_nm}');
       },
       child: Container(
         width: 180,
@@ -142,9 +147,11 @@ class ProductCardVertical extends StatelessWidget {
                                   iconSize: 18.0,
                                   color: tWhiteColor,
                                   onPressed: () {
-                                    Get.to(() => ItemScreen(
+                                    Get.to(() =>
+                                        ProductDetailScreen(product: product));
+                                    /*Get.to(() => ItemScreen(
                                           product: product,
-                                        ));
+                                        ));*/
                                   }),
                             ),
                           ),

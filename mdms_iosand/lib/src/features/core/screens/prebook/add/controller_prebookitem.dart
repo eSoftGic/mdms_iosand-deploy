@@ -3,13 +3,14 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/repository_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/repository_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import 'package:mdms_iosand/src/features/core/screens/prebook/add/controller_prebookbasic.dart';
 import 'package:mdms_iosand/src/features/core/screens/prebook/add/controller_prebookcart.dart';
 import 'package:unique_list/unique_list.dart';
 import '../../../../../../../singletons/singletons.dart';
 import '../../../network/status.dart';
-import '../../order/add_order/model_item.dart';
+
 
 class PreBookItemController extends GetxController {
   final ordbasiccontroller = Get.put(PreBookBasicController());

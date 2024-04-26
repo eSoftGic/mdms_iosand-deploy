@@ -1,18 +1,20 @@
 // ignore_for_file: non_constant_identifier_names, no_leading_underscores_for_local_identifiers, prefer_is_empty, invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, avoid_print
 
 import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_cart.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderbasic.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/repository_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/network/status.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/repository_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderedit.dart';
 import 'package:unique_list/unique_list.dart';
 import '../../../../../../../singletons/singletons.dart';
-import '../../../../network/status.dart';
-import '../../edit_order/controller_orderedit.dart';
-import '../model_item.dart';
+
+
+
 
 class OrderItemController extends GetxController {
   final ordbasiccontroller = Get.put(OrderBasicController());

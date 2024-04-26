@@ -2,9 +2,9 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/model_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/repository_order.dart';
 import '../../network/status.dart';
-import '../order/model_order.dart';
-import '../order/repository_order.dart';
 
 class ApprovalController extends GetxController {
   final _api = OrderRepository();

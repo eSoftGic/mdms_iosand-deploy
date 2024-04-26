@@ -4,7 +4,11 @@ import 'package:mdms_iosand/src/features/authentication/controllers/login_contro
 //import 'package:mdms_iosand/temp/on_boarding_controller.dart';
 import 'package:mdms_iosand/src/features/authentication/controllers/otp_controller.dart';
 import 'package:mdms_iosand/src/features/authentication/controllers/signup_controller.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/controller_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
+
 import 'package:mdms_iosand/src/features/core/screens/party/option/details/controller_option.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/ledger/controller_ledger.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/os/controller_os.dart';
@@ -12,10 +16,7 @@ import 'package:mdms_iosand/src/features/core/screens/party/option/uncrn/control
 
 import 'package:mdms_iosand/src/repository/user_repository/user_repository.dart';
 import '../features/core/screens/approval/controller_approvalhome.dart';
-import '../features/core/screens/order/add_order/widgets/controller_item.dart';
-import '../features/core/screens/order/add_order/widgets/controller_orderbasic.dart';
-import '../features/core/screens/order/add_order/widgets/controller_orderitem.dart';
-import '../features/core/screens/order/edit_order/controller_orderedit.dart';
+import '../features/core/neworder/controller/controller_orderedit.dart';
 import '../features/core/screens/party/home_list/party_controller.dart';
 import '../features/core/screens/party/option/rcp/controller_rcp.dart';
 import '../features/core/screens/stock/stock_controller.dart';

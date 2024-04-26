@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, prefer_interpolation_to_compose_strings
+// ignore_for_file: non_constant_identifier_names, prefer_interpolation_to_compose_strings, unrelated_type_equality_checks
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,9 +6,8 @@ import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/appbar.dart';
 import 'package:mdms_iosand/src/common_widgets/custom_shapes/container/primary_header_container.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderbasic.dart';
 import 'package:list_picker/list_picker.dart';
-//import 'package:mdms_iosand/src/common_widgets/searchbar/tsearchbar.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 
 class OrderPartyScreen extends StatelessWidget {
   const OrderPartyScreen({super.key});
@@ -322,7 +321,7 @@ class OrderPartyScreen extends StatelessWidget {
 
   Widget ChainOfStoreSelect(
       BuildContext context, OrderBasicController controller) {
-    bool shwcos = controller.coslist.value.isNotEmpty;
+    bool shwcos = controller.coslist.isNotEmpty;
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: shwcos

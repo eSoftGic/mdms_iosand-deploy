@@ -51,7 +51,9 @@ class PreBookBasicFormWidget extends StatelessWidget {
       title: Text(
         'Credit Limits',
         style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-            color: controller.iscrdlimitover.value == false ? Colors.green : Colors.red,
+            color: controller.iscrdlimitover.value == false
+                ? Colors.green
+                : Colors.red,
             fontWeight: FontWeight.bold),
       ),
       children: [
@@ -69,10 +71,14 @@ class PreBookBasicFormWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('CREDIT', style: Theme.of(context).textTheme.headlineSmall),
-                      Text('O/S', style: Theme.of(context).textTheme.headlineSmall),
-                      Text('LIMIT', style: Theme.of(context).textTheme.headlineSmall),
-                      Text('STATUS', style: Theme.of(context).textTheme.headlineSmall),
+                      Text('CREDIT',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      Text('O/S',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      Text('LIMIT',
+                          style: Theme.of(context).textTheme.headlineSmall),
+                      Text('STATUS',
+                          style: Theme.of(context).textTheme.headlineSmall),
                     ],
                   ),
                 ),
@@ -129,7 +135,8 @@ class PreBookBasicFormWidget extends StatelessWidget {
                     Text(controller.bukcrbil.toString(),
                         style: Theme.of(context).textTheme.bodyMedium),
                     controller.bukstbil.toString().trim() == 'Over'
-                        ? Icon(Icons.clear, size: 20, color: Colors.red.shade900)
+                        ? Icon(Icons.clear,
+                            size: 20, color: Colors.red.shade900)
                         : Icon(
                             Icons.check,
                             size: 20,
@@ -195,8 +202,9 @@ class PreBookBasicFormWidget extends StatelessWidget {
           Text(
             msg,
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color:
-                      controller.iscrdlimitover.value ? Colors.red.shade900 : Colors.green.shade900,
+                  color: controller.iscrdlimitover.value
+                      ? Colors.red.shade900
+                      : Colors.green.shade900,
                 ),
           )
         ],
@@ -251,12 +259,14 @@ class PreBookBasicFormWidget extends StatelessWidget {
         //initialValue:
         contentAlign: TextAlign.end,
         autovalidateMode: AutovalidateMode.disabled,
-        items: controller.coslist.map((f) => f.areanm).toList(),
+        items: controller.coslist.map((f) => f?.areanm.toString()).toList(),
         //options:
         visible: controller.costore,
         validator: (value) {
           if (value == null || value.toString().isEmpty) {
-            return appData.commonorder! ? 'Shipping Addr' : 'Chain Store ' ' is required';
+            return appData.commonorder!
+                ? 'Shipping Addr'
+                : 'Chain Store ' ' is required';
           }
           return null;
         },
@@ -320,7 +330,8 @@ class PreBookBasicFormWidget extends StatelessWidget {
         onChanged: (value) {
           controller.setParty(value);
           if (controller.acid > 0) {
-            if (appSecure.chklocation == true && controller.invaliddist.value == false) {
+            if (appSecure.chklocation == true &&
+                controller.invaliddist.value == false) {
               Get.snackbar('Invalid Distance, You are ',
                   '${controller.cdistance} mtrs away from Party Location');
             }

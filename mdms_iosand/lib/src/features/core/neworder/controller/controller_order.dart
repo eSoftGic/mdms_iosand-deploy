@@ -2,11 +2,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-//import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import '../../../../../singletons/singletons.dart';
 import '../../network/status.dart';
-import 'add_order/widgets/controller_orderbasic.dart';
-//import 'edit_order/controller_orderedit.dart';
 import 'model_order.dart';
 import 'repository_order.dart';
 

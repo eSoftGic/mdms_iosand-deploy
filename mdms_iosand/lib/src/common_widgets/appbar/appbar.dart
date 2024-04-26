@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/constants/colors.dart';
 
 class TAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TAppBar(
@@ -8,14 +9,15 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.showBackArrow = false,
       this.leadingIcon,
       this.actions,
-      this.leadingOnPressed});
+      this.leadingOnPressed, 
+    });
 
   final Widget? title;
   final bool showBackArrow;
   final IconData? leadingIcon;
   final List<Widget>? actions;
   final VoidCallback? leadingOnPressed;
-
+ 
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -29,6 +31,7 @@ class TAppBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: const Icon(
                     Icons.arrow_back,
                     size: 32,
+                    color: tPrimaryColor,
                   ))
               : leadingIcon != null
                   ? IconButton(

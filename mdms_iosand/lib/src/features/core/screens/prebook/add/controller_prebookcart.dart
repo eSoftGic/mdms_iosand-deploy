@@ -2,9 +2,10 @@
 
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../../../../singletons/AppData.dart';
 import 'package:http/http.dart' as http;
-import '../../order/add_order/model_item.dart';
+
 import 'controller_prebookbasic.dart';
 import 'controller_prebookedit.dart';
 

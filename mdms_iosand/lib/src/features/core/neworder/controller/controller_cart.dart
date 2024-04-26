@@ -4,10 +4,10 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import '../../../../../../../singletons/AppData.dart';
-import '../../edit_order/controller_orderedit.dart';
-import '../model_item.dart';
-import 'controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
+import '../../../../../singletons/AppData.dart';
+import 'controller_orderedit.dart';
 import 'package:http/http.dart' as http;
 
 class OrderCartController extends GetxController {

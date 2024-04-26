@@ -1,10 +1,10 @@
+import 'package:mdms_iosand/src/features/core/neworder/model/model_book.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_chain.dart';
 import 'package:mdms_iosand/src/features/core/screens/prebook/home/model_prebook.dart';
 import '../../../../../../singletons/AppData.dart';
 import '../../../models/company_model.dart';
 import '../../../network/app_url.dart';
 import '../../../network/network_api_service.dart';
-import '../../order/add_order/model_book.dart';
-import '../../order/add_order/model_chain.dart';
 
 class PreBookRepository {
   final _apiService = NetworkApiServices();

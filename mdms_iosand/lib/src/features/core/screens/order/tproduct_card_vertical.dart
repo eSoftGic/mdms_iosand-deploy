@@ -1,10 +1,11 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_if_null_operators, unnecessary_cast
+// ignore_for_file: avoid_unnecessary_containers, prefer_if_null_operators, unnecessary_cast, unused_import
 
 import 'package:flutter/material.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/ecommerce/widget/imagebyte_widget.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../constants/image_strings.dart';
-import 'add_order/model_item.dart';
+
 
 class TProductCardVertical extends StatelessWidget {
   const TProductCardVertical({super.key, required this.product});
@@ -297,6 +298,18 @@ class TRoundedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String imgurl = imageUrl.toString().trim();
+    int imgtype = 0;
+    imgtype = isImageByByte
+        ? 2
+        : isNetWorkImage
+            ? 1
+            : 0;
+    if (imgurl == 'na' || imgurl.isEmpty) {
+      imgurl = tNoImage;
+      imgtype = 0;
+    }
+
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -310,28 +323,23 @@ class TRoundedImage extends StatelessWidget {
         ),
         child: ClipRRect(
             borderRadius: applyImageRadius
-                ? BorderRadius.circular(borderRadius)
-                : BorderRadius.zero,
-            child: isImageByByte == true
-                ? imageUrl != 'na'
-                    ? ImageByteWidget(
-                        b64: imageUrl,
-                        imgwid: width,
-                        imght: height,
-                      )
-                    : Image(
-                        width: width,
-                        height: height,
-                        fit: fit,
-                        image: AssetImage(imageUrl) as ImageProvider)
-                : isNetWorkImage == false
-                    ? Image(fit: fit, image: AssetImage(imageUrl))
-                    : Image(
-                        // here add network image
-                        fit: fit,
-                        width: width,
-                        height: height,
-                        image: AssetImage(imageUrl) as ImageProvider)),
+              ? BorderRadius.circular(borderRadius)
+              : BorderRadius.zero,
+            child: imgtype == 2
+              ? ImageByteWidget(
+                  b64: imageUrl,
+                  imgwid: width,
+                  imght: height,
+                )
+              : Image(
+                  width: width,
+                  height: height,
+                  fit: fit,
+                  image: (imgtype == 1)
+                    ? AssetImage(imageUrl) as ImageProvider
+                    : AssetImage(imageUrl) as ImageProvider
+                )
+            ),
       ),
     );
   }

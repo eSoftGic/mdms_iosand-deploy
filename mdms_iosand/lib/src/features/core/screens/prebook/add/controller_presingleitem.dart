@@ -3,9 +3,10 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../../../../singletons/AppData.dart';
 import 'package:mdms_iosand/singletons/appsecure.dart';
-import '../../order/add_order/model_item.dart';
+
 
 class PreSingleItemController extends GetxController {
   ItemModel curitem = ItemModel();

@@ -3,12 +3,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_cart.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
+
 import '../../../../../constants/constants.dart';
 import '../../../../../ecommerce/widget/custom_appbar.dart';
 import '../../../../../ecommerce/widget/imagebyte_widget.dart';
-import 'model_item.dart';
+
 
 class ItemScreen extends StatelessWidget {
   final ItemModel product;
@@ -25,7 +27,8 @@ class ItemScreen extends StatelessWidget {
       appBar: CustomAppBar(
         title: product.item_nm!,
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: 
+      BottomAppBar(
         // CustomNavBar(),
         color: Colors.white,
         child: Container(
@@ -91,6 +94,7 @@ class ItemScreen extends StatelessWidget {
           ),
         ),
       ),
+      
       body: ListView(children: [
         //(curitmcontroller.prdimglist.value.isNotEmpty)
         //?

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/model_item.dart';
+import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
+
 import 'package:mdms_iosand/src/features/core/screens/prebook/add/screen_preproduct.dart';
 
 import '../../../../../constants/constants.dart';

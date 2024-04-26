@@ -9,14 +9,17 @@ import 'package:mdms_iosand/singletons/AppData.dart';
 import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/constants/constants.dart';
 import 'package:mdms_iosand/src/ecommerce/widget/custom_appbar.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/controller_orderitem.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/edit_order/controller_orderedit.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderedit.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/model_order.dart';
 import 'package:mdms_iosand/src/features/core/screens/order/edit_order/screen_order_edithome.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/model_order.dart';
+
 import 'package:mdms_iosand/src/features/core/screens/track/controller_track.dart';
 import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
 import 'package:path_provider/path_provider.dart';
-import '../screens/order/controller_order.dart';
+
 
 class OrderDetailView extends StatelessWidget {
   final int ordrefno;
