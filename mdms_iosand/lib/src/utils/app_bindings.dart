@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:mdms_iosand/src/ecommerce/controller/cart_controller.dart';
+//import 'package:mdms_iosand/ztemp/ecommerce_temp/controller/cart_controller.dart';
 import 'package:mdms_iosand/src/features/authentication/controllers/login_controller.dart';
 //import 'package:mdms_iosand/temp/on_boarding_controller.dart';
 import 'package:mdms_iosand/src/features/authentication/controllers/otp_controller.dart';
@@ -8,6 +8,7 @@ import 'package:mdms_iosand/src/features/core/neworder/controller/controller_ite
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
 
 import 'package:mdms_iosand/src/features/core/screens/party/option/details/controller_option.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/ledger/controller_ledger.dart';
@@ -21,8 +22,6 @@ import '../features/core/screens/party/home_list/party_controller.dart';
 import '../features/core/screens/party/option/rcp/controller_rcp.dart';
 import '../features/core/screens/stock/stock_controller.dart';
 import '../repository/authentication_repository/authentication_repository.dart';
-
-
 
 class AppBinding extends Bindings {
   @override
@@ -43,7 +42,8 @@ class AppBinding extends Bindings {
     Get.lazyPut(() => PartyRcpController(), fenix: true);
     Get.lazyPut(() => PartyUnCrnController(), fenix: true);
 
-    Get.lazyPut(() => CartController(), fenix: true);
+    //Get.lazyPut(() => CartController(), fenix: true);
+    Get.lazyPut(() => OrderCartController(), fenix: true);
     Get.lazyPut(() => SingleItemController(), fenix: true);
     Get.lazyPut(() => OrderBasicController(), fenix: true);
     Get.lazyPut(() => OrderItemController(), fenix: true);

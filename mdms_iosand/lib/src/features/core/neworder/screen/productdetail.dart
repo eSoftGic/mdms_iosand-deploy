@@ -1,12 +1,10 @@
 // ignore_for_file: unused_local_variable, non_constant_identifier_names, unused_import, avoid_unnecessary_containers
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/appbar.dart';
 import 'package:mdms_iosand/src/common_widgets/custom_shapes/curved_edge/curved_edges_widget.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/constants/image_strings.dart';
-import 'package:mdms_iosand/src/ecommerce/widget/imagebyte_widget.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_item.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
@@ -1003,7 +1001,6 @@ class ProductDetailScreen extends StatelessWidget {
       textConfirm: "OK",
       buttonColor: tCardBgColor,
     );
-    
   }
 }
 

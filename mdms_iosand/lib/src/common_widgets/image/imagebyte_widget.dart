@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import '../../constants/constants.dart';
+import '../../../src/constants/constants.dart';
 
 class ImageByteWidget extends StatelessWidget {
   String b64;

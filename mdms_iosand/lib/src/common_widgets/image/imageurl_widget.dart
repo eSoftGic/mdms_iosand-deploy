@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../constants/constants.dart';
+import '../../../src/constants/constants.dart';
 
 class ImageUrlWidget extends StatelessWidget {
   String imgurl;

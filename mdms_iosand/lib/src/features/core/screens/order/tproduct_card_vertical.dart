@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_if_null_operators, unnecessary_cast, unused_import
 
 import 'package:flutter/material.dart';
+import 'package:mdms_iosand/src/common_widgets/image/imagebyte_widget.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
-import 'package:mdms_iosand/src/ecommerce/widget/imagebyte_widget.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../constants/image_strings.dart';
 

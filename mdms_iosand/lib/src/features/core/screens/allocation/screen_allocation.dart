@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/src/common_widgets/appbar/custom_appbar.dart';
 import 'package:mdms_iosand/src/features/core/screens/allocation/controller_allocation.dart';
 import '../../../../constants/constants.dart';
-import '../../../../ecommerce/widget/custom_appbar.dart';
 import 'package:grouped_list/grouped_list.dart';
 
 class AllocateScreen extends StatelessWidget {
