@@ -1,8 +1,11 @@
 // ignore_for_file: unused_local_variable, non_constant_identifier_names, unused_import, avoid_unnecessary_containers
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/appbar.dart';
 import 'package:mdms_iosand/src/common_widgets/custom_shapes/curved_edge/curved_edges_widget.dart';
+import 'package:mdms_iosand/src/common_widgets/image/imagebyte_widget.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/constants/image_strings.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
@@ -30,7 +33,10 @@ class ProductDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            TProductImageSlider(isDark: isDark),
+            TProductImageSlider(
+              isDark: isDark,
+              product: product,
+            ),
             Padding(
               padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
               child: Column(children: [
@@ -1008,31 +1014,44 @@ class TProductImageSlider extends StatelessWidget {
   const TProductImageSlider({
     super.key,
     required this.isDark,
+    required this.product,
   });
 
   final bool isDark;
+  final ItemModel product;
 
   @override
   Widget build(BuildContext context) {
+    bool hasimage = (product.item_image!.isNotEmpty);
+
     return CurvedEdgesWidget(
         child: Container(
       color: isDark ? tCardDarkColor : tCardLightColor,
       child: Stack(
         children: [
           // Main Image Large
-          const SizedBox(
+          SizedBox(
               height: 300,
               child: Padding(
-                padding: EdgeInsets.all(32),
-                child: Center(child: Image(image: AssetImage(tProfileImage))),
-              )),
+                  padding: const EdgeInsets.all(32),
+                  child: Center(
+                      child: hasimage
+                          ? ImageByteWidget(
+                              b64: product.item_image!,
+                              imgwid: double.infinity,
+                              imght: 300,
+                            )
+                          : const Image(
+                              width: double.infinity,
+                              height: 300,
+                              image: AssetImage(tNoImage))))),
           // Image Slidder
           Positioned(
             right: 0,
             bottom: 30,
             left: 16,
             child: SizedBox(
-              height: 75,
+              height: 50,
               child: ListView.separated(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -1040,7 +1059,7 @@ class TProductImageSlider extends StatelessWidget {
                   separatorBuilder: (_, __) => const SizedBox(width: 16),
                   itemCount: 8,
                   itemBuilder: (_, __) => TRoundedImage(
-                        width: 75,
+                        width: 50,
                         backgroundColor:
                             isDark ? tCardDarkColor : tCardLightColor,
                         border: Border.all(

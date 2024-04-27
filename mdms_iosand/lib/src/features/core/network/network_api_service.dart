@@ -8,7 +8,6 @@ import 'exceptions/app_exceptions.dart';
 class NetworkApiServices extends BaseApiServices {
   @override
   Future<dynamic> getApi(String url) async {
-    // ignore: avoid_print
     debugPrint(url);
 
     dynamic responseJson;

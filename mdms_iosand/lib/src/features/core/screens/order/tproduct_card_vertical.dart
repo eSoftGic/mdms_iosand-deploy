@@ -301,8 +301,8 @@ class TRoundedImage extends StatelessWidget {
     String imgurl = imageUrl.toString().trim();
     int imgtype = 0;
     imgtype = isImageByByte
-        ? 2
-        : isNetWorkImage
+      ? 2
+      : isNetWorkImage
             ? 1
             : 0;
     if (imgurl == 'na' || imgurl.isEmpty) {

@@ -80,14 +80,17 @@ class OrderCartController extends GetxController {
   }
 
   void saveOrder() async {
+    //debugPrint('cart save order');
     int _noitems = cartlist.length;
     int srno = 0;
     String lstsrno = '0';
     for (var item in cartlist) {
       srno = srno + 1;
+      debugPrint(srno.toString());
       lstsrno = srno == cartlist.length ? '1' : '0';
+
       String qryparam = '';
-      if (editcontroller.ordrefno == 0) {
+      if (controller.ordrefno == 0) {
         qryparam = "DbName=" +
             appData.log_dbnm! +
             "&ref_no=" +
@@ -250,10 +253,14 @@ class OrderCartController extends GetxController {
             item.ordremark.toString() + //_ordremark.trim() +
             "&retval=0";
       }
+
+      debugPrint(srno.toString());
       debugPrint(appData.baseurl.toString() + "/Order_add?" + qryparam);
+
       var res = await doitempost(
           appData.baseurl.toString() + "/Order_add?" + qryparam);
     }
+    
     cleardata();
   }
 

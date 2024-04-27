@@ -259,7 +259,7 @@ class PreBookBasicFormWidget extends StatelessWidget {
         //initialValue:
         contentAlign: TextAlign.end,
         autovalidateMode: AutovalidateMode.disabled,
-        items: controller.coslist.map((f) => f?.areanm.toString()).toList(),
+        items: controller.coslist.map((f) => f.areanm.toString()).toList(),
         //options:
         visible: controller.costore,
         validator: (value) {

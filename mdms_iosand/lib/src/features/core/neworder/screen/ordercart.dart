@@ -17,7 +17,6 @@ class OrdercartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     OrderCartController cartController = Get.put(OrderCartController());
-
     OrderBasicController controller = Get.put(OrderBasicController());
 
     bool isDark = Theme.of(context).brightness == Brightness.dark;
@@ -169,11 +168,16 @@ class OrdercartScreen extends StatelessWidget {
         child:
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               if (cartcontroller.cartlist.isEmpty) {
                 buildMsg('No Products to Save', '', Colors.red, tWhiteColor);
               } else {
+                //debugPrint('Saving Cart ');
+
                 cartcontroller.saveOrder();
+
+                //debugPrint('Card Saved');
+
                 Get.delete<OrderBasicController>(force: true);
                 Get.delete<OrderCartController>(force: true);
                 Get.to(() => const OrderHomeView());
@@ -188,7 +192,7 @@ class OrdercartScreen extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Get.delete<OrderBasicController>(force: true);
               Get.delete<OrderCartController>(force: true);
               Get.to(() => const OrderHomeView());

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_book.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_chain.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_quot.dart';
@@ -12,17 +13,18 @@ class OrderRepository {
   final _apiService = NetworkApiServices();
 
   Future<List<OrderModel>> orderListApi(int acid) async {
+    
     if (appData.log_type == 'PARTY') {
-      acid = appData.log_dlrid!;
-    }
+      acid = appData.log_dlrid!; }
+
     final String ordersummqryparam =
         "DbName=${appData.log_dbnm!}&AcId=${acid.toString().trim()}&chain_id=0&Branch_Id=${appData.log_branchid.toString().trim()}&SmanId=${appData.log_smanid.toString().trim()}&User_Type_Code=${appData.log_type.toString().trim()}&tran_type=ORD&User_Type_Code=${appData.log_type.toString().trim()}";
 
     var ordlist = <OrderModel>[];
-    var resdata = await _apiService
-        .getApi(AppUrl.ordersummaryListUrl + ordersummqryparam);
+    var resdata = await _apiService.getApi(AppUrl.ordersummaryListUrl + ordersummqryparam);
     if (resdata != null) {
-      //print('res data' + resdata.toString());
+      debugPrint('res data ${resdata.toString()}');
+      
       for (var ordjson in resdata) {
         ordlist.add(OrderModel.fromJson(ordjson as Map<String, dynamic>));
       }
