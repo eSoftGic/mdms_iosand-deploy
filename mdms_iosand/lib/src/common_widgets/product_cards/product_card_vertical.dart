@@ -6,8 +6,8 @@ import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/constants/image_strings.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import 'package:mdms_iosand/src/features/core/neworder/screen/productdetail.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/screen_product.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/tproduct_card_vertical.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/add_order/screen_product.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/tproduct_card_vertical.dart';
 
 class ProductCardVertical extends StatelessWidget {
   const ProductCardVertical({super.key, required this.product});
@@ -17,7 +17,8 @@ class ProductCardVertical extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-    bool hasimage = (product.item_image!.isNotEmpty);
+    bool hasimage = (product.item_image!.isNotEmpty &&
+        product.item_image!.toString().trim() != 'na');
 
     return GestureDetector(
       onTap: () {

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
 import '../../../../../singletons/AppData.dart';
-import 'controller_orderedit.dart';
+import '../../screens/old_order/edit_order/remove_controller_orderedit.dart';
 import 'package:http/http.dart' as http;
 
 class OrderCartController extends GetxController {
@@ -96,7 +96,7 @@ class OrderCartController extends GetxController {
             "&ref_no=" +
             controller.ordrefno.toString().trim() +
             "&tran_type=" +
-            controller.ordqottype +
+            controller.ordqottype.value.toString() +
             "&tran_type_id=" +
             controller.bukid.value +
             "&ac_id=" +
@@ -260,7 +260,7 @@ class OrderCartController extends GetxController {
       var res = await doitempost(
           appData.baseurl.toString() + "/Order_add?" + qryparam);
     }
-    
+
     cleardata();
   }
 

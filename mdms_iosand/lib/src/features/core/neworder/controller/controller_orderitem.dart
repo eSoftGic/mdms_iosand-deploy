@@ -6,19 +6,19 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/repository_orderitem.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
-import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderedit.dart';
+//import 'package:mdms_iosand/src/features/core/screens/old_order/edit_order/remove_controller_orderedit.dart';
 import 'package:unique_list/unique_list.dart';
 import '../../../../../../../singletons/singletons.dart';
 
-
-
-
 class OrderItemController extends GetxController {
+  final ordcontroller = Get.put(OrderController());
   final ordbasiccontroller = Get.put(OrderBasicController());
-  final editcontroller = Get.put(OrderEditController());
+
+  //final editcontroller = Get.put(OrderEditController());
   final ordcartcontroller = Get.put(OrderCartController());
 
   final RxRequestStatus = Status.LOADING.obs;
@@ -122,16 +122,16 @@ class OrderItemController extends GetxController {
     _fulllist = _value;
     lislen.value = _value.length;
 
-    debugPrint('controller ordno ' + editcontroller.ordrefno.value.toString());
+    debugPrint('controller ordno ' + ordcontroller.ordrefno.value.toString());
     debugPrint('setFulllist cnt ' + _value.length.toString());
     debugPrint('orditmlist cnt ' + orditmlist.value.length.toString());
 
-    if (editcontroller.ordrefno.value > 0 && _value.length > 0) {
+    if (ordcontroller.ordrefno.value > 0 && _value.length > 0) {
       orditmlist.value = _value.toList();
       if (ordcartcontroller.cartlist.length == 0) {
         debugPrint('setting order cart list for ' +
-            editcontroller.ordrefno.value.toString());
-        setOrderCartlist(editcontroller.ordrefno.value);
+            ordcontroller.ordrefno.value.toString());
+        setOrderCartlist(ordcontroller.ordrefno.value);
       }
     }
     loadfiltervalues();

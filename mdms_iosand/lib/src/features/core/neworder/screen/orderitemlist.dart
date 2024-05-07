@@ -8,7 +8,8 @@ import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:mdms_iosand/src/features/core/network/exceptions/general_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/exceptions/internet_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
-import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+//import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
 
 class OrderitemListScreen extends StatelessWidget {
@@ -16,23 +17,27 @@ class OrderitemListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OrderBasicController controller = Get.put(OrderBasicController());
+    OrderController ordcontroller = Get.put(OrderController());
+    int ordno = ordcontroller.ordrefno.value;
     OrderItemController itmcontroller = Get.put(OrderItemController());
 
     itmcontroller.setTrantype('ORD');
-    itmcontroller.setOrdChoice(controller.ordrefno.value == 0 ? 'ADD' : 'EDIT');
+    itmcontroller.setOrdChoice(ordno == 0 ? 'ADD' : 'EDIT');
     itmcontroller.setShwimg(itmcontroller.shwimg.value);
+
     double grdwidth = MediaQuery.of(context).size.width - 50;
-    
+
+    itmcontroller.refreshListApi();
+
     return Scaffold(
       body: Column(children: [
         TPrimaryHeaderContainer(
             height: 130,
-            child: const TAppBar(
+            child: TAppBar(
               title: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('ORDER'),
+                    Text(ordno > 0 ? 'EDIT ORDER' : 'ADD ORDER'),
                     SizedBox(
                       height: 8,
                     ),
@@ -84,10 +89,8 @@ class OrderitemListScreen extends StatelessWidget {
                       crossAxisSpacing: 16,
                       mainAxisExtent: 288, // play with this value
                     ),
-                    itemBuilder: (_, index) => Expanded(
-                      child: ProductCardVertical(
-                        product: itmcontroller.reslist[index],
-                      ),
+                    itemBuilder: (_, index) => ProductCardVertical(
+                      product: itmcontroller.reslist[index],
                     ),
                   )),
             ),
@@ -151,6 +154,4 @@ class OrderitemListScreen extends StatelessWidget {
       ],
     );
   }
-
-
 }

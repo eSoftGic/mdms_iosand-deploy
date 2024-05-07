@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings
+// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_const_constructors
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +11,10 @@ import 'package:mdms_iosand/src/features/core/network/exceptions/general_excepti
 import 'package:mdms_iosand/src/features/core/network/exceptions/internet_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+//import 'package:mdms_iosand/src/features/core/neworder/screen/orderedit.dart';
 import 'package:mdms_iosand/src/features/core/neworder/screen/ordernavigation.dart';
-import 'package:mdms_iosand/src/features/core/orderdb/orderdetail.dart';
-
+//import 'package:mdms_iosand/src/features/core/orderdb/orderdetail.dart';
+import 'package:mdms_iosand/src/features/core/screens/dashboard/dashboard.dart';
 
 class OrderHomeView extends StatefulWidget {
   const OrderHomeView({super.key});
@@ -47,8 +48,9 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             preferredSize:
                 const Size.fromHeight(55.0), // here the desired height
             child: AppBar(
+              automaticallyImplyLeading: false,
               title: const Text("ORDER"),
-              backgroundColor: tCardBgColor,
+              backgroundColor: tPrimaryColor.withOpacity(0.3),
               actions: [
                 IconButton(
                     onPressed: () {
@@ -60,6 +62,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                         appData.ordmaxlimit = 0.0;
                         appData.ordlimitvalid = true;
                       });
+                      ordcontroller.setOrdrefno(0);
                       //Get.to(() => const AddOrderHomeScreen());
                       Get.to(() => const OrderNavigationScreen());
                     },
@@ -67,14 +70,14 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                       Icons.add,
                       size: 24,
                     )),
-                /*IconButton(
+                IconButton(
                     onPressed: () {
-                      ordcontroller.refreshListApi();
+                      Get.to(const Dashboard());
                     },
                     icon: const Icon(
-                      Icons.refresh_outlined,
+                      Icons.home,
                       size: 24,
-                    )),*/
+                    )),
               ],
             )),
         body: SingleChildScrollView(
@@ -88,31 +91,61 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      TextButton(onPressed: () {}, child: const Text('ALL')),
+                      TextButton(
+                          onPressed: () {
+                            gotoselected('all');
+                          },
+                          child: Text(
+                            'ALL',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
                       TextButton(
                           onPressed: () {
                             gotoselected('apprvpend');
                           },
-                          child: const Text('PENDING')),
+                          child: Text(
+                            'PENDING',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
                       TextButton(
                           onPressed: () {
                             gotoselected('billpend');
                           },
-                          child: const Text('APPROVED')),
+                          child: Text(
+                            'APPROVED',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
                       TextButton(
                           onPressed: () {
                             gotoselected('billed');
                           },
-                          child: const Text('BILLED')),
-                      /*
-                  TextButton(
-                      onPressed: () {
-                        gotoselected('apprvreject');
-                      },
-                      child: const Text('REJECTED')),*/
+                          child: Text(
+                            'BILLED',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            gotoselected('apprvreject');
+                          },
+                          child: Text(
+                            'REJECTED',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
+                      /*TextButton(
+                          onPressed: () {
+                            gotoselected('noorder');
+                          },
+                          child: Text(
+                            'NO-ORDER',
+                            style: Theme.of(context).textTheme.labelSmall,
+                          )),
+                          */
                     ],
                   ),
-                  _searchBar(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: _searchBar(),
+                  ),
                   const Divider(
                     height: 5,
                     color: tPrimaryColor,
@@ -178,7 +211,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
         ),
-        /*IconButton(
+        IconButton(
             onPressed: () {
               ordcontroller.searchtxt.text = "";
               ordcontroller.refreshListApi();
@@ -186,7 +219,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
             icon: const Icon(
               Icons.refresh,
               size: 24,
-            )),*/
+            )),
       ],
     );
   }
@@ -233,9 +266,6 @@ class _OrderHomeViewState extends State<OrderHomeView> {
       child: ListTile(
         trailing: IconButton(
             onPressed: () {
-              debugPrint(ordcontroller.reslist[index].ref_no.toString());
-              debugPrint(index.toString());
-
               setState(() {
                 appData.prtid =
                     int.parse(ordcontroller.reslist[index].ac_id.toString());
@@ -258,18 +288,18 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                 appData.ordqottype = 'ORD';
               });
               if (ordcontroller.reslist[index].ref_no! > 0) {
-                Get.to(() => OrderDetailView(
-                    ordrefno: ordcontroller.reslist[index].ref_no!));
+                ordcontroller.setOrdrefno(ordcontroller.reslist[index].ref_no!);
+                Get.to(() => OrderNavigationScreen());
               }
             },
-            icon: const Icon(
+            icon: Icon(
               LineAwesomeIcons.angle_double_right,
               size: 28,
               color: tAccentColor,
             )),
         title: Text(
           ordcontroller.reslist[index].ac_nm.toString(),
-          style: Theme.of(context).textTheme.bodyLarge,
+          style: Theme.of(context).textTheme.bodyMedium,
           softWrap: true,
           overflow: TextOverflow.ellipsis,
         ),
@@ -284,7 +314,10 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                   ordcontroller.reslist[index].tran_dt.toString(),
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodySmall!
+                      .copyWith(fontWeight: FontWeight.bold),
                 ),
               ),
               Flexible(
@@ -297,7 +330,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                             .trim(),
                     overflow: TextOverflow.ellipsis,
                     softWrap: true,
-                    style: Theme.of(context).textTheme.bodyLarge),
+                    style: Theme.of(context).textTheme.bodyMedium),
               ),
               Flexible(
                 flex: 3,
@@ -313,7 +346,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
           Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Status ', style: Theme.of(context).textTheme.bodyLarge),
+                Text('Status ', style: Theme.of(context).textTheme.bodyMedium),
                 Flexible(
                   flex: 6,
                   child: Text(ordstatus.toString(),
@@ -331,18 +364,6 @@ class _OrderHomeViewState extends State<OrderHomeView> {
   }
 
   void gotoselected(String opt) async {
-    if (opt == 'billed') {
-      ordcontroller.setOrdBillList('Y');
-    }
-    if (opt == 'billpend') {
-      ordcontroller.setOrdBillList('N');
-    }
-    if (opt == 'noorder') {}
-    if (opt == 'apprvpend') {
-      ordcontroller.setApprovalStatus('PENDING');
-    }
-    if (opt == 'apprvreject') {
-      ordcontroller.setApprovalStatus('REJECTED');
-    }
+    ordcontroller.setOrdBillList(opt);
   }
 }

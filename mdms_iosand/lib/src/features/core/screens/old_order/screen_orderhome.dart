@@ -28,7 +28,7 @@ import 'package:share_extend/share_extend.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path/path.dart' as path;
 
-import '../../neworder/controller/controller_orderedit.dart';
+import 'edit_order/remove_controller_orderedit.dart';
 import 'edit_order/screen_order_edithome.dart';
 
 class OrderHomeScreen extends StatefulWidget {
@@ -544,7 +544,7 @@ class _OrderHomeScreenState extends State<OrderHomeScreen> {
               appData.approvalstatus = currorder.approvalstatus ?? '';
               appData.ordqottype = 'ORD';
             });
-            editcontroller.setOrderRecord();
+            editcontroller.setEditOrderRecord();
             Get.to(() => const EditOrderScreen());
           }
         } else {

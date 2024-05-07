@@ -11,7 +11,7 @@ import 'package:mdms_iosand/src/constants/image_strings.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_item.dart';
 import 'package:mdms_iosand/src/features/core/neworder/model/model_item.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/tproduct_card_vertical.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/tproduct_card_vertical.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key, required this.product});

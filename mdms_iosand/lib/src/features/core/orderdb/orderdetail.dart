@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_is_empty, non_constant_identifier_names, prefer_const_constructors, sized_box_for_whitespace, no_leading_underscores_for_local_identifiers, unnecessary_brace_in_string_interps, avoid_print, unused_local_variable
 
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,11 +9,12 @@ import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/custom_appbar.dart';
 import 'package:mdms_iosand/src/constants/constants.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 
-import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderedit.dart';
+//import 'package:mdms_iosand/src/features/core/screens/order/edit_order/remove_controller_orderedit.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderitem.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/model_order.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/edit_order/screen_order_edithome.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/edit_order/screen_order_edithome.dart';
 
 import 'package:mdms_iosand/src/features/core/screens/track/controller_track.dart';
 import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
@@ -28,12 +28,11 @@ class OrderDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ordcontroller = Get.put(OrderController());
-    final ordeditcontroller = Get.put(OrderEditController());
+    final ordeditcontroller = Get.put(OrderBasicController());
     final orditmcontroller = Get.put(OrderItemController());
 
     ordcontroller.setSingleOrderDetail(ordrefno);
-    ordeditcontroller.setOrderRecord();
-
+    ordeditcontroller.setEditOrderRecord();
     ordeditcontroller.acid(ordcontroller.currentOrder[0].ac_id);
     ordeditcontroller.ordrefno(ordcontroller.currentOrder[0].ref_no);
     ordeditcontroller.bukcmpstr(ordcontroller.currentOrder[0].company_sel);
@@ -46,7 +45,6 @@ class OrderDetailView extends StatelessWidget {
 
     orditmcontroller.setTrantype('ORD');
     orditmcontroller.setImgcnt(0);
-
     orditmcontroller.refreshListApi();
 
     return Scaffold(
@@ -380,7 +378,7 @@ class OrderDetailView extends StatelessWidget {
   }
 
   Padding buildOrderAction(BuildContext context, OrderModel corder,
-      OrderEditController ordeditcontroller) {
+      OrderBasicController ordeditcontroller) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Container(
@@ -398,7 +396,7 @@ class OrderDetailView extends StatelessWidget {
                       } else {
                         if (appSecure.editorder!) {
                           if (appData.log_type != "DMAN") {
-                            ordeditcontroller.setOrderRecord();
+                            ordeditcontroller.setEditOrderRecord();
                             Get.to(() => const EditOrderScreen());
                           }
                         } else {

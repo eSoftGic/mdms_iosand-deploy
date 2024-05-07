@@ -9,7 +9,7 @@ import '../../../neworder/controller/controller_cart.dart';
 import '../add_order/widgets/widget_ordercartlist.dart';
 import '../add_order/widgets/widget_orderitemlist.dart';
 //import '../screen_orderhome.dart';
-import '../../../neworder/controller/controller_orderedit.dart';
+import 'remove_controller_orderedit.dart';
 
 class EditOrderScreen extends StatefulWidget {
   const EditOrderScreen({super.key});

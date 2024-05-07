@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:get/get.dart';
-import '../../../../../singletons/AppData.dart';
+import '../../../../../../singletons/AppData.dart';
 
 class OrderEditController extends GetxController {
   RxInt activeStepIndex = 0.obs;
@@ -32,11 +32,12 @@ class OrderEditController extends GetxController {
   void setBukid(String value) => bukid.value = value;
   void setBuknm(String value) => buknm.value = value;
   void setSaleType(String value) => saletype.value = value;
+  
   void setTodayorder(bool value) {
     todayorder.value = value;
   }
 
-  void setOrderRecord() {
+  void setEditOrderRecord() {
     print('setting editing params');
     setOrdrefno(int.parse(appData.ordrefno.toString()));
     setAcid(int.parse(appData.prtid.toString()));

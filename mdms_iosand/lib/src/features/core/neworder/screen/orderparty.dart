@@ -1,20 +1,40 @@
 // ignore_for_file: non_constant_identifier_names, prefer_interpolation_to_compose_strings, unrelated_type_equality_checks
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mdms_iosand/singletons/AppData.dart';
 import 'package:mdms_iosand/singletons/appsecure.dart';
 import 'package:mdms_iosand/src/common_widgets/appbar/appbar.dart';
 import 'package:mdms_iosand/src/common_widgets/custom_shapes/container/primary_header_container.dart';
 import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:list_picker/list_picker.dart';
+import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/utils/pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as pth;
 
 class OrderPartyScreen extends StatelessWidget {
   const OrderPartyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    OrderController ordcontroller = Get.put(OrderController());
+
+    // this will check for add or edit
+    int ordno = ordcontroller.ordrefno.value;
+
     OrderBasicController controller = Get.put(OrderBasicController());
+
+    if (ordno > 0) {
+      ordcontroller.setSingleOrderDetail(ordno);
+      controller.acid(ordcontroller.currentOrder[0].ac_id);
+      controller.ordrefno(ordcontroller.currentOrder[0].ref_no);
+      controller.bukcmpstr(ordcontroller.currentOrder[0].company_sel);
+      controller.setEditOrderRecord();
+    }
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -23,15 +43,15 @@ class OrderPartyScreen extends StatelessWidget {
           height: 400,
           child: Column(
             children: [
-              const TAppBar(
+              TAppBar(
                 title: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('ORDER'),
-                      SizedBox(
+                      Text(ordno > 0 ? 'EDIT ORDER' : 'ADD ORDER'),
+                      const SizedBox(
                         height: 8,
                       ),
-                      Text('Book/Party/Credit Limit',
+                      const Text('Book/Party/Credit Limit',
                           style: TextStyle(fontSize: 16, color: tPrimaryColor)),
                     ]),
                 showBackArrow: false,
@@ -49,15 +69,131 @@ class OrderPartyScreen extends StatelessWidget {
             return (controller.buknm.value != '' && controller.acid.value > 0)
                 ? _Limit(context, controller)
                 : const SizedBox();
-          })
+          }),
+          _OrderStatus(context, ordcontroller, controller),
         ],
       )
     ])));
   }
 
+  _OrderStatus(BuildContext context, OrderController ordcontroller,
+      OrderBasicController controller) {
+    bool hasordpdf =
+        ordcontroller.reslist[0].ordpdf!.trim().isNotEmpty ? true : false;
+    String ordurl = hasordpdf
+        ? appData.pdfbaseurl! + ordcontroller.reslist[0].ordpdf!.trim() + '.pdf'
+        : '';
+
+    bool hasbilpdf =
+        ordcontroller.reslist[0].billpdf!.trim().isNotEmpty ? true : false;
+    String bilurl = hasbilpdf
+        ? appData.pdfbaseurl! +
+            ordcontroller.reslist[0].billpdf!.trim() +
+            '.pdf'
+        : "";
+
+    return Padding(
+        padding: const EdgeInsets.only(top: 10.0, bottom: 5.0),
+        child: ExpansionTile(
+            initiallyExpanded: controller.ordrefno > 0 ? true : false,
+            title: const Text(
+              'Status',
+              style: TextStyle(fontSize: 16, color: tPrimaryColor),
+            ),
+            children: [
+              Card(
+                  child: Padding(
+                padding: const EdgeInsets.only(
+                    top: 5.0, bottom: 5.0, left: 10, right: 10),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Approval :'),
+                          Text(
+                            ordcontroller.reslist[0].approvalstatus.toString(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(
+                                    color: ordcontroller
+                                                .reslist[0].approvalstatus
+                                                .toString()
+                                                .toLowerCase()
+                                                .contains('approved') ==
+                                            true
+                                        ? Colors.green
+                                        : Colors.red,
+                                    fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                                'Order ${ordcontroller.reslist[0].ordpdf.toString()}'),
+                            IconButton(
+                                onPressed: hasordpdf
+                                    ? () async {
+                                        download(
+                                            ordurl,
+                                            ordcontroller.reslist[0].ordpdf!
+                                                    .trim() +
+                                                '.pdf',
+                                            'Order-${ordcontroller.reslist[0].ref_no.toString()}');
+                                      }
+                                    : null,
+                                icon: const Icon(
+                                  Icons.download,
+                                  color: tPrimaryColor,
+                                )),
+                          ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Bill Details'),
+                          Text(
+                            ordcontroller.reslist[0].billdetails.toString(),
+                            style: const TextStyle(
+                                fontSize: 16, color: tPrimaryColor),
+                          ),
+                          IconButton(
+                              onPressed: hasbilpdf
+                                  ? () async {
+                                      download(
+                                          bilurl,
+                                          ordcontroller.reslist[0].billpdf!
+                                                  .trim() +
+                                              '.pdf',
+                                          'Invoice - ${ordcontroller.reslist[0].billdetails!}');
+                                    }
+                                  : null,
+                              icon: const Icon(
+                                Icons.download,
+                                color: tPrimaryColor,
+                              ))
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Track Order'),
+                          IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.timeline)),
+                        ],
+                      ),
+                    ]),
+              ))
+            ]));
+  }
+
   _Limit(BuildContext context, OrderBasicController controller) {
     return ExpansionTile(
-      initiallyExpanded: true, //controller.iscrdlimitover.value,
+      initiallyExpanded: controller.ordrefno == 0 ? true : false,
       title: Text(
         'Credit Limits',
         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
@@ -422,11 +558,98 @@ class OrderPartyScreen extends StatelessWidget {
                       value: controller.todayorder.value,
                       onChanged: (bool newvalue) {
                         controller.setTodayorder(newvalue);
+                        if (newvalue == false) {
+                          Get.defaultDialog(
+                              title: 'Save as No Order for Today',
+                              middleText: 'Confirm',
+                              backgroundColor: tCardLightColor.withOpacity(0.3),
+                              titleStyle: const TextStyle(
+                                  color: tSecondaryColor, fontSize: 20),
+                              middleTextStyle:
+                                  const TextStyle(color: tPrimaryColor),
+                              radius: 15,
+                              barrierDismissible: false,
+                              textConfirm: "Yes",
+                              confirmTextColor: tPrimaryColor,
+                              textCancel: "No",
+                              cancelTextColor: tSecondaryColor,
+                              buttonColor: tCardBgColor,
+                              onCancel: () => controller.setTodayorder(true));
+                        }
                       },
                     ))
               ]),
         ],
       ),
     );
+  }
+
+  Future<dynamic> buildMsg(
+      String title, String mtext, Color tcolor, Color mcolor) {
+    return Get.defaultDialog(
+      title: title,
+      middleText: mtext,
+      backgroundColor: tPrimaryColor.withOpacity(0.5),
+      titleStyle: TextStyle(color: tcolor, fontSize: 20),
+      middleTextStyle: TextStyle(color: mcolor),
+      radius: 15,
+      barrierDismissible: true,
+      textConfirm: "OK",
+      confirmTextColor: tPrimaryColor,
+      textCancel: "CANCEL",
+      cancelTextColor: tSecondaryColor,
+      buttonColor: tCardBgColor,
+    );
+  }
+
+  Future download(String fileUrl, String fileName, String ptitle) async {
+    getPermission();
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final permissionStatus = await Permission.storage.isGranted;
+    if (permissionStatus == true) {
+      final savePath = pth.join(dir, fileName);
+      await startDownload(savePath, fileUrl);
+      Get.to(() => PdfView(
+            path: savePath,
+            pdftitle: ptitle,
+          ));
+    } else {
+      Get.snackbar('Permission', 'denied for download to ' + dir.toString());
+    }
+  }
+
+  void getPermission() async {
+    //await Permission..manageExternalStorage.request();
+    await Permission.storage.request();
+  }
+
+  Future startDownload(String savePath, String urlPath) async {
+    Dio dio = Dio();
+    Map<String, dynamic> result = {
+      "isSuccess": false,
+      "filePath": null,
+      "error": null
+    };
+    try {
+      var response = await dio.download(
+        urlPath,
+        savePath,
+        onReceiveProgress: _onReceiveProgress,
+      );
+      result['isSuccess'] = response.statusCode == 200;
+      result['filePath'] = savePath;
+    } catch (e) {
+      result['error'] = e.toString();
+    } finally {
+      //_showNotification(result);
+    }
+  }
+
+  _onReceiveProgress(int receive, int total) {
+    if (total != -1) {
+      //setState(() {
+      //  progress = (receive / total * 100).toStringAsFixed(0) + '%';
+      //});
+    }
   }
 }

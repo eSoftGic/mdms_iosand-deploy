@@ -33,7 +33,6 @@ class OrderNavigationScreen extends StatelessWidget {
 
 class NavigationController extends GetxController {
   final RxInt selectedIndex = 0.obs;
-
   final screens = [
     OrderPartyScreen(),
     OrderitemListScreen(),

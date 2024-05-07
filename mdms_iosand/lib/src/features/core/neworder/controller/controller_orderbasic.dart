@@ -5,13 +5,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/singletons/singletons.dart';
 import 'package:mdms_iosand/src/features/core/models/company_model.dart';
-
-
-
-
-
-
-
 import 'package:mdms_iosand/src/features/core/models/party/party_model.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/repository_order.dart';
@@ -39,6 +32,14 @@ class OrderBasicController extends GetxController {
   RxInt chainid = 0.obs;
   RxString searchtext = "".obs;
   RxString chainareanm = "".obs;
+  RxString saletype = ''.obs;
+  RxString ordqottype = 'ORD'.obs;
+  RxInt imgcnt = 0.obs;
+  RxBool hascostores = false.obs;
+  RxBool invaliddist = false.obs;
+
+  RxInt ordrefno = 0.obs;
+  late Position currentLocation;
 
   final _api = OrderRepository();
   final _prtapi = PartyRepository();
@@ -51,16 +52,11 @@ class OrderBasicController extends GetxController {
 
   List<String> company = <String>[];
 
-  late Position currentLocation;
-
   double cdistance = 0.0;
-  RxBool invaliddist = false.obs;
   double plat = 0.0;
   double plon = 0.0;
-
-  late RxInt ordrefno = 0.obs;
-  late String ordqottype = '';
   late bool istelephonicorder = false;
+
   var billdetails = '';
   var chainnm = '';
   var ordbilled = '';
@@ -78,11 +74,10 @@ class OrderBasicController extends GetxController {
   double bukcrrs = 0;
   String bukstrs = '';
   bool bukhasord = false;
+
   String todayorddet = '';
 
   bool costore = false;
-  String saletype = '';
-  RxBool hascostores = false.obs;
 
   @override
   void onInit() async {
@@ -115,22 +110,26 @@ class OrderBasicController extends GetxController {
 
   void setError(String _value) => error.value = _value;
   void setRxRequestStatus(Status _value) => RxRequestStatus.value = _value;
+
+  void setOrdrefno(int _value) => ordrefno.value = _value;
   void setAcid(int _value) => acid.value = _value;
   void setAcnm(String _value) => acnm.value = _value;
   void setBukid(String _value) => bukid.value = _value;
   void setBuknm(String _value) => buknm.value = _value;
-  void setOrdrefno(int _value) => ordrefno.value = _value;
-  void setSaleType(String _value) => saletype = _value;
+  void setSaleType(String _value) => saletype.value = _value;
 
   void setParty(String nm) async {
     setAcnm(nm);
     var selectprt = prtlist.where((prt) {
       return prt.ac_nm!.toLowerCase().trim() == nm.toLowerCase().trim();
     }).toList()[0];
+
     setAcid(selectprt.ac_id!.toInt());
+
     setSaleType(selectprt.sale_type.toString().trim());
 
     plat = double.tryParse(selectprt.prt_lat.toString()) ?? 0.0;
+
     plon = double.tryParse(selectprt.prt_lon.toString()) ?? 0.0;
 
     //getPermission();
@@ -143,14 +142,26 @@ class OrderBasicController extends GetxController {
 
   void initorder(int acid) async {
     ordrefno.value = 0;
-    ordqottype = "ORD";
+    ordqottype.value = "ORD";
     istelephonicorder = false;
     setAcid(acid);
     setOrdrefno(0);
-    BookListApi(acid);
     if (hascostores.value == true) {
       ChainOfStoresListApi();
     }
+    BookListApi(acid);
+  }
+
+  void initEditorder(int acid, int ordno) async {
+    ordrefno.value = ordno;
+    ordqottype.value = "ORD";
+    istelephonicorder = false;
+    setAcid(acid);
+    setOrdrefno(ordno);
+    if (hascostores.value == true) {
+      ChainOfStoresListApi();
+    }
+    BookListApi(acid);
   }
 
   void setBookList(List<BookModel> _value) {
@@ -259,7 +270,7 @@ class OrderBasicController extends GetxController {
     bukstrs = '';
     iscrdlimitover.value = false;
     bukhasord = false;
-    if (ordqottype == 'ORD') {
+    if (ordqottype.value == 'ORD') {
       buklist.forEach((f) {
         curbk = f.trandesc ?? "";
         if (curbk == bknm) {
@@ -307,6 +318,7 @@ class OrderBasicController extends GetxController {
 
   Future<void> OrdPartyListApi() async {
     if (appData.log_type == 'PARTY') {}
+
     await _prtapi.partyListApi(acid.value).then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setOrdPartyList(value);
@@ -370,5 +382,21 @@ class OrderBasicController extends GetxController {
       return true;
     }
     update();
+  }
+
+  void setEditOrderRecord() {
+    print('setting editing params');
+    setOrdrefno(int.parse(appData.ordrefno.toString()));
+    setAcid(int.parse(appData.prtid.toString()));
+    setAcnm(appData.prtnm.toString());
+    setBukid(appData.bukid.toString());
+    bukcmpstr.value = appData.bukcmpstr.toString();
+    setBuknm(appData.buknm.toString());
+    chainid.value = int.parse(appData.chainid.toString());
+    chainareanm.value = appData.chainnm.toString();
+    saletype.value = appData.saletype.toString();
+    ordqottype.value = appData.ordqottype.toString();
+    ordmaxlimit.value = appData.ordmaxlimit!;
+    ordlimitvalid.value = appData.ordlimitvalid!;
   }
 }

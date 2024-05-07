@@ -7,9 +7,9 @@ import 'package:mdms_iosand/src/features/core/neworder/controller/controller_ord
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_cart.dart';
 
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderbasic.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_ordercartlist.dart';
-import 'package:mdms_iosand/src/features/core/screens/order/add_order/widgets/widget_orderitemlist.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/add_order/widgets/widget_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/add_order/widgets/widget_ordercartlist.dart';
+import 'package:mdms_iosand/src/features/core/screens/old_order/add_order/widgets/widget_orderitemlist.dart';
 
 class AddOrderHomeScreen extends StatefulWidget {
   const AddOrderHomeScreen({super.key});

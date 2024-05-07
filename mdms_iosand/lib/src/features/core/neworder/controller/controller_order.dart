@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, invalid_use_of_protected_member, no_leading_underscores_for_local_identifiers, avoid_print
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
 import '../../../../../singletons/singletons.dart';
@@ -18,6 +19,7 @@ class OrderController extends GetxController {
   RxDouble stockRs = 0.0.obs;
   int ordforacid = 0;
   final currentOrder = <OrderModel>[].obs;
+  RxInt ordrefno = 0.obs;
 
   final _api = OrderRepository();
   List<OrderModel> _fulllist = <OrderModel>[];
@@ -29,6 +31,8 @@ class OrderController extends GetxController {
     ListApi();
   }
 
+  void setOrdrefno(int _val) => ordrefno.value = _val;
+
   void setOrdforacid(int _val) => ordforacid = _val;
 
   void setError(String _value) => error.value = _value;
@@ -39,15 +43,53 @@ class OrderController extends GetxController {
     //loadfiltervalues();
   }
 
-  void setOrdBillList(String yn) async {
-    if (yn == 'Y') {
-      reslist.value = _fulllist.where((rec) {
-        return rec.billed!.toString().trim().toLowerCase() == yn.toLowerCase();
-      }).toList();
-    } else {
-      reslist.value = _fulllist.where((rec) {
-        return rec.billed!.toString().trim().toLowerCase() != 'y'.toLowerCase();
-      }).toList();
+  void setOrdBillList(String opt) async {
+    switch (opt) {
+      case 'apprvpend':
+        {
+          reslist.value = _fulllist.where((rec) {
+            return rec.approvalstatus!.toString().trim().toLowerCase() ==
+                'pending'.toLowerCase();
+          }).toList();
+        }
+        break;
+      case 'billpend':
+        {
+          reslist.value = _fulllist.where((rec) {
+            return rec.billed!.toString().trim().toLowerCase() == 'n' &&
+                rec.approvalstatus!.toString().trim().toLowerCase() ==
+                    'approved'.toLowerCase();
+          }).toList();
+        }
+        break;
+      case 'billed':
+        {
+          reslist.value = _fulllist.where((rec) {
+            return rec.billed!.toString().trim().toLowerCase() == 'y';
+          }).toList();
+        }
+        break;
+      case 'noorder':
+        {
+          reslist.value = _fulllist.where((rec) {
+            return rec.noorder!.toString().trim().toLowerCase() ==
+                'y'.toLowerCase();
+          }).toList();
+        }
+        break;
+      case 'apprvreject':
+        {
+          reslist.value = _fulllist.where((rec) {
+            return rec.approvalstatus!.toString().trim().toLowerCase() ==
+                'rejected'.toLowerCase();
+          }).toList();
+        }
+        break;
+      default:
+        {
+          reslist.value = _fulllist.toList();
+        }
+        break;
     }
     lislen.value = reslist.length;
   }

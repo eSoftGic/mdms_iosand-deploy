@@ -91,12 +91,15 @@ class OrderModel {
         bill_asm_approval_status: json['BILL_ASM_APPROVAL_STATUS'] ?? 'NA',
         bill_asm_approval_dt: json['BILL_ASM_APPROVAL_DT'] ?? 'NA',
         bill_asm_approval_user: json['BILL_ASM_APPROVAL_USER'] ?? 'NA',
-        bill_account_approval_status: json['BILL_ACCOUNT_APPROVAL_STATUS'] ?? 'NA',
+        bill_account_approval_status:
+            json['BILL_ACCOUNT_APPROVAL_STATUS'] ?? 'NA',
         bill_account_approval_dt: json['BILL_ACCOUNT_APPROVAL_DT'] ?? 'NA',
         bill_account_approval_user: json['BILL_ACCOUNT_APPROVAL_USER'] ?? 'NA',
-        bill_logistic_approval_status: json['BILL_LOGISTIC_APPROVAL_STATUS'] ?? 'NA',
+        bill_logistic_approval_status:
+            json['BILL_LOGISTIC_APPROVAL_STATUS'] ?? 'NA',
         bill_logistic_approval_dt: json['BILL_LOGISTIC_APPROVAL_DT'] ?? 'NA',
-        bill_logistic_approval_user: json['BILL_LOGISTIC_APPROVAL_USER'] ?? 'NA');
+        bill_logistic_approval_user:
+            json['BILL_LOGISTIC_APPROVAL_USER'] ?? 'NA');
   }
 
   Map<String, dynamic> toJson() => {

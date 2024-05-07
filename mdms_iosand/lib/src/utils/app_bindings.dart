@@ -17,7 +17,7 @@ import 'package:mdms_iosand/src/features/core/screens/party/option/uncrn/control
 
 import 'package:mdms_iosand/src/repository/user_repository/user_repository.dart';
 import '../features/core/screens/approval/controller_approvalhome.dart';
-import '../features/core/neworder/controller/controller_orderedit.dart';
+import '../features/core/screens/old_order/edit_order/remove_controller_orderedit.dart';
 import '../features/core/screens/party/home_list/party_controller.dart';
 import '../features/core/screens/party/option/rcp/controller_rcp.dart';
 import '../features/core/screens/stock/stock_controller.dart';
