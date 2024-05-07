@@ -65,7 +65,7 @@ class ApprovalScreen extends StatelessWidget {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .headlineMedium
+                              .bodyLarge
                               ?.copyWith(color: getColor(value))),
                     ),
                     itemBuilder: (c, element) {
@@ -79,7 +79,7 @@ class ApprovalScreen extends StatelessWidget {
                               element[aprController.grp2nm.value],
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineMedium
+                                  .bodyMedium
                                   ?.copyWith(
                                       color:
                                           getColor(aprController.grp2nm.value)),
@@ -100,7 +100,7 @@ class ApprovalScreen extends StatelessWidget {
                                           Text('Order',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                           Text(
                                               element['tran_desc']
                                                       .toString()
@@ -111,14 +111,14 @@ class ApprovalScreen extends StatelessWidget {
                                                       .trim(),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                           Text(
                                               'Rs. ' +
                                                   element['net_amt']
                                                       .toStringAsFixed(2),
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                         ]),
                                     Row(
                                       mainAxisAlignment:
@@ -155,12 +155,12 @@ class ApprovalScreen extends StatelessWidget {
                                           Text('Billing',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                           Text(
                                             element['billdetails'].toString(),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headlineSmall,
+                                                .bodySmall,
                                           ),
                                         ]),
                                     Row(
@@ -205,7 +205,7 @@ class ApprovalScreen extends StatelessWidget {
                                           child: Text('Finance',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                         ),
                                         Expanded(
                                             flex: 1,
@@ -243,7 +243,7 @@ class ApprovalScreen extends StatelessWidget {
                                           child: Text('Logistic',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .headlineSmall),
+                                                  .bodySmall),
                                         ),
                                         Expanded(
                                             flex: 1,

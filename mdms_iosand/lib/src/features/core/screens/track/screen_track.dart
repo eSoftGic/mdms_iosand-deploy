@@ -60,37 +60,57 @@ class TrackScreen extends StatelessWidget {
                                   ),*/
                                   SizedBox(
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           '${tController.listOfEvents[i].eventName} ( ${tController.listOfEvents[i].tblid} )',
-                                          style: Theme.of(context).textTheme.headlineSmall,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
                                         ),
-                                        Text(tController.listOfEvents[i].astatus,
+                                        Text(
+                                            tController.listOfEvents[i].astatus,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .headlineSmall
+                                                .bodyMedium
                                                 ?.copyWith(
-                                                    color: getColor(
-                                                        tController.listOfEvents[i].astatus))),
-                                        Text(tController.listOfEvents[i].adate.toString()),
-                                        tController.listOfEvents[i].eventName == 'ORDER'
+                                                    color: getColor(tController
+                                                        .listOfEvents[i]
+                                                        .astatus))),
+                                        Text(tController.listOfEvents[i].adate
+                                            .toString()),
+                                        tController.listOfEvents[i].eventName ==
+                                                'ORDER'
                                             ? Text(
-                                                tController.listOfEvents[i].orddesc,
-                                                style: const TextStyle(fontSize: 18),
+                                                tController
+                                                    .listOfEvents[i].orddesc,
+                                                style: const TextStyle(
+                                                    fontSize: 18),
                                               )
                                             : Text(
-                                                tController.listOfEvents[i].bildesc,
-                                                style: const TextStyle(fontSize: 18),
+                                                tController
+                                                    .listOfEvents[i].bildesc,
+                                                style: const TextStyle(
+                                                    fontSize: 18),
                                               ),
-                                        tController.listOfEvents[i].eventName == 'ORDER'
+                                        tController.listOfEvents[i].eventName ==
+                                                'ORDER'
                                             ? Text(
-                                                tController.listOfEvents[i].orddt.toString(),
-                                                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                                tController
+                                                    .listOfEvents[i].orddt
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 16),
                                               )
                                             : Text(
-                                                tController.listOfEvents[i].bildt.toString(),
-                                                style: const TextStyle(color: Colors.grey, fontSize: 12),
+                                                tController
+                                                    .listOfEvents[i].bildt
+                                                    .toString(),
+                                                style: const TextStyle(
+                                                    color: Colors.grey,
+                                                    fontSize: 16),
                                               ),
                                       ],
                                     ),
@@ -114,7 +134,8 @@ class TrackScreen extends StatelessWidget {
                                   height: 20.0,
                                   width: 20.0,
                                   decoration: BoxDecoration(
-                                    color: getColor(tController.listOfEvents[i].astatus),
+                                    color: getColor(
+                                        tController.listOfEvents[i].astatus),
                                     borderRadius: BorderRadius.circular(20),
                                   ),
                                 ),
@@ -145,9 +166,11 @@ class TrackScreen extends StatelessWidget {
                   return const Center(child: CircularProgressIndicator());
                 case Status.ERROR:
                   if (tController.error.value == 'No Internet') {
-                    return InternetExceptionWidget(onPress: () => tController.trackApi());
+                    return InternetExceptionWidget(
+                        onPress: () => tController.trackApi());
                   } else {
-                    return GeneralExceptionWidget(onPress: () => tController.trackApi());
+                    return GeneralExceptionWidget(
+                        onPress: () => tController.trackApi());
                   }
                 case Status.COMPLETED:
                   return showTrack();
@@ -185,11 +208,11 @@ class trackHeaderWidget extends StatelessWidget {
                 children: [
                   Text(
                     '${trkhdr.trantype}-${trkhdr.ordno}',
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                   Text(
                     trkhdr.orddt,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ],
               ),
@@ -202,13 +225,14 @@ class trackHeaderWidget extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(trkhdr.prtnm, style: Theme.of(context).textTheme.headlineSmall),
+                        Text(trkhdr.prtnm,
+                            style: Theme.of(context).textTheme.bodyMedium),
                         Text('Chain of Stores : ${trkhdr.chainnm}',
-                            style: Theme.of(context).textTheme.bodyLarge),
+                            style: Theme.of(context).textTheme.bodySmall),
                       ],
                     ),
                     Text('Rs. ${trkhdr.netamt.toStringAsFixed(2)}',
-                        style: Theme.of(context).textTheme.headlineSmall)
+                        style: Theme.of(context).textTheme.bodyMedium)
                   ]),
             ]),
       ),

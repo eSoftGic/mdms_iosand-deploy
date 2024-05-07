@@ -11,6 +11,8 @@ import 'package:mdms_iosand/src/constants/colors.dart';
 import 'package:list_picker/list_picker.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_orderbasic.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/controller_track.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
 import 'package:mdms_iosand/src/utils/pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -78,6 +80,8 @@ class OrderPartyScreen extends StatelessWidget {
 
   _OrderStatus(BuildContext context, OrderController ordcontroller,
       OrderBasicController controller) {
+    TrackController trackcontroller = Get.put(TrackController());
+
     bool hasordpdf =
         ordcontroller.reslist[0].ordpdf!.trim().isNotEmpty ? true : false;
     String ordurl = hasordpdf
@@ -134,7 +138,7 @@ class OrderPartyScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                'Order ${ordcontroller.reslist[0].ordpdf.toString()}'),
+                                'Order ${ordcontroller.reslist[0].ordpdf.toString().trim()}'),
                             IconButton(
                                 onPressed: hasordpdf
                                     ? () async {
@@ -149,6 +153,26 @@ class OrderPartyScreen extends StatelessWidget {
                                 icon: const Icon(
                                   Icons.download,
                                   color: tPrimaryColor,
+                                )),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Track Order '),
+                            IconButton(
+                                onPressed: () {
+                                  trackcontroller.ordidstr.value = controller
+                                      .ordrefno.value
+                                      .toString()
+                                      .trim();
+                                  trackcontroller.trantype.value = 'ORD';
+                                  trackcontroller.trackApi();
+                                  Get.to(() => const TrackScreen());
+                                },
+                                icon: const Icon(
+                                  Icons.timeline,
+                                  size: 18,
+                                  color: tAccentColor,
                                 )),
                           ]),
                       Row(
@@ -174,16 +198,24 @@ class OrderPartyScreen extends StatelessWidget {
                               icon: const Icon(
                                 Icons.download,
                                 color: tPrimaryColor,
-                              ))
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text('Track Order'),
+                              )),
+                          /*
                           IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.timeline)),
+                              onPressed: () {
+                                trackcontroller.setordIdstr(ordcontroller
+                                    .reslist[0].tran_no
+                                    .toString()
+                                    .trim());
+                                trackcontroller.settrantype('SAL');
+                                trackcontroller.trackApi();
+                                Get.to(() => const TrackScreen());
+                              },
+                              icon: const Icon(
+                                Icons.timeline,
+                                size: 18,
+                                color: tAccentColor,
+                              )),
+                            */
                         ],
                       ),
                     ]),
