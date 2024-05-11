@@ -187,7 +187,7 @@ class OsHomeScreenState extends State<OsHomeScreen> {
 
   Widget _listItem(index) {
     return GestureDetector(
-      onDoubleTap: () {
+      onTap: () {
         prtController.setosacid(osController.reslist[index].acid!);
         prtController.prtOsApi();
         Get.to(() => const PartyOSScreen());

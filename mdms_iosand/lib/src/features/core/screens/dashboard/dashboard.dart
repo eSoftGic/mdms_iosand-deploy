@@ -19,7 +19,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool shwchart = true;
+  bool shwchart = false;
   @override
   Widget build(BuildContext context) {
     //Variables
