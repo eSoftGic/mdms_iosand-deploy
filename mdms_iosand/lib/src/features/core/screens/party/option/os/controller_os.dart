@@ -16,6 +16,7 @@ class PartyOsController extends GetxController {
   final RxRequestStatus = Status.LOADING.obs;
   final oslist = <PrtOs>[].obs;
   void setRxRequestStatus(Status value) => RxRequestStatus.value = value;
+
   void setOsList(List<PrtOs> value) async {
     oslist.value = value.toList();
     oslen.value = oslist.length;

@@ -28,14 +28,15 @@ class DashboardCategoriesModel {
     DashboardCategoriesModel(
         "APR", "Approval", "", Icons.approval, 0xff5B8076, true, null),
     DashboardCategoriesModel(
-        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
-    DashboardCategoriesModel(
         "STK", "Stock Listing", "", Icons.category, 0xff5B8076, true, null),
     DashboardCategoriesModel("OS", "OutStanding", "",
         Icons.pending_actions_outlined, 0xff5B8076, true, null),
 
     /*
-      DashboardCategoriesModel(
+    DashboardCategoriesModel(
+        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
+
+     DashboardCategoriesModel(
         "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
     DashboardCategoriesModel(
         "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
@@ -61,8 +62,6 @@ class DashboardCategoriesModel {
     DashboardCategoriesModel(
         "APR", "Approval", "", Icons.approval, 0xff622f74, true, null),
     DashboardCategoriesModel(
-        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
-    DashboardCategoriesModel(
         "PRB", "Pre Booking", "", Icons.star_border, 0xff26cb3c, true, null),
     DashboardCategoriesModel(
         "DWN", "Download", "", Icons.download, 0xff5B8076, true, null),
@@ -74,6 +73,8 @@ class DashboardCategoriesModel {
         "PRB", "Pre Booking", "", Icons.star_border, 0xff5B8076, true, null),
 
     /*
+    DashboardCategoriesModel(
+        "TRK", "Order Track", "", Icons.track_changes, 0xff5B8076, true, null),
     DashboardCategoriesModel(
         "TRG", "Targets", "", Icons.show_chart, 0xffff5829, true, null),
     DashboardCategoriesModel(

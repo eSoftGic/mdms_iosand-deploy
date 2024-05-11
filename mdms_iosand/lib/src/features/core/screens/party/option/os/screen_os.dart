@@ -22,7 +22,7 @@ class PartyOSScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PartyOsController osController = Get.put(PartyOsController());
+    PartyOsController prtController = Get.put(PartyOsController());
 
     //Pdf Config
     const PdfColor baseColor = PdfColors.blue;
@@ -35,86 +35,89 @@ class PartyOSScreen extends StatelessWidget {
     String? getIndex(int rw, int cl) {
       switch (cl) {
         case 0:
-          return osController.oslist[rw].trandt!;
+          return prtController.oslist[rw].trandt!;
         case 1:
-          return osController.oslist[rw].tranno!;
+          return prtController.oslist[rw].tranno!;
         case 2:
-          return osController.oslist[rw].trandesc!;
+          return prtController.oslist[rw].trandesc!;
         case 3:
-          return osController.oslist[rw].netamt!.toStringAsFixed(2);
+          return prtController.oslist[rw].netamt!.toStringAsFixed(2);
         case 4:
-          return osController.oslist[rw].duedt!;
+          return prtController.oslist[rw].duedt!;
         case 5:
-          return osController.oslist[rw].pendday == null
+          return prtController.oslist[rw].pendday == null
               ? '0'
-              : osController.oslist[rw].pendday!.toStringAsFixed(0);
+              : prtController.oslist[rw].pendday!.toStringAsFixed(0);
         case 6:
-          return osController.oslist[rw].rcvdamt == null
+          return prtController.oslist[rw].rcvdamt == null
               ? '0'
-              : osController.oslist[rw].rcvdamt!.toStringAsFixed(2);
+              : prtController.oslist[rw].rcvdamt!.toStringAsFixed(2);
         case 7:
-          return osController.oslist[rw].rcvdamt == null
-              ? osController.oslist[rw].netamt!.toStringAsFixed(2)
-              : (osController.oslist[rw].netamt! - osController.oslist[rw].rcvdamt!)
+          return prtController.oslist[rw].rcvdamt == null
+              ? prtController.oslist[rw].netamt!.toStringAsFixed(2)
+              : (prtController.oslist[rw].netamt! -
+                      prtController.oslist[rw].rcvdamt!)
                   .toStringAsFixed(2);
       }
       return null;
     }
 
     pw.Widget buildHeader(pw.Context context) {
-      return pw.Row(crossAxisAlignment: pw.CrossAxisAlignment.center, children: [
-        pw.Expanded(
-            child: pw.Column(children: [
-          pw.Container(
-            height: 30,
-            padding: const pw.EdgeInsets.only(left: 20),
-            alignment: pw.Alignment.center,
-            child: pw.Text(appData.log_conm!,
-                style: pw.TextStyle(
-                  color: baseColor,
-                  fontWeight: pw.FontWeight.bold,
-                  fontSize: 18,
-                )),
-          ),
-          pw.Container(
-            height: 30,
-            padding: const pw.EdgeInsets.only(left: 20),
-            alignment: pw.Alignment.center,
-            child: pw.Text('Outstanding Statement',
-                style: pw.TextStyle(
-                  color: baseColor,
-                  fontWeight: pw.FontWeight.bold,
-                  fontSize: 18,
-                )),
-          ),
-          pw.Divider(
-            color: PdfColors.blue,
-            height: 2,
-          ),
-          pw.Container(
-            height: 30,
-            padding: const pw.EdgeInsets.only(left: 20),
-            alignment: pw.Alignment.centerLeft,
-            child: pw.Text('Party Name :${appData.prtnm!}',
-                style: pw.TextStyle(
-                  color: baseColor,
-                  fontWeight: pw.FontWeight.bold,
-                  fontSize: 18,
-                )),
-          ),
-          pw.Container(
-            height: 30,
-            padding: const pw.EdgeInsets.only(left: 20),
-            alignment: pw.Alignment.center,
-            child: pw.Text('O/S Rs. :${osController.ostot.value}',
-                style: pw.TextStyle(
-                  color: baseColor,
-                  fontWeight: pw.FontWeight.bold,
-                  fontSize: 18,
-                )),
-          ),
-        ]))
-      ]);
+      return pw.Row(
+          crossAxisAlignment: pw.CrossAxisAlignment.center,
+          children: [
+            pw.Expanded(
+                child: pw.Column(children: [
+              pw.Container(
+                height: 30,
+                padding: const pw.EdgeInsets.only(left: 20),
+                alignment: pw.Alignment.center,
+                child: pw.Text(appData.log_conm!,
+                    style: pw.TextStyle(
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 18,
+                    )),
+              ),
+              pw.Container(
+                height: 30,
+                padding: const pw.EdgeInsets.only(left: 20),
+                alignment: pw.Alignment.center,
+                child: pw.Text('Outstanding Statement',
+                    style: pw.TextStyle(
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 18,
+                    )),
+              ),
+              pw.Divider(
+                color: PdfColors.blue,
+                height: 2,
+              ),
+              pw.Container(
+                height: 30,
+                padding: const pw.EdgeInsets.only(left: 20),
+                alignment: pw.Alignment.centerLeft,
+                child: pw.Text('Party Name :${appData.prtnm!}',
+                    style: pw.TextStyle(
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 18,
+                    )),
+              ),
+              pw.Container(
+                height: 30,
+                padding: const pw.EdgeInsets.only(left: 20),
+                alignment: pw.Alignment.center,
+                child: pw.Text('O/S Rs. :${prtController.ostot.value}',
+                    style: pw.TextStyle(
+                      color: baseColor,
+                      fontWeight: pw.FontWeight.bold,
+                      fontSize: 18,
+                    )),
+              ),
+            ]))
+          ]);
     }
 
     pw.Widget buildFooter(pw.Context context) {
@@ -127,13 +130,16 @@ class PartyOSScreen extends StatelessWidget {
               height: 20,
               width: 200,
               child: pw.Text('Dated : $tdt',
-                  style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                  style: pw.TextStyle(
+                      fontSize: 16, fontWeight: pw.FontWeight.bold)),
             ),
             pw.Container(
               height: 20,
               width: 100,
-              child: pw.Text('Page ${context.pageNumber} / ${context.pagesCount}',
-                  style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+              child: pw.Text(
+                  'Page ${context.pageNumber} / ${context.pagesCount}',
+                  style: pw.TextStyle(
+                      fontSize: 16, fontWeight: pw.FontWeight.bold)),
             ),
           ]);
     }
@@ -154,7 +160,8 @@ class PartyOSScreen extends StatelessWidget {
         border: null,
         cellAlignment: pw.Alignment.centerLeft,
         headerDecoration: const pw.BoxDecoration(
-            borderRadius: pw.BorderRadius.all(pw.Radius.circular(2)), color: baseColor),
+            borderRadius: pw.BorderRadius.all(pw.Radius.circular(2)),
+            color: baseColor),
         headerHeight: 25,
         cellHeight: 40,
         cellAlignments: {
@@ -185,7 +192,7 @@ class PartyOSScreen extends StatelessWidget {
           (col) => tableHeaders[col],
         ),
         data: List<List<String>>.generate(
-          osController.oslen.value,
+          prtController.oslen.value,
           (row) => List<String>.generate(
             tableHeaders.length,
             (col) => getIndex(row, col)!,
@@ -242,8 +249,8 @@ class PartyOSScreen extends StatelessWidget {
     }
 
     Widget showos(BuildContext context, PartyOsController controller) {
-      return osController.oslist.value.isNotEmpty
-          ? buildColumn(osController, ExpButton, context)
+      return prtController.oslist.value.isNotEmpty
+          ? buildColumn(prtController, ExpButton, context)
           : const Center(child: CircularProgressIndicator());
     }
 
@@ -259,17 +266,19 @@ class PartyOSScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Obx(() {
-                  switch (osController.RxRequestStatus.value) {
+                  switch (prtController.RxRequestStatus.value) {
                     case Status.LOADING:
                       return const Center(child: CircularProgressIndicator());
                     case Status.ERROR:
-                      if (osController.error.value == 'No Internet') {
-                        return InternetExceptionWidget(onPress: () => osController.prtOsApi());
+                      if (prtController.error.value == 'No Internet') {
+                        return InternetExceptionWidget(
+                            onPress: () => prtController.prtOsApi());
                       } else {
-                        return GeneralExceptionWidget(onPress: () => osController.prtOsApi());
+                        return GeneralExceptionWidget(
+                            onPress: () => prtController.prtOsApi());
                       }
                     case Status.COMPLETED:
-                      return showos(context, osController);
+                      return showos(context, prtController);
                   }
                 }),
               ],
@@ -278,48 +287,54 @@ class PartyOSScreen extends StatelessWidget {
         ));
   }
 
-  Column buildColumn(PartyOsController osController, IconButton Function(BuildContext context) ExpButton,
+  Column buildColumn(
+      PartyOsController osController,
+      IconButton Function(BuildContext context) ExpButton,
       BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-          Text(
-            'Bill Date  ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Bill No ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Bill Amt ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Rcvd Amt',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-        ]),
-        const Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: <Widget>[
-          Text(
-            'Due  Date  ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Type    ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Due Days ',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-          Text(
-            'Pend.Amt',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-        ]),
+        const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Bill Date  ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Bill No ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Bill Amt ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Rcvd Amt',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+            ]),
+        const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                'Due  Date  ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Type    ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Due Days ',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+              Text(
+                'Pend.Amt',
+                style: TextStyle(fontSize: 14, color: Colors.black87),
+              ),
+            ]),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -341,6 +356,7 @@ class PartyOSScreen extends StatelessWidget {
                       const SizedBox(
                         width: 20,
                       ),
+                      ShowButton(context, osController),
                       ExpButton(context),
                     ],
                   )),
@@ -353,9 +369,9 @@ class PartyOSScreen extends StatelessWidget {
             itemCount: osController.oslen.value,
             itemBuilder: (context, index) {
               String pamt = "";
-              pamt = (osController.oslist[index].netamt! - osController.oslist[index].rcvdamt!)
+              pamt = (osController.oslist[index].netamt! -
+                      osController.oslist[index].rcvdamt!)
                   .toStringAsFixed(2);
-
               return ListTile(
                   title: Card(
                     child: Column(
@@ -377,17 +393,25 @@ class PartyOSScreen extends StatelessWidget {
                             Text(
                               osController.oslist[index].tranno.toString(),
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold, color: tPrimaryColor),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: tPrimaryColor),
                             ),
                             Text(
-                              osController.oslist[index].netamt!.toDouble().toString(),
+                              osController.oslist[index].netamt!
+                                  .toDouble()
+                                  .toString(),
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold, color: tPrimaryColor),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: tPrimaryColor),
                             ),
                             Text(
                               osController.oslist[index].rcvdamt.toString(),
                               style: const TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.bold, color: tPrimaryColor),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: tPrimaryColor),
                             ),
                           ],
                         ),
@@ -396,19 +420,26 @@ class PartyOSScreen extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               osController.oslist[index].duedt!,
-                              style: TextStyle(fontSize: 14, color: Colors.blueGrey.shade600),
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.blueGrey.shade600),
                             ),
                             Text(
                               osController.oslist[index].trandesc!,
-                              style: TextStyle(fontSize: 12, color: Colors.blueGrey.shade600),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.blueGrey.shade600),
                             ),
                             Text(
                               osController.oslist[index].pendday.toString(),
-                              style: TextStyle(fontSize: 12, color: Colors.blueGrey.shade600),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.blueGrey.shade600),
                             ),
                             Text(
                               pamt,
-                              style: TextStyle(fontSize: 14, color: Colors.red.shade900),
+                              style: TextStyle(
+                                  fontSize: 14, color: Colors.red.shade900),
                             ),
                           ],
                         ),
@@ -443,6 +474,19 @@ class PartyOSScreen extends StatelessWidget {
                   });
             }),
       ],
+    );
+  }
+
+  ShowButton(BuildContext context, PartyOsController prtcontroller) {
+    return IconButton(
+      icon: const Icon(Icons.remove_red_eye_outlined),
+      color: tAccentColor,
+      iconSize: 30.0,
+      disabledColor: Colors.grey,
+      highlightColor: tPrimaryColor,
+      onPressed: () {
+        prtcontroller.prtOsApi();
+      },
     );
   }
 }

@@ -11,6 +11,7 @@ class AppUrl {
   static String cmpListUrl = '$baseUrl/company?';
   static String itmListUrl = '$baseUrl/item_stock?';
   static String getqotnoUrl = '$baseUrl/Quot_New_Ref_No?';
+  static String osListUrl = '$baseUrl/debtors_sumr?';
 
   // Party Options
   static String acmstdetailUrl = '$baseUrl/ac_mst_debtors?';

@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_const_constructors
+// ignore_for_file: invalid_use_of_protected_member, prefer_interpolation_to_compose_strings, prefer_const_constructors, non_constant_identifier_names, unused_local_variable
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +11,14 @@ import 'package:mdms_iosand/src/features/core/network/exceptions/general_excepti
 import 'package:mdms_iosand/src/features/core/network/exceptions/internet_exception_widget.dart';
 import 'package:mdms_iosand/src/features/core/network/status.dart';
 import 'package:mdms_iosand/src/features/core/neworder/controller/controller_order.dart';
-//import 'package:mdms_iosand/src/features/core/neworder/screen/orderedit.dart';
 import 'package:mdms_iosand/src/features/core/neworder/screen/ordernavigation.dart';
-//import 'package:mdms_iosand/src/features/core/orderdb/orderdetail.dart';
 import 'package:mdms_iosand/src/features/core/screens/dashboard/dashboard.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/controller_track.dart';
+import 'package:mdms_iosand/src/features/core/screens/track/screen_track.dart';
+import 'package:mdms_iosand/src/utils/pdfview.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart' as pth;
 
 class OrderHomeView extends StatefulWidget {
   const OrderHomeView({super.key});
@@ -26,7 +30,7 @@ class OrderHomeView extends StatefulWidget {
 class _OrderHomeViewState extends State<OrderHomeView> {
   final ordcontroller = Get.put(OrderController());
   String ordrs = "";
-  var _colorapproved = Colors.blue;
+  Color colorapproved = Colors.blue;
   final Dio dio = Dio();
   String progress = "0";
 
@@ -246,19 +250,19 @@ class _OrderHomeViewState extends State<OrderHomeView> {
     String ordstatus = '';
     if (ordcontroller.reslist[index].billed == 'Y') {
       ordstatus = 'Billed';
-      _colorapproved = Colors.green;
+      colorapproved = Colors.green;
     }
     if (ordcontroller.reslist[index].approvalstatus!
         .toUpperCase()
         .contains('REJECTED')) {
       ordstatus = 'Rejected';
-      _colorapproved = Colors.purple;
+      colorapproved = Colors.purple;
     }
     if (ordcontroller.reslist[index].approvalstatus!
         .toUpperCase()
         .contains('PENDING')) {
       ordstatus = 'Approval Pending';
-      _colorapproved = Colors.red;
+      colorapproved = Colors.red;
     }
 
     return Card(
@@ -297,73 +301,265 @@ class _OrderHomeViewState extends State<OrderHomeView> {
               size: 28,
               color: tAccentColor,
             )),
-        title: Text(
-          ordcontroller.reslist[index].ac_nm.toString(),
-          style: Theme.of(context).textTheme.bodyMedium,
-          softWrap: true,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle:
-            Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Flexible(
-                flex: 3,
-                child: Text(
-                  ordcontroller.reslist[index].tran_dt.toString(),
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall!
-                      .copyWith(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Flexible(
-                flex: 6,
-                child: Text(
-                    ordcontroller.reslist[index].ref_no.toString() +
-                        '-' +
-                        ordcontroller.reslist[index].tran_desc
-                            .toString()
-                            .trim(),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: Theme.of(context).textTheme.bodyMedium),
-              ),
-              Flexible(
-                flex: 3,
-                child: Text(
-                  ordcontroller.reslist[index].net_amt.toString(),
-                  overflow: TextOverflow.ellipsis,
-                  softWrap: true,
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
-            ],
+        title: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4),
+          child: Text(
+            ordcontroller.reslist[index].ac_nm.toString(),
+            style: Theme.of(context).textTheme.bodyMedium,
+            softWrap: true,
+            overflow: TextOverflow.ellipsis,
           ),
-          Row(
+        ),
+        subtitle: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text('Status ', style: Theme.of(context).textTheme.bodyMedium),
+                Flexible(
+                  flex: 3,
+                  child: Text(
+                    ordcontroller.reslist[index].tran_dt.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ),
                 Flexible(
                   flex: 6,
-                  child: Text(ordstatus.toString(),
+                  child: Text(
+                      ordcontroller.reslist[index].ref_no.toString() +
+                          '-' +
+                          ordcontroller.reslist[index].tran_desc
+                              .toString()
+                              .trim(),
                       overflow: TextOverflow.ellipsis,
                       softWrap: true,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyLarge
-                          ?.copyWith(color: _colorapproved)),
-                )
-              ]),
-        ]),
+                      style: Theme.of(context).textTheme.bodyMedium),
+                ),
+                Flexible(
+                  flex: 3,
+                  child: Text(
+                    ordcontroller.reslist[index].net_amt.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: true,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Approval :'),
+                  Text(
+                    ordcontroller.reslist[0].approvalstatus.toString(),
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: ordcontroller.reslist[0].approvalstatus
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains('approved') ==
+                                true
+                            ? Colors.green
+                            : Colors.red,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+            OrderStatus(context, ordcontroller),
+          ]),
+        ),
       ),
     );
   }
 
   void gotoselected(String opt) async {
     ordcontroller.setOrdBillList(opt);
+  }
+
+  Widget OrderStatus(BuildContext context, OrderController ordcontroller) {
+    TrackController trackcontroller = Get.put(TrackController());
+    bool hasordpdf =
+        ordcontroller.reslist[0].ordpdf!.trim().isNotEmpty ? true : false;
+    String ordurl = hasordpdf
+        ? appData.pdfbaseurl! + ordcontroller.reslist[0].ordpdf!.trim() + '.pdf'
+        : '';
+
+    bool hasbilpdf =
+        ordcontroller.reslist[0].billpdf!.trim().isNotEmpty ? true : false;
+    String bilurl = hasbilpdf
+        ? appData.pdfbaseurl! +
+            ordcontroller.reslist[0].billpdf!.trim() +
+            '.pdf'
+        : "";
+
+    return ExpansionTile(
+        iconColor: tPrimaryColor,
+        childrenPadding: EdgeInsets.symmetric(horizontal: 4),
+        initiallyExpanded: false,
+        title: Text(
+          'Options..',
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: tPrimaryColor),
+        ),
+        children: [
+          Card(
+              color: tCardLightColor,
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Order ${ordcontroller.reslist[0].ordpdf.toString().trim()}',
+                              style: Theme.of(context).textTheme.bodyMedium,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            IconButton(
+                                onPressed: hasordpdf
+                                    ? () async {
+                                        download(
+                                            ordurl,
+                                            ordcontroller.reslist[0].ordpdf!
+                                                    .trim() +
+                                                '.pdf',
+                                            'Order-${ordcontroller.reslist[0].ref_no.toString()}');
+                                      }
+                                    : null,
+                                icon: const Icon(
+                                  Icons.download,
+                                  color: tPrimaryColor,
+                                )),
+                          ]),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text('Track Order '),
+                            IconButton(
+                                onPressed: () {
+                                  trackcontroller.ordidstr.value = ordcontroller
+                                      .ordrefno.value
+                                      .toString()
+                                      .trim();
+                                  trackcontroller.trantype.value = 'ORD';
+                                  trackcontroller.trackApi();
+                                  Get.to(() => const TrackScreen());
+                                },
+                                icon: const Icon(
+                                  Icons.timeline,
+                                  size: 18,
+                                  color: tAccentColor,
+                                )),
+                          ]),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text('Bill Details'),
+                          Text(
+                            ordcontroller.reslist[0].billdetails.toString(),
+                            style: const TextStyle(
+                                fontSize: 16, color: tPrimaryColor),
+                          ),
+                          IconButton(
+                              onPressed: hasbilpdf
+                                  ? () async {
+                                      download(
+                                          bilurl,
+                                          ordcontroller.reslist[0].billpdf!
+                                                  .trim() +
+                                              '.pdf',
+                                          'Invoice - ${ordcontroller.reslist[0].billdetails!}');
+                                    }
+                                  : null,
+                              icon: const Icon(
+                                Icons.download,
+                                color: tPrimaryColor,
+                              )),
+                          /*
+                      IconButton(
+                          onPressed: () {
+                            trackcontroller.setordIdstr(ordcontroller
+                                .reslist[0].tran_no
+                                .toString()
+                                .trim());
+                            trackcontroller.settrantype('SAL');
+                            trackcontroller.trackApi();
+                            Get.to(() => const TrackScreen());
+                          },
+                          icon: const Icon(
+                            Icons.timeline,
+                            size: 18,
+                            color: tAccentColor,
+                          )),
+                        */
+                        ],
+                      ),
+                    ]),
+              ))
+        ]);
+  }
+
+  Future download(String fileUrl, String fileName, String ptitle) async {
+    getPermission();
+    final String dir = (await getApplicationDocumentsDirectory()).path;
+    final permissionStatus = await Permission.storage.isGranted;
+    if (permissionStatus == true) {
+      final savePath = pth.join(dir, fileName);
+      await startDownload(savePath, fileUrl);
+      Get.to(() => PdfView(
+            path: savePath,
+            pdftitle: ptitle,
+          ));
+    } else {
+      Get.snackbar('Permission', 'denied for download to ' + dir.toString());
+    }
+  }
+
+  void getPermission() async {
+    //await Permission..manageExternalStorage.request();
+    await Permission.storage.request();
+  }
+
+  Future startDownload(String savePath, String urlPath) async {
+    Dio dio = Dio();
+    Map<String, dynamic> result = {
+      "isSuccess": false,
+      "filePath": null,
+      "error": null
+    };
+    try {
+      var response = await dio.download(
+        urlPath,
+        savePath,
+        onReceiveProgress: _onReceiveProgress,
+      );
+      result['isSuccess'] = response.statusCode == 200;
+      result['filePath'] = savePath;
+    } catch (e) {
+      result['error'] = e.toString();
+    } finally {
+      //_showNotification(result);
+    }
+  }
+
+  _onReceiveProgress(int receive, int total) {
+    if (total != -1) {
+      //setState(() {
+      //  progress = (receive / total * 100).toStringAsFixed(0) + '%';
+      //});
+    }
   }
 }

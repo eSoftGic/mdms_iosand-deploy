@@ -6,7 +6,7 @@ class AppData {
   final String wdmsver = ''; //"""01/01/2024";
   final String mdmsver = ''; //01/01/2024";
   final String mdmsverno =
-      '24.03.13'; // 24 is constant - only change mm.dd for year 2024
+      '24.05.11'; // 24 is constant - only change mm.dd for year 2024
   String? log_ip;
   String? log_name;
   int? log_id;

@@ -18,6 +18,8 @@ import 'package:mdms_iosand/src/features/core/screens/party/option/history/contr
 import 'package:mdms_iosand/src/features/core/screens/party/option/history/screen_history.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/ledger/controller_ledger.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/ledger/screen_party_ledger.dart';
+import 'package:mdms_iosand/src/features/core/screens/party/option/os/controller_os.dart';
+import 'package:mdms_iosand/src/features/core/screens/party/option/os/screen_os.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/rcp/controller_rcp.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/rcp/screen_rcp.dart';
 import 'package:mdms_iosand/src/features/core/screens/party/option/uncrn/controller_uncrn.dart';
@@ -78,7 +80,7 @@ class PartyDetails extends StatelessWidget {
 
     final ordController = Get.put(OrderController());
     final grlController = Get.put(PartyLedgerController());
-    //final osController = Get.put(PartyOsController());
+    final osController = Get.put(PartyOsController());
     final rcpController = Get.put(PartyRcpController());
     final ucrnController = Get.put(PartyUnCrnController());
     final hisController = Get.put(OrderHistoryController());
@@ -117,6 +119,9 @@ class PartyDetails extends StatelessWidget {
                     //gotoselected('history', acid, acnm);
                     break;
                   case 'POS':
+                    osController.setosacid(acid);
+                    osController.prtOsApi();
+                    Get.to(() => const PartyOSScreen());
                     //gotoselected('os', acid, acnm);
                     break;
                   case 'PGRL':

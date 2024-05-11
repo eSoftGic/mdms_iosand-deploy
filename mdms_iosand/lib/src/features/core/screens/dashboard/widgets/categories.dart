@@ -8,6 +8,7 @@ import 'package:mdms_iosand/src/features/core/neworder/controller/controller_ord
 import 'package:mdms_iosand/src/features/core/orderdb/orderhome.dart';
 import 'package:mdms_iosand/src/features/core/screens/allocation/screen_allocation.dart';
 import 'package:mdms_iosand/src/features/core/screens/approval/screen_approvalhome.dart';
+import 'package:mdms_iosand/src/features/core/screens/os/os_home.dart';
 
 //import 'package:mdms_iosand/src/features/core/screens/order/screen_orderhome.dart';
 import '../../../models/dashboard/categories_model.dart';
@@ -83,7 +84,7 @@ class DashboardCategories extends StatelessWidget {
                   Get.snackbar('Download', 'RDS');
                   break;
                 case 'OS':
-                  Get.snackbar('Outstanding', 'RDS');
+                  Get.to(() => const OsHomeScreen());
                   break;
                 case 'GEO':
                   Get.snackbar('Geo', 'RDS');
