@@ -64,18 +64,6 @@ class ProductCardVertical extends StatelessWidget {
                       ),
                     ),
                   ),
-
-                  /*
-                  // fav on Right top
-                  const Positioned(
-                    top: -5,
-                    right: -3,
-                    child: TCircularIcon(
-                      icon: Icons.favorite_border_outlined,
-                      color: Colors.red,
-                    ),
-                  ),
-                  */
                 ],
               )),
           const SizedBox(
@@ -90,23 +78,13 @@ class ProductCardVertical extends StatelessWidget {
                   title: product.item_nm,
                   smallSize: false,
                 ),
-                Row(
-                  children: [
-                    Text(
-                      product.item_brand_nm!,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    /*
-                    const Spacer(),
-                    const Icon(
-                      Icons.verified,
-                      color: Colors.green,
-                      size: 16,
-                    )
-                    */
-                  ],
+                Text(
+                  product.item_brand_nm!,
+                  overflow: TextOverflow.ellipsis,
+                  softWrap: true,
+                  textAlign: TextAlign.start,
+                  maxLines: 2,
+                  style: Theme.of(context).textTheme.bodySmall,
                 ),
                 const SizedBox(
                   height: 4,
@@ -124,14 +102,14 @@ class ProductCardVertical extends StatelessWidget {
                     product.ord_qty! > 0
                         ? TRoundedContainer(
                             radius: 4,
-                            backgroundColor: tPrimaryColor.withOpacity(0.3),
+                            backgroundColor: tPrimaryColor.withOpacity(0.1),
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 4),
                             child: Text(product.ord_qty.toString(),
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelLarge!
-                                    .copyWith(color: Colors.red)),
+                                    .copyWith(color: tPrimaryColor)),
                           )
                         : Container(
                             decoration: const BoxDecoration(

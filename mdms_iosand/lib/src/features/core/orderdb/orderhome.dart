@@ -67,7 +67,6 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                         appData.ordlimitvalid = true;
                       });
                       ordcontroller.setOrdrefno(0);
-                      //Get.to(() => const AddOrderHomeScreen());
                       Get.to(() => const OrderNavigationScreen());
                     },
                     icon: const Icon(
@@ -232,16 +231,18 @@ class _OrderHomeViewState extends State<OrderHomeView> {
     return LiquidPullRefresh(
       onRefresh: _handleRefresh,
       color: tAccentColor.withOpacity(0.3),
-      height: 250,
+      height: 200,
       backgroundColor: tCardLightColor,
       animSpeedFactor: 2,
       showChildOpacityTransition: true,
-      child: ListView.builder(
-        shrinkWrap: true,
-        itemCount: ordcontroller.reslist.value.length,
-        itemBuilder: (context, index) {
-          return _listItem(index);
-        },
+      child: Expanded(
+        child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: ordcontroller.reslist.value.length,
+          itemBuilder: (context, index) {
+            return _listItem(index);
+          },
+        ),
       ),
     );
   }
@@ -263,6 +264,12 @@ class _OrderHomeViewState extends State<OrderHomeView> {
         .contains('PENDING')) {
       ordstatus = 'Approval Pending';
       colorapproved = Colors.red;
+    }
+    if (ordcontroller.reslist[index].approvalstatus!
+        .toUpperCase()
+        .contains('APPROVED')) {
+      ordstatus = 'Approved';
+      colorapproved = Colors.green;
     }
 
     return Card(
@@ -318,19 +325,12 @@ class _OrderHomeViewState extends State<OrderHomeView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Flexible(
-                  flex: 3,
-                  child: Text(
-                    ordcontroller.reslist[index].tran_dt.toString(),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: true,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodySmall!
-                        .copyWith(fontWeight: FontWeight.bold),
-                  ),
+                  flex: 4,
+                  child: Text(ordcontroller.reslist[index].tran_dt.toString(),
+                      style: Theme.of(context).textTheme.bodyMedium),
                 ),
                 Flexible(
-                  flex: 6,
+                  flex: 5,
                   child: Text(
                       ordcontroller.reslist[index].ref_no.toString() +
                           '-' +
@@ -359,9 +359,9 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                 children: [
                   const Text('Approval :'),
                   Text(
-                    ordcontroller.reslist[0].approvalstatus.toString(),
+                    ordcontroller.reslist[index].approvalstatus.toString(),
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: ordcontroller.reslist[0].approvalstatus
+                        color: ordcontroller.reslist[index].approvalstatus
                                     .toString()
                                     .toLowerCase()
                                     .contains('approved') ==
@@ -373,7 +373,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                 ],
               ),
             ),
-            OrderStatus(context, ordcontroller),
+            OrderStatus(context, ordcontroller, index),
           ]),
         ),
       ),
@@ -384,19 +384,20 @@ class _OrderHomeViewState extends State<OrderHomeView> {
     ordcontroller.setOrdBillList(opt);
   }
 
-  Widget OrderStatus(BuildContext context, OrderController ordcontroller) {
+  Widget OrderStatus(
+      BuildContext context, OrderController ordcontroller, int index) {
     TrackController trackcontroller = Get.put(TrackController());
     bool hasordpdf =
-        ordcontroller.reslist[0].ordpdf!.trim().isNotEmpty ? true : false;
+        ordcontroller.reslist[index].ordpdf!.trim().isNotEmpty ? true : false;
     String ordurl = hasordpdf
         ? appData.pdfbaseurl! + ordcontroller.reslist[0].ordpdf!.trim() + '.pdf'
         : '';
 
     bool hasbilpdf =
-        ordcontroller.reslist[0].billpdf!.trim().isNotEmpty ? true : false;
+        ordcontroller.reslist[index].billpdf!.trim().isNotEmpty ? true : false;
     String bilurl = hasbilpdf
         ? appData.pdfbaseurl! +
-            ordcontroller.reslist[0].billpdf!.trim() +
+            ordcontroller.reslist[index].billpdf!.trim() +
             '.pdf'
         : "";
 
@@ -424,7 +425,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Order ${ordcontroller.reslist[0].ordpdf.toString().trim()}',
+                              'Order ${ordcontroller.reslist[index].ordpdf.toString().trim()}',
                               style: Theme.of(context).textTheme.bodyMedium,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -433,10 +434,10 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                                     ? () async {
                                         download(
                                             ordurl,
-                                            ordcontroller.reslist[0].ordpdf!
+                                            ordcontroller.reslist[index].ordpdf!
                                                     .trim() +
                                                 '.pdf',
-                                            'Order-${ordcontroller.reslist[0].ref_no.toString()}');
+                                            'Order-${ordcontroller.reslist[index].ref_no.toString()}');
                                       }
                                     : null,
                                 icon: const Icon(
@@ -451,7 +452,7 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                             IconButton(
                                 onPressed: () {
                                   trackcontroller.ordidstr.value = ordcontroller
-                                      .ordrefno.value
+                                      .reslist[index].ref_no
                                       .toString()
                                       .trim();
                                   trackcontroller.trantype.value = 'ORD';
@@ -478,33 +479,16 @@ class _OrderHomeViewState extends State<OrderHomeView> {
                                   ? () async {
                                       download(
                                           bilurl,
-                                          ordcontroller.reslist[0].billpdf!
+                                          ordcontroller.reslist[index].billpdf!
                                                   .trim() +
                                               '.pdf',
-                                          'Invoice - ${ordcontroller.reslist[0].billdetails!}');
+                                          'Invoice - ${ordcontroller.reslist[index].billdetails!}');
                                     }
                                   : null,
                               icon: const Icon(
                                 Icons.download,
                                 color: tPrimaryColor,
                               )),
-                          /*
-                      IconButton(
-                          onPressed: () {
-                            trackcontroller.setordIdstr(ordcontroller
-                                .reslist[0].tran_no
-                                .toString()
-                                .trim());
-                            trackcontroller.settrantype('SAL');
-                            trackcontroller.trackApi();
-                            Get.to(() => const TrackScreen());
-                          },
-                          icon: const Icon(
-                            Icons.timeline,
-                            size: 18,
-                            color: tAccentColor,
-                          )),
-                        */
                         ],
                       ),
                     ]),

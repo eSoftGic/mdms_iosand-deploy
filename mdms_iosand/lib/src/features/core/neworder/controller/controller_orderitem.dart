@@ -29,10 +29,11 @@ class OrderItemController extends GetxController {
   final _api = OrderItemRepository();
   var ordchoice = "ADD";
   var trantype = "ORD";
-  RxBool shwimg = false.obs;
+  RxBool shwimg = true.obs;
   RxInt imgcnt = 0.obs;
   RxInt Curitmid = 0.obs;
   RxString Curitmnm = ''.obs;
+  RxBool shwall = false.obs;
 
   List<ItemModel> _fulllist = <ItemModel>[];
 
@@ -42,6 +43,10 @@ class OrderItemController extends GetxController {
 
   void setImgcnt(int val) {
     imgcnt.value = val;
+  }
+
+  void setShwAll(bool val) {
+    shwall.value = val;
   }
 
   void setShwimg(bool val) {
@@ -65,7 +70,7 @@ class OrderItemController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ItemListApi(ordchoice, trantype, imgcnt.value);
+    ItemListApi(ordchoice, trantype, imgcnt.value, shwall.value);
   }
 
   /*@override
@@ -84,9 +89,9 @@ class OrderItemController extends GetxController {
     debugPrint(Curitmnm.value.toString());
   }
 
-  void ItemListApi(String ordchoice, String trantype, int imgcnt) {
+  void ItemListApi(String ordchoice, String trantype, int imgcnt, bool shwall) {
     debugPrint('itemlistapi ' + ordchoice + ' ' + trantype);
-    _api.itemListApi(ordchoice, trantype, imgcnt).then((value) {
+    _api.itemListApi(ordchoice, trantype, imgcnt, shwall).then((value) {
       setRxRequestStatus(Status.COMPLETED);
       //debugPrint(value.toString());
       setFullList(value.toList());
@@ -104,7 +109,9 @@ class OrderItemController extends GetxController {
     appData.filtbrand = [];
     appData.applystkfilter = false;
     setRxRequestStatus(Status.LOADING);
-    _api.itemListApi(ordchoice, trantype, imgcnt.value).then((value) {
+    _api
+        .itemListApi(ordchoice, trantype, imgcnt.value, shwall.value)
+        .then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setFullList(value);
       setItemList(value);

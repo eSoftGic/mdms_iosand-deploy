@@ -23,10 +23,9 @@ class OrderitemListScreen extends StatelessWidget {
 
     itmcontroller.setTrantype('ORD');
     itmcontroller.setOrdChoice(ordno == 0 ? 'ADD' : 'EDIT');
-    itmcontroller.setShwimg(itmcontroller.shwimg.value);
-
+    itmcontroller.setShwimg(ordno == 0 ? false : true);
+    itmcontroller.setShwAll(ordno == 0 ? true : false);
     double grdwidth = MediaQuery.of(context).size.width - 50;
-
     itmcontroller.refreshListApi();
 
     return Scaffold(
@@ -132,10 +131,24 @@ class OrderitemListScreen extends StatelessWidget {
         Obx(
           () => IconButton(
               onPressed: () {
-                itmcontroller.setShwimg(!itmcontroller.shwimg.value);
+                itmcontroller.setShwAll(!itmcontroller.shwall.value);
+                itmcontroller.refreshListApi();
               },
               icon: Icon(
-                itmcontroller.shwimg.value == true
+                itmcontroller.shwall.value
+                    ? Icons.remove_shopping_cart_outlined
+                    : Icons.shopping_cart_outlined,
+                size: 24,
+              )),
+        ),
+        Obx(
+          () => IconButton(
+              onPressed: () {
+                itmcontroller.setShwimg(!itmcontroller.shwimg.value);
+                itmcontroller.refreshListApi();
+              },
+              icon: Icon(
+                itmcontroller.shwimg.value
                     ? Icons.image_outlined
                     : Icons.image_not_supported_outlined,
                 size: 24,
@@ -149,8 +162,6 @@ class OrderitemListScreen extends StatelessWidget {
               Icons.refresh,
               size: 24,
             )),
-
-        /*Center(child: _filter()),*/
       ],
     );
   }

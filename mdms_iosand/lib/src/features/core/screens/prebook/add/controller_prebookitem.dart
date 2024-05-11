@@ -11,7 +11,6 @@ import 'package:unique_list/unique_list.dart';
 import '../../../../../../../singletons/singletons.dart';
 import '../../../network/status.dart';
 
-
 class PreBookItemController extends GetxController {
   final ordbasiccontroller = Get.put(PreBookBasicController());
   //final editcontroller = Get.put(OrderEditController());
@@ -54,14 +53,14 @@ class PreBookItemController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    ItemListApi(ordchoice, trantype);
+    ItemListApi(ordchoice, trantype, 1, true);
   }
 
   @override
   void onReady() {
     super.onReady();
     if (reslist.value.isEmpty) {
-      ItemListApi(ordchoice, trantype);
+      ItemListApi(ordchoice, trantype, 1, true);
     }
   }
 
@@ -164,8 +163,8 @@ class PreBookItemController extends GetxController {
     lislen.value = reslist.value.length;
   }
 
-  void ItemListApi(String ordchoice, String trantype) {
-    _api.itemListApi(ordchoice, trantype,imgcnt).then((value) {
+  void ItemListApi(String ordchoice, String trantype, int imgcnt, bool shwall) {
+    _api.itemListApi(ordchoice, trantype, imgcnt, shwall).then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setFullList(value);
       setItemList(value);
@@ -182,7 +181,7 @@ class PreBookItemController extends GetxController {
     appData.filtbrand = [];
     appData.applystkfilter = false;
     setRxRequestStatus(Status.LOADING);
-    _api.itemListApi(ordchoice, trantype,imgcnt).then((value) {
+    _api.itemListApi(ordchoice, trantype, imgcnt, true).then((value) {
       setRxRequestStatus(Status.COMPLETED);
       setFullList(value);
       setItemList(value);
