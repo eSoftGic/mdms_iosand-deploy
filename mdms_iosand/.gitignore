@@ -8,6 +8,10 @@
 # git diff main
 # git merge main
 
+# -- https://github.com/anuj0612/hvci_flutter_app
+#git remote add hvci_flutter_app https://github.com/anuj0612/hvci_flutter_app
+#git checkout deploy
+#git push hvci_flutter_app
 
 # Miscellaneous
 *.class
